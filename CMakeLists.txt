@@ -16,17 +16,19 @@ find_package (Eigen3 3.3 REQUIRED NO_MODULE)
 
 link_directories(${Eigen_INCLUDE_DIRS})
 set (PROJECT_SOURCES
-    core/src/ahp_decision_method.cpp
-    core/src/decision_method.cpp
-    core/src/gm_decision_method.cpp
-    core/src/heuristic_decision_method.cpp
-    core/src/tropical.cpp
-    core/src/tropical_decision_method.cpp
+        trunk/core/src/ahp_decision_method.cpp
+        trunk/core/src/decision_method.cpp
+        trunk/core/src/gm_decision_method.cpp
+        trunk/core/src/heuristic_decision_method.cpp
+        trunk/core/src/tropical.cpp
+        trunk/core/src/tropical_decision_method.cpp
+        trunk/core/src/ui/start_menu.cpp
+        trunk/core/src/decision_model.cpp
+        trunk/core/src/main.cpp
 
-    main.cpp
-    mainwindow.cpp
-    mainwindow.h
-    mainwindow.ui
+)
+set (PROJECT_HEADERS
+        trunk/core/include/ui/start_menu.h
 )
 
 
@@ -34,6 +36,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(${PROJECT_NAME}
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        ${PROJECT_HEADERS}
+        trunk/core/include/decision_model.h trunk/core/src/decision_model.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET TestDm APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -49,6 +53,7 @@ else()
     else()
         add_executable(${PROJECT_NAME}
             ${PROJECT_SOURCES}
+            ${PROJECT_HEADERS}
         )
     endif()
 endif()
