@@ -1,9 +1,4 @@
-//
-// Created by marshall on 14.12.2021.
-//
-
-#ifndef MAXALGEBRA_H
-#define MAXALGEBRA_H
+#pragma once
 #include <Eigen/Dense>
 #include <vector>
 
@@ -180,4 +175,3 @@ void TestMatrixMultiplication(){
 }
 #endif
 
-#endif

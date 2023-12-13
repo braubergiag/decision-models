@@ -1,6 +1,5 @@
 
-#ifndef TROPICAL_TROPICAL_DECISION_METHOD_H
-#define TROPICAL_TROPICAL_DECISION_METHOD_H
+#pragma once
 
 #include "decision_method.h"
 #include "tropical.h"
@@ -8,15 +7,16 @@
 class tropical_decision_method : public decision_method{
 
 public:
+    tropical_decision_method() = default;
     tropical_decision_method(const vector<MaxAlgMatrixXd> &alternatives, const MaxAlgMatrixXd &criteria);
     void perform() override;
 
 public:
 
-    const vector<MaxAlgMatrixXd> &get_alternatives() const;
-    const MaxAlgMatrixXd &get_criteria() const;
+    const vector<MaxAlgMatrixXd> &alternatives() const;
+    const MaxAlgMatrixXd &criteria() const;
 
-    const pair<MaxAlgMatrixXd, MaxAlgMatrixXd> &get_final_weights() const;
+    const pair<MaxAlgMatrixXd, MaxAlgMatrixXd> &final_weights() const;
 
 
 
@@ -26,9 +26,9 @@ public:
 
 public:
 
-    int get_best_differentiating_weight_vector_index(const MaxAlgMatrixXd & D) const;
-    MaxAlgMatrixXd get_best_differentiating_weight_vector(const MaxAlgMatrixXd & D, int index) const;
-    MaxAlgMatrixXd get_worst_differentiating_weight_vector(const MaxAlgMatrixXd & D) const;
+    int best_differentiating_weight_vector_index(const MaxAlgMatrixXd & D) const;
+    MaxAlgMatrixXd best_differentiating_weight_vector(const MaxAlgMatrixXd & D, int index) const;
+    MaxAlgMatrixXd worst_differentiating_weight_vector(const MaxAlgMatrixXd & D) const;
     MaxAlgMatrixXd construction_generating_matrix_optimal_weights(const MaxAlgMatrixXd & Criteria,double lambda) const;
     MaxAlgMatrixXd computing_weighted_sum_pairwise_comparison_matrices(std::vector<MaxAlgMatrixXd> alternatives ,
                                                                        const MaxAlgMatrixXd &v) const;
@@ -46,6 +46,3 @@ private:
     std::pair<MaxAlgMatrixXd,MaxAlgMatrixXd> final_weights_;
     MaxAlgMatrixXd criteria_;
 };
-
-
-#endif //TROPICAL_TROPICAL_DECISION_METHOD_H

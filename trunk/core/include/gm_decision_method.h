@@ -1,20 +1,13 @@
-//
-// Created by igor on 26.12.22.
-//
-
-#ifndef TROPICAL_GMDECISIONMETHOD_H
-#define TROPICAL_GMDECISIONMETHOD_H
+#pragma once
 
 #include "heuristic_decision_method.h"
 
 
 class gm_decision_method  : public heuristic_decision_method{
 public:
-    void perform() override;
+    gm_decision_method() = default;
+    gm_decision_method(const std::vector<Eigen::MatrixXd> &alternatives, const Eigen::MatrixXd &criteria);
 
 public:
-    gm_decision_method(const std::vector<Eigen::MatrixXd> &alternatives, const Eigen::MatrixXd &criteria);
+    void perform() override;
 };
-
-
-#endif //TROPICAL_GMDECISIONMETHOD_H
