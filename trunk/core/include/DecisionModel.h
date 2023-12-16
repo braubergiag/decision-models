@@ -9,11 +9,15 @@ class DecisionModel
 {
 public:
     DecisionModel() = default;
+public:
     void addAlternative(const std::string &alternative);
     void addCriteria(const std::string &criteria);
 
 public:
-    void set_decision_name(const string &decisionName);
+    const string &decisionName() const;
+public:
+    void setDecisionName(const string &decisionName);
+
 private:
     std::string decisionName_;
     std::vector<std::string> criteriaNames_;

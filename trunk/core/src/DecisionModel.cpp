@@ -9,6 +9,10 @@ void DecisionModel::addCriteria(const std::string &criteria) {
 
 }
 
-void DecisionModel::set_decision_name(const string &decisionName) {
+void DecisionModel::setDecisionName(const string &decisionName) {
     decisionName_ = decisionName;
+}
+
+const string &DecisionModel::decisionName() const {
+    return decisionName_;
 }
