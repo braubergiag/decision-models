@@ -20,18 +20,18 @@ void StartMenu::onCreateModelButtonClicked()
     auto res = createModelDialog->exec();
     if (res == QDialog::Accepted){
         qDebug() << "Accepted DecisionModelDialog";
-        dmodel_ptr_ = std::make_shared<DecisionModel>();
+        dmodelPtr_ = std::make_shared<DecisionModel>();
         auto alternatives = createModelDialog->alternativesNames();
         auto criteria = createModelDialog->criteriaNames();
 
 
         for (auto alt : alternatives) {
-            dmodel_ptr_->addAlternative(alt.toStdString());
+            dmodelPtr_->addAlternative(alt.toStdString());
         }
         for (auto crit : criteria) {
-            dmodel_ptr_->addCriteria(crit.toStdString());
+            dmodelPtr_->addCriteria(crit.toStdString());
         }
-        dmodel_ptr_->set_decision_name(createModelDialog->decisionName().toStdString());
+        dmodelPtr_->set_decision_name(createModelDialog->decisionName().toStdString());
     }
 
 }

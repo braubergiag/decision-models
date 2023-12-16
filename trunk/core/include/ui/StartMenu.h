@@ -21,7 +21,7 @@ private slots:
     void onCreateModelButtonClicked();
 
 private:
-    std::shared_ptr<DecisionModel> dmodel_ptr_;
+    std::shared_ptr<DecisionModel> dmodelPtr_;
     Ui::StartMenu *ui;
 };
 
