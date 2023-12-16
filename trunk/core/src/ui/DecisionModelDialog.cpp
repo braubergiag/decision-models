@@ -37,7 +37,7 @@ void DecisionModelDialog::onAddCriteriaButtonClicked()
     if (criteriaName.isEmpty()){
         QMessageBox::information(this,"Название не задано","Пожалуйста, укажите название альтернативы");
         return;
-    } else if (! ui->alternativesList->findItems(criteriaName,Qt::MatchExactly).isEmpty()){
+    } else if (! ui->criteriaList->findItems(criteriaName,Qt::MatchExactly).isEmpty()){
         QMessageBox::information(this,"Критерий уже добавлен","Критерий с данным названием уже есть в списке");
         return;
     }
