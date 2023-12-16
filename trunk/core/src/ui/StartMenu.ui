@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>407</width>
-    <height>404</height>
+    <width>663</width>
+    <height>515</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,8 +16,8 @@
   <widget class="QPushButton" name="createModelButton">
    <property name="geometry">
     <rect>
-     <x>210</x>
-     <y>40</y>
+     <x>0</x>
+     <y>360</y>
      <width>171</width>
      <height>41</height>
     </rect>
@@ -29,19 +29,19 @@
   <widget class="QListWidget" name="modelsList">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>40</y>
-     <width>171</width>
-     <height>241</height>
+     <x>1</x>
+     <y>34</y>
+     <width>181</width>
+     <height>321</height>
     </rect>
    </property>
   </widget>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>60</x>
-     <y>10</y>
-     <width>67</width>
+     <x>1</x>
+     <y>11</y>
+     <width>61</width>
      <height>17</height>
     </rect>
    </property>
@@ -49,12 +49,12 @@
     <string>Модели:</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="compareCriteriaButton">
    <property name="geometry">
     <rect>
-     <x>210</x>
-     <y>170</y>
-     <width>181</width>
+     <x>410</x>
+     <y>230</y>
+     <width>201</width>
      <height>41</height>
     </rect>
    </property>
@@ -62,17 +62,63 @@
     <string>Сравнить критерии</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="compareAlternativesButton">
    <property name="geometry">
     <rect>
-     <x>210</x>
-     <y>240</y>
-     <width>181</width>
+     <x>410</x>
+     <y>70</y>
+     <width>191</width>
      <height>41</height>
     </rect>
    </property>
    <property name="text">
     <string>Сравнить альтернативы</string>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="alternativesList">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>70</y>
+     <width>201</width>
+     <height>121</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="criteriaList">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>230</y>
+     <width>201</width>
+     <height>121</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>40</y>
+     <width>111</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Альтернативы:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>200</y>
+     <width>111</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Критерии:</string>
    </property>
   </widget>
  </widget>

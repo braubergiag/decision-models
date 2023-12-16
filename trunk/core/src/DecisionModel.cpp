@@ -16,3 +16,11 @@ void DecisionModel::setDecisionName(const string &decisionName) {
 const string &DecisionModel::decisionName() const {
     return decisionName_;
 }
+
+const vector<std::string> &DecisionModel::criteriaNames() const {
+    return criteriaNames_;
+}
+
+const vector<std::string> &DecisionModel::alternativesNames() const {
+    return alternativesNames_;
+}

@@ -6,6 +6,8 @@ class DecisionModelsDB {
 public:
     void addModel(const std::string& modelName, const DecisionModel & decisionModel);
     size_t size() const;
+    bool count(const std::string & modelName) const;
+    const DecisionModel& model(const std::string & modelName) const;
 
 private:
     using model_name = std::string;

@@ -7,6 +7,10 @@ StartMenu::StartMenu(QWidget *parent) :
         QWidget(parent), ui(new Ui::StartMenu){
     ui->setupUi(this);
     connect(ui->createModelButton,&QPushButton::clicked,this,&StartMenu::onCreateModelButtonClicked);
+    connect(this,&StartMenu::modelListUpdate,this,&StartMenu::onModelListUpdate);
+
+    ui->compareAlternativesButton->setEnabled(false);
+    ui->compareCriteriaButton->setEnabled(false);
 
 }
 
@@ -37,8 +41,39 @@ void StartMenu::onCreateModelButtonClicked()
 
         }
         modelsDb_.addModel(decisionModel.decisionName(), decisionModel);
+        emit modelListUpdate();
+
+    }
+
+
+}
+
+void StartMenu::onModelListUpdate() {
+
+    if (modelsDb_.size() > 0) {
+        auto currentModelIndex = ui->modelsList->count() - 1;
+        ui->modelsList->setCurrentRow(currentModelIndex);
+
+        auto modelName = ui->modelsList->currentItem()->text().toStdString();
+        if (modelsDb_.count(modelName)){
+            auto model = modelsDb_.model(modelName);
+
+            for (const auto& alt : model.alternativesNames())
+                ui->alternativesList->addItem(QString::fromStdString(alt));
+            for (const auto& crit : model.criteriaNames())
+                ui->criteriaList->addItem(QString::fromStdString(crit));
+
+
+
+            ui->compareCriteriaButton->setEnabled(true);
+            ui->compareAlternativesButton->setEnabled(true);
+        }
+
+
+
 
     }
 
 }
+
 

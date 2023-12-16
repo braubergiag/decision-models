@@ -19,7 +19,9 @@ public:
 
 private slots:
     void onCreateModelButtonClicked();
-
+    void onModelListUpdate();
+signals:
+    void modelListUpdate();
 private:
     DecisionModelsDB modelsDb_;
     Ui::StartMenu *ui;

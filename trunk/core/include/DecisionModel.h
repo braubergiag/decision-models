@@ -21,6 +21,12 @@ public:
 private:
     std::string decisionName_;
     std::vector<std::string> criteriaNames_;
+public:
+    const vector<std::string> &criteriaNames() const;
+
+    const vector<std::string> &alternativesNames() const;
+
+private:
     std::vector<std::string> alternativesNames_;
 
     ahp_decision_method ahp;
