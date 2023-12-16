@@ -31,7 +31,7 @@
     <rect>
      <x>30</x>
      <y>60</y>
-     <width>341</width>
+     <width>356</width>
      <height>491</height>
     </rect>
    </property>
@@ -65,7 +65,7 @@
       <item>
        <widget class="QPushButton" name="addAlternative">
         <property name="text">
-         <string>PushButton</string>
+         <string>Добавить</string>
         </property>
        </widget>
       </item>
@@ -89,7 +89,7 @@
       <item>
        <widget class="QPushButton" name="addCriteria">
         <property name="text">
-         <string>PushButton</string>
+         <string>Добавить</string>
         </property>
        </widget>
       </item>

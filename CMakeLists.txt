@@ -22,6 +22,7 @@ set (PROJECT_SOURCES
         trunk/core/src/heuristic_decision_method.cpp
         trunk/core/src/tropical.cpp
         trunk/core/src/tropical_decision_method.cpp
+        trunk/core/src/DecisionModelsDB.cpp
         trunk/core/src/ui/StartMenu.cpp
         trunk/core/src/ui/DecisionModelDialog.cpp
         trunk/core/src/DecisionModel.cpp

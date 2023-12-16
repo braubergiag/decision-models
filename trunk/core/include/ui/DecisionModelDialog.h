@@ -31,6 +31,8 @@ public:
     const QString &decisionName() const;
 
 private:
+    const int kMinAlternativesCount{2};
+    const int kMinCriteriaCount{1};
     QVector<QString> alternativesNames_;
     QVector<QString> criteriaNames_;
     Ui::DecisionModelDialog *ui;
