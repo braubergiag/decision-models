@@ -1,13 +1,13 @@
 
 #include <QApplication>
 
-#include "../include/ui/start_menu.h"
+#include "../include/ui/StartMenu.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    start_menu startMenu;
+    StartMenu startMenu;
     startMenu.show();
 
     return a.exec();

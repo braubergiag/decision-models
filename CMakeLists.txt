@@ -22,13 +22,18 @@ set (PROJECT_SOURCES
         trunk/core/src/heuristic_decision_method.cpp
         trunk/core/src/tropical.cpp
         trunk/core/src/tropical_decision_method.cpp
-        trunk/core/src/ui/start_menu.cpp
+        trunk/core/src/ui/StartMenu.cpp
+        trunk/core/src/ui/DecisionModelDialog.cpp
         trunk/core/src/decision_model.cpp
         trunk/core/src/main.cpp
 
+        trunk/core/src/ui/StartMenu.ui
+        trunk/core/src/ui/DecisionModelDialog.ui
+
 )
 set (PROJECT_HEADERS
-        trunk/core/include/ui/start_menu.h
+        trunk/core/include/ui/StartMenu.h
+        trunk/core/include/ui/DecisionModelDialog.h
 )
 
 
@@ -37,7 +42,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
         ${PROJECT_HEADERS}
-        trunk/core/include/decision_model.h trunk/core/src/decision_model.cpp
+
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET TestDm APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
