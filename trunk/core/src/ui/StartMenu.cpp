@@ -31,7 +31,13 @@ void StartMenu::onCreateModelButtonClicked()
         for (auto crit : criteria) {
             dmodelPtr_->addCriteria(crit.toStdString());
         }
-        dmodelPtr_->set_decision_name(createModelDialog->decisionName().toStdString());
+        auto modelName = createModelDialog->decisionName();
+        if (! modelName.isEmpty()){
+            dmodelPtr_->setDecisionName(modelName.toStdString());
+            ui->modelsList->addItem(modelName);
+
+        }
+
     }
 
 }
