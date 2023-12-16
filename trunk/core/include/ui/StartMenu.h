@@ -3,7 +3,7 @@
 #include <QWidget>
 #include <QPushButton>
 #include "DecisionModelDialog.h"
-#include "../DecisionModel.h"
+#include "../DecisionModelsDB.h"
 #include <memory>
 QT_BEGIN_NAMESPACE
 namespace Ui { class StartMenu; }
@@ -21,7 +21,7 @@ private slots:
     void onCreateModelButtonClicked();
 
 private:
-    std::shared_ptr<DecisionModel> dmodelPtr_;
+    DecisionModelsDB modelsDb_;
     Ui::StartMenu *ui;
 };
 
