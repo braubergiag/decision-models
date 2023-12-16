@@ -26,7 +26,7 @@
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -46,7 +46,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit"/>
+       <widget class="QLineEdit" name="decisionNameLineEdit"/>
       </item>
      </layout>
     </item>
@@ -65,7 +65,7 @@
       <item>
        <widget class="QPushButton" name="addAlternative">
         <property name="text">
-         <string>Добавить</string>
+         <string>PushButton</string>
         </property>
        </widget>
       </item>
@@ -89,7 +89,7 @@
       <item>
        <widget class="QPushButton" name="addCriteria">
         <property name="text">
-         <string>Добавить</string>
+         <string>PushButton</string>
         </property>
        </widget>
       </item>

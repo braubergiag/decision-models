@@ -10,27 +10,28 @@ namespace Ui { class DecisionModelDialog; }
 QT_END_NAMESPACE
 
 class DecisionModelDialog : public QDialog {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit DecisionModelDialog(QWidget *parent = nullptr);
-
     ~DecisionModelDialog() override;
 
 private slots:
-    void on_addAlternative_clicked();
-
-    void on_addCriteria_clicked();
-
-    void on_buttonBox_accepted();
+    void onAddAlternativeButtonClicked();
+    void onAddCriteriaButtonClicked();
+    void onButtonBoxAccepted();
 
 public:
     const QVector<QString> &alternativesNames() const;
     const QVector<QString> &criteriaNames() const;
 
 private:
-    QVector<QString> alternativesNames_;
+    QString decisionName_;
+public:
+    const QString &decisionName() const;
 
+private:
+    QVector<QString> alternativesNames_;
     QVector<QString> criteriaNames_;
     Ui::DecisionModelDialog *ui;
 };

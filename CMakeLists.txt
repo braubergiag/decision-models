@@ -24,7 +24,7 @@ set (PROJECT_SOURCES
         trunk/core/src/tropical_decision_method.cpp
         trunk/core/src/ui/StartMenu.cpp
         trunk/core/src/ui/DecisionModelDialog.cpp
-        trunk/core/src/decision_model.cpp
+        trunk/core/src/DecisionModel.cpp
         trunk/core/src/main.cpp
 
         trunk/core/src/ui/StartMenu.ui
@@ -34,6 +34,7 @@ set (PROJECT_SOURCES
 set (PROJECT_HEADERS
         trunk/core/include/ui/StartMenu.h
         trunk/core/include/ui/DecisionModelDialog.h
+        trunk/core/include/DecisionModel.h
 )
 
 

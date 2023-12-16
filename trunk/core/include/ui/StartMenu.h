@@ -3,6 +3,8 @@
 #include <QWidget>
 #include <QPushButton>
 #include "DecisionModelDialog.h"
+#include "../DecisionModel.h"
+#include <memory>
 QT_BEGIN_NAMESPACE
 namespace Ui { class StartMenu; }
 QT_END_NAMESPACE
@@ -16,9 +18,10 @@ public:
     ~StartMenu() override;
 
 private slots:
-    void on_createModelButton_clicked();
+    void onCreateModelButtonClicked();
 
 private:
+    std::shared_ptr<DecisionModel> dmodel_ptr_;
     Ui::StartMenu *ui;
 };
 

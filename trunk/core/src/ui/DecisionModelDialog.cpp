@@ -1,21 +1,21 @@
 
 #include "../../include/ui/DecisionModelDialog.h"
 #include "ui_DecisionModelDialog.h"
-#include <QVBoxLayout>
-#include <QGridLayout>
-
+#include <QDebug>
 DecisionModelDialog::DecisionModelDialog(QWidget *parent) :
     QDialog(parent), ui(new Ui::DecisionModelDialog) {
     ui->setupUi(this);
 
-
+    connect(ui->addAlternative, &QPushButton::clicked,this, &DecisionModelDialog::onAddAlternativeButtonClicked);
+    connect(ui->addCriteria, &QPushButton::clicked,this, &DecisionModelDialog::onAddCriteriaButtonClicked);
+    connect(ui->buttonBox,&QDialogButtonBox::accepted,this,&DecisionModelDialog::onButtonBoxAccepted);
 }
 
 DecisionModelDialog::~DecisionModelDialog() {
     delete ui;
 }
 
-void DecisionModelDialog::on_addAlternative_clicked()
+void DecisionModelDialog::onAddAlternativeButtonClicked()
 {
     auto alternativeName = ui->alternativeLineEdit->text();
     if (! alternativeName.isEmpty()){
@@ -25,8 +25,7 @@ void DecisionModelDialog::on_addAlternative_clicked()
 
 }
 
-
-void DecisionModelDialog::on_addCriteria_clicked()
+void DecisionModelDialog::onAddCriteriaButtonClicked()
 {
     auto criteriaName = ui->criteriaLineEdit->text();
     if (! criteriaName.isEmpty()){
@@ -34,8 +33,6 @@ void DecisionModelDialog::on_addCriteria_clicked()
         ui->criteriaLineEdit->clear();
     }
 }
-
-
 const QVector<QString> &DecisionModelDialog::alternativesNames() const {
     return alternativesNames_;
 }
@@ -46,9 +43,11 @@ const QVector<QString> &DecisionModelDialog::criteriaNames() const {
 
 
 
+const QString &DecisionModelDialog::decisionName() const {
+    return decisionName_;
+}
 
-
-void DecisionModelDialog::on_buttonBox_accepted()
+void DecisionModelDialog::onButtonBoxAccepted()
 {
     for (int i = 0; i < ui->alternativesList->count(); ++i) {
         alternativesNames_.append(ui->alternativesList->item(i)->text());
@@ -56,8 +55,7 @@ void DecisionModelDialog::on_buttonBox_accepted()
     for (int i = 0; i < ui->criteriaList->count(); ++i) {
         criteriaNames_.append(ui->criteriaList->item(i)->text());
     }
-
-    qDebug() << "Accepted";
+    decisionName_ = ui->decisionNameLineEdit->text();
     accept();
 }
 
