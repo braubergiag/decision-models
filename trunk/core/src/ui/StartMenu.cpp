@@ -2,6 +2,7 @@
 #include "ui_StartMenu.h"
 #include <QVBoxLayout>
 #include <QDebug>
+#include <QMessageBox>
 #if 0
 static int current_count(){
     static int count = 0;
@@ -14,6 +15,8 @@ StartMenu::StartMenu(QWidget *parent) :
     ui->setupUi(this);
     connect(ui->createModelButton,&QPushButton::clicked,this,&StartMenu::onCreateModelButtonClicked);
     connect(ui->modelsList,&QListWidget::currentRowChanged,this, &StartMenu::onModelListUpdate);
+    connect(ui->deleteModelButton,&QPushButton::clicked,this,&StartMenu::onDeleteModelButtonClicked);
+
     ui->compareAlternativesButton->setEnabled(false);
     ui->compareCriteriaButton->setEnabled(false);
 
@@ -51,7 +54,26 @@ void StartMenu::onCreateModelButtonClicked()
     }
 }
 
+void StartMenu::onDeleteModelButtonClicked() {
+    auto modelNameIndex = ui->modelsList->currentRow();
+    if (modelNameIndex < 0) {
+        QMessageBox::information(this,"Модели","В вашем списке пока нет моделей");
+        return;
+    }
+    auto modelName = ui->modelsList->currentItem()->text().toStdString();
+    if (modelsDb_.count(modelName)) {
+        ui->alternativesList->clear();
+        ui->criteriaList->clear();
+
+        auto item = ui->modelsList->takeItem(modelNameIndex);
+        delete item;
+        modelsDb_.deleteModel(modelName);
+    }
+}
+
 void StartMenu::onModelListUpdate() {
+    if (!ui->modelsList->count() > 0 || !ui->modelsList->currentItem())
+        return;
     ui->alternativesList->clear();
     ui->criteriaList->clear();
 

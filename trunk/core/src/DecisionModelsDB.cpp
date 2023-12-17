@@ -15,3 +15,10 @@ bool DecisionModelsDB::count(const string &modelName) const {
 const DecisionModel &DecisionModelsDB::model(const string &modelName) const {
     return modelsDb_.at(modelName);
 }
+
+void DecisionModelsDB::deleteModel(const string &modelName) {
+    if (modelsDb_.count(modelName))
+        modelsDb_.erase(modelName);
+
+}
+

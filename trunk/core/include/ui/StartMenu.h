@@ -19,6 +19,7 @@ public:
 
 private slots:
     void onCreateModelButtonClicked();
+    void onDeleteModelButtonClicked();
     void onModelListUpdate();
 private:
     DecisionModelsDB modelsDb_;
