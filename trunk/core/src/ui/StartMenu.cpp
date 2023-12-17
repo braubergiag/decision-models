@@ -3,6 +3,7 @@
 #include <QVBoxLayout>
 #include <QDebug>
 #include <QMessageBox>
+#include <QVector>
 #if 0
 static int current_count(){
     static int count = 0;
@@ -28,7 +29,7 @@ StartMenu::~StartMenu() {
 
 void StartMenu::onCreateModelButtonClicked()
 {
-    auto createModelDialog = new DecisionModelDialog(this);
+    auto createModelDialog = new DecisionModelDialog(modelsDb_, this);
     auto res = createModelDialog->exec();
     if (res == QDialog::Accepted){
         qDebug() << "Accepted DecisionModelDialog";

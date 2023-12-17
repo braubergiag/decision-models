@@ -3,6 +3,7 @@
 #include <string>
 #include "DecisionModel.h"
 class DecisionModelsDB {
+
 public:
     void addModel(const std::string& modelName, const DecisionModel & decisionModel);
     void deleteModel(const std::string& modelName);
@@ -11,8 +12,8 @@ public:
     const DecisionModel& model(const std::string & modelName) const;
 
 private:
-    using model_name = std::string;
-    std::map<model_name,DecisionModel> modelsDb_;
+    using ModelName = std::string;
+    std::map<ModelName,DecisionModel> modelsDb_;
 };
 
 

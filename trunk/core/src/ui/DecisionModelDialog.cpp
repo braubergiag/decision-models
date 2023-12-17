@@ -3,8 +3,8 @@
 #include "ui_DecisionModelDialog.h"
 #include <QDebug>
 #include <QMessageBox>
-DecisionModelDialog::DecisionModelDialog(QWidget *parent) :
-    QDialog(parent), ui(new Ui::DecisionModelDialog) {
+DecisionModelDialog::DecisionModelDialog(const DecisionModelsDB &modelsDb, QWidget *parent) :
+    QDialog(parent), ui(new Ui::DecisionModelDialog), modelsDb_(modelsDb) {
     ui->setupUi(this);
 
     connect(ui->addAlternative, &QPushButton::clicked,this, &DecisionModelDialog::onAddAlternativeButtonClicked);
@@ -64,9 +64,13 @@ void DecisionModelDialog::onButtonBoxAccepted()
 {
     decisionName_ = ui->decisionNameLineEdit->text();
     if (decisionName_.isEmpty()){
-        QMessageBox::information(this,"Название модели не задано","Пожалуйста, укажите название модели");
+        QMessageBox::information(this,"Название модели","Пожалуйста, укажите название модели");
+        return;
+    } else if (modelsDb_.count(decisionName_.toStdString()) > 0) {
+        QMessageBox::information(this,"Название модели","Модель с данным названием уже существует");
         return;
     }
+
     auto alternativesCount = ui->alternativesList->count();
     if (alternativesCount < kMinAlternativesCount) {
         QMessageBox::information(this,"Альтернатив недостаточно",

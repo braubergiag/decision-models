@@ -5,6 +5,7 @@
 #include <QLabel>
 #include <QVector>
 #include <QString>
+#include "../DecisionModelsDB.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class DecisionModelDialog; }
 QT_END_NAMESPACE
@@ -13,7 +14,7 @@ class DecisionModelDialog : public QDialog {
     Q_OBJECT
 
 public:
-    explicit DecisionModelDialog(QWidget *parent = nullptr);
+    explicit DecisionModelDialog(const DecisionModelsDB &modelsDb, QWidget *parent = nullptr);
     ~DecisionModelDialog() override;
 
 private slots:
@@ -33,8 +34,10 @@ public:
 private:
     const int kMinAlternativesCount{2};
     const int kMinCriteriaCount{1};
+    const DecisionModelsDB & modelsDb_;
     QVector<QString> alternativesNames_;
     QVector<QString> criteriaNames_;
+    QVector<QString> existingModelNames_;
     Ui::DecisionModelDialog *ui;
 };
 
