@@ -2,13 +2,18 @@
 #include "ui_StartMenu.h"
 #include <QVBoxLayout>
 #include <QDebug>
+#if 0
+static int current_count(){
+    static int count = 0;
+    return ++count;
+}
+#endif
 
 StartMenu::StartMenu(QWidget *parent) :
         QWidget(parent), ui(new Ui::StartMenu){
     ui->setupUi(this);
     connect(ui->createModelButton,&QPushButton::clicked,this,&StartMenu::onCreateModelButtonClicked);
-    connect(this,&StartMenu::modelListUpdate,this,&StartMenu::onModelListUpdate);
-
+    connect(ui->modelsList,&QListWidget::currentRowChanged,this, &StartMenu::onModelListUpdate);
     ui->compareAlternativesButton->setEnabled(false);
     ui->compareCriteriaButton->setEnabled(false);
 
@@ -24,15 +29,15 @@ void StartMenu::onCreateModelButtonClicked()
     auto res = createModelDialog->exec();
     if (res == QDialog::Accepted){
         qDebug() << "Accepted DecisionModelDialog";
-        auto alternatives = createModelDialog->alternativesNames();
-        auto criteria = createModelDialog->criteriaNames();
+        auto alternativesNames = createModelDialog->alternativesNames();
+        auto criteriaNames = createModelDialog->criteriaNames();
 
         DecisionModel decisionModel;
-        for (auto alt : alternatives) {
-            decisionModel.addAlternative(alt.toStdString());
+        for (const auto& alternativeName : alternativesNames) {
+            decisionModel.addAlternative(alternativeName.toStdString());
         }
-        for (auto crit : criteria) {
-            decisionModel.addCriteria(crit.toStdString());
+        for (const auto& criterionName : criteriaNames) {
+            decisionModel.addCriteria(criterionName.toStdString());
         }
         auto modelName = createModelDialog->decisionName();
         if (! modelName.isEmpty()){
@@ -41,37 +46,26 @@ void StartMenu::onCreateModelButtonClicked()
 
         }
         modelsDb_.addModel(decisionModel.decisionName(), decisionModel);
-        emit modelListUpdate();
-
+        auto currentModelIndex = ui->modelsList->count() - 1;
+        ui->modelsList->setCurrentRow(currentModelIndex);
     }
-
-
 }
 
 void StartMenu::onModelListUpdate() {
+    ui->alternativesList->clear();
+    ui->criteriaList->clear();
 
-    if (modelsDb_.size() > 0) {
-        auto currentModelIndex = ui->modelsList->count() - 1;
-        ui->modelsList->setCurrentRow(currentModelIndex);
+    auto modelName = ui->modelsList->currentItem()->text().toStdString();
+    if (modelsDb_.count(modelName)){
+        auto model = modelsDb_.model(modelName);
 
-        auto modelName = ui->modelsList->currentItem()->text().toStdString();
-        if (modelsDb_.count(modelName)){
-            auto model = modelsDb_.model(modelName);
+        for (auto& alternativeName : model.alternativesNames())
+            ui->alternativesList->addItem(QString::fromStdString(alternativeName));
+        for (auto& criterionName : model.criteriaNames())
+            ui->criteriaList->addItem(QString::fromStdString(criterionName));
 
-            for (const auto& alt : model.alternativesNames())
-                ui->alternativesList->addItem(QString::fromStdString(alt));
-            for (const auto& crit : model.criteriaNames())
-                ui->criteriaList->addItem(QString::fromStdString(crit));
-
-
-
-            ui->compareCriteriaButton->setEnabled(true);
-            ui->compareAlternativesButton->setEnabled(true);
-        }
-
-
-
-
+        ui->compareCriteriaButton->setEnabled(true);
+        ui->compareAlternativesButton->setEnabled(true);
     }
 
 }
