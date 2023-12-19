@@ -24,3 +24,11 @@ const vector<std::string> &DecisionModel::criteriaNames() const {
 const vector<std::string> &DecisionModel::alternativesNames() const {
     return alternativesNames_;
 }
+
+void DecisionModel::setCriteriaNames(const vector<std::string> &criteriaNames) {
+    criteriaNames_ = criteriaNames;
+}
+
+void DecisionModel::setAlternativesNames(const vector<std::string> &alternativesNames) {
+    alternativesNames_ = alternativesNames;
+}

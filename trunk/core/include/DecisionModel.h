@@ -14,6 +14,8 @@ public:
     void addCriteria(const std::string &criteria);
 public:
     void setDecisionName(const string &decisionName);
+    void setCriteriaNames(const vector<std::string> &criteriaNames);
+    void setAlternativesNames(const vector<std::string> &alternativesNames);
 public:
     const string &decisionName() const;
     const vector<std::string> &criteriaNames() const;

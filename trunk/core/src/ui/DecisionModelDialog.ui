@@ -46,7 +46,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="decisionNameLineEdit"/>
+       <widget class="QLineEdit" name="modelNameLineEdit"/>
       </item>
      </layout>
     </item>

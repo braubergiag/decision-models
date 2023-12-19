@@ -4,26 +4,22 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QVector>
-#if 0
-static int current_count(){
-    static int count = 0;
-    return ++count;
-}
-#endif
 
 StartMenu::StartMenu(QWidget *parent) :
         QWidget(parent), ui(new Ui::StartMenu){
     ui->setupUi(this);
     connect(ui->createModelButton,&QPushButton::clicked,this,&StartMenu::onCreateModelButtonClicked);
     connect(ui->modelsList,&QListWidget::currentRowChanged,this, &StartMenu::onModelListUpdate);
+    connect(this,&StartMenu::modelUpdated,this, &StartMenu::onModelListUpdate);
     connect(ui->deleteModelButton,&QPushButton::clicked,this,&StartMenu::onDeleteModelButtonClicked);
+    connect(ui->editModelButton,&QPushButton::clicked,this,&StartMenu::onEditModelButtonClicked);
 
     ui->compareAlternativesButton->setEnabled(false);
     ui->compareCriteriaButton->setEnabled(false);
-
     ui->deleteModelButton->setEnabled(false);
-    ui->compareAlternativesButton->setEnabled(ui->alternativesList->count() > 0);
-    ui->compareCriteriaButton->setEnabled(ui->criteriaList->count() > 0);
+    ui->editModelButton->setEnabled(false);
+    ui->compareAlternativesButton->setEnabled(false);
+    ui->compareCriteriaButton->setEnabled(false);
 }
 
 StartMenu::~StartMenu() {
@@ -35,27 +31,9 @@ void StartMenu::onCreateModelButtonClicked()
     auto createModelDialog = new DecisionModelDialog(modelsDb_, this);
     auto res = createModelDialog->exec();
     if (res == QDialog::Accepted){
-        qDebug() << "Accepted DecisionModelDialog";
-        auto alternativesNames = createModelDialog->alternativesNames();
-        auto criteriaNames = createModelDialog->criteriaNames();
-
-        DecisionModel decisionModel;
-        for (const auto& alternativeName : alternativesNames) {
-            decisionModel.addAlternative(alternativeName.toStdString());
-        }
-        for (const auto& criterionName : criteriaNames) {
-            decisionModel.addCriteria(criterionName.toStdString());
-        }
-        auto modelName = createModelDialog->decisionName();
-        if (! modelName.isEmpty()){
-            decisionModel.setDecisionName(modelName.toStdString());
-            ui->modelsList->addItem(modelName);
-
-        }
-        modelsDb_.addModel(decisionModel.decisionName(), decisionModel);
-        auto currentModelIndex = ui->modelsList->count() - 1;
-        ui->modelsList->setCurrentRow(currentModelIndex);
+        emit onDecisionModelDialogAccepted(createModelDialog);
     }
+
 }
 
 void StartMenu::onDeleteModelButtonClicked() {
@@ -76,6 +54,7 @@ void StartMenu::onDeleteModelButtonClicked() {
     ui->compareAlternativesButton->setEnabled(ui->alternativesList->count() > 0);
     ui->compareCriteriaButton->setEnabled(ui->criteriaList->count() > 0);
     ui->deleteModelButton->setEnabled(modelsDb_.size() > 0);
+    ui->editModelButton->setEnabled(modelsDb_.size() > 0);
 
 
 }
@@ -98,9 +77,62 @@ void StartMenu::onModelListUpdate() {
         ui->compareCriteriaButton->setEnabled(true);
         ui->compareAlternativesButton->setEnabled(true);
         ui->deleteModelButton->setEnabled(true);
+        ui->editModelButton->setEnabled(true);
     }
 
 
 }
 
+void StartMenu::onEditModelButtonClicked() {
+    auto modelNameIndex = ui->modelsList->currentRow();
+    if (modelNameIndex < 0) {
+        QMessageBox::information(this, "Модели", "В вашем списке пока нет моделей");
+        return;
+    }
+    auto modelName = ui->modelsList->currentItem()->text().toStdString();
+    if (modelsDb_.count(modelName)) {
+        auto createModelDialog = new DecisionModelDialog(modelsDb_, modelName,this);
+        auto res = createModelDialog->exec();
+        if (res == QDialog::Accepted){
+            emit onDecisionModelDialogAccepted(createModelDialog, modelName);
+        }
+
+    }
+
+}
+
+void StartMenu::onDecisionModelDialogAccepted(const DecisionModelDialog *createModelDialog,
+                                              const std::string &oldModelName) {
+        qDebug() << "Accepted DecisionModelDialog";
+        DecisionModel decisionModel;
+        auto modelName = createModelDialog->modelName();
+        decisionModel.setDecisionName(modelName.toStdString());
+
+        auto alternativesNames = createModelDialog->alternativesNames();
+        auto criteriaNames = createModelDialog->criteriaNames();
+
+        for (const auto& alternativeName : alternativesNames) {
+            decisionModel.addAlternative(alternativeName.toStdString());
+        }
+        for (const auto& criterionName : criteriaNames) {
+            decisionModel.addCriteria(criterionName.toStdString());
+        }
+#if 0
+        if (modelName.toStdString() != oldModelName){
+            modelsDb_.deleteModel(oldModelName);
+
+            auto modelNameIndex = ui->modelsList->currentRow();
+            auto item = ui->modelsList->takeItem(modelNameIndex);
+            delete item;
+            ui->modelsList->insertItem(modelNameIndex,modelName);
+
+        }
+#endif
+        if (oldModelName.empty())
+                ui->modelsList->addItem(modelName);
+        modelsDb_.addOrUpdateModel(decisionModel.decisionName(), decisionModel);
+        auto currentModelIndex = ui->modelsList->count() - 1;
+        ui->modelsList->setCurrentRow(currentModelIndex);
+        emit modelUpdated();
+}
 

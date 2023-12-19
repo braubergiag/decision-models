@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Модели принятия решений</string>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>330</x>
@@ -62,9 +62,9 @@
   <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>10</y>
-     <width>241</width>
+     <x>41</x>
+     <y>11</y>
+     <width>261</width>
      <height>421</height>
     </rect>
    </property>
@@ -80,16 +80,27 @@
      <widget class="QListWidget" name="modelsList"/>
     </item>
     <item>
-     <widget class="QPushButton" name="createModelButton">
-      <property name="text">
-       <string>Создать</string>
-      </property>
-     </widget>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QPushButton" name="createModelButton">
+        <property name="text">
+         <string>Создать</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="deleteModelButton">
+        <property name="text">
+         <string>Удалить</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
     <item>
-     <widget class="QPushButton" name="deleteModelButton">
+     <widget class="QPushButton" name="editModelButton">
       <property name="text">
-       <string>Удалить</string>
+       <string>Редактировать</string>
       </property>
      </widget>
     </item>

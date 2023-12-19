@@ -4,8 +4,31 @@
 #include <QDebug>
 #include <QMessageBox>
 DecisionModelDialog::DecisionModelDialog(const DecisionModelsDB &modelsDb, QWidget *parent) :
-    QDialog(parent), ui(new Ui::DecisionModelDialog), modelsDb_(modelsDb) {
+        QDialog(parent),
+        modelsDb_(modelsDb),
+        ui(new Ui::DecisionModelDialog) {
     ui->setupUi(this);
+
+    initSignalAndSlots();
+    editMode_ = false;
+}
+
+DecisionModelDialog::DecisionModelDialog(const DecisionModelsDB &modelsDb, const string &modelName, QWidget *parent) :
+        QDialog(parent),
+        modelsDb_(modelsDb),
+        modelName_(QString::fromStdString(modelName)),
+        ui(new Ui::DecisionModelDialog) {
+
+    ui->setupUi(this);
+
+    initSignalAndSlots();
+    ui->modelNameLineEdit->setText(modelName_);
+    setAlternativesListWidget(modelsDb_);
+    setCriteriaListWidget(modelsDb_);
+    editMode_ = true;
+}
+
+void DecisionModelDialog::initSignalAndSlots() {
 
     connect(ui->addAlternative, &QPushButton::clicked,this, &DecisionModelDialog::onAddAlternativeButtonClicked);
     connect(ui->addCriteria, &QPushButton::clicked,this, &DecisionModelDialog::onAddCriteriaButtonClicked);
@@ -16,7 +39,6 @@ DecisionModelDialog::DecisionModelDialog(const DecisionModelsDB &modelsDb, QWidg
 DecisionModelDialog::~DecisionModelDialog() {
     delete ui;
 }
-
 void DecisionModelDialog::onAddAlternativeButtonClicked()
 {
     auto alternativeName = ui->alternativeLineEdit->text();
@@ -47,6 +69,9 @@ void DecisionModelDialog::onAddCriteriaButtonClicked()
     ui->criteriaLineEdit->clear();
 
 }
+
+
+
 const QVector<QString> &DecisionModelDialog::alternativesNames() const {
     return alternativesNames_;
 }
@@ -55,19 +80,17 @@ const QVector<QString> &DecisionModelDialog::criteriaNames() const {
     return criteriaNames_;
 }
 
-
-
-const QString &DecisionModelDialog::decisionName() const {
-    return decisionName_;
+const QString &DecisionModelDialog::modelName() const {
+    return modelName_;
 }
 
 void DecisionModelDialog::onButtonBoxAccepted()
 {
-    decisionName_ = ui->decisionNameLineEdit->text();
-    if (decisionName_.isEmpty()){
+    modelName_ = ui->modelNameLineEdit->text();
+    if (modelName_.isEmpty()){
         QMessageBox::information(this,"Название модели","Пожалуйста, укажите название модели");
         return;
-    } else if (modelsDb_.count(decisionName_.toStdString()) > 0) {
+    } else if (!editMode_ && modelsDb_.count(modelName_.toStdString()) > 0) {
         QMessageBox::information(this,"Название модели","Модель с данным названием уже существует");
         return;
     }
@@ -96,5 +119,26 @@ void DecisionModelDialog::onButtonBoxAccepted()
 
 void DecisionModelDialog::onButtonBoxRejected() {
     reject();
+}
+
+void DecisionModelDialog::setAlternativesListWidget(const DecisionModelsDB &modelsDb) {
+    auto  modelNameStd = modelName_.toStdString();
+    if (modelsDb.count(modelNameStd)) {
+        auto & model = modelsDb_.model(modelNameStd);
+        for (const auto & alternativeName : model.alternativesNames()) {
+            ui->alternativesList->addItem(QString::fromStdString(alternativeName));
+        }
+    }
+
+}
+
+void DecisionModelDialog::setCriteriaListWidget(const DecisionModelsDB &modelsDb) {
+    auto  modelNameStd = modelName_.toStdString();
+    if (modelsDb.count(modelNameStd)) {
+        auto & model = modelsDb_.model(modelNameStd);
+        for (const auto & criterionName : model.criteriaNames()) {
+            ui->criteriaList->addItem(QString::fromStdString(criterionName));
+        }
+    }
 }
 

@@ -5,7 +5,7 @@
 class DecisionModelsDB {
 
 public:
-    void addModel(const std::string& modelName, const DecisionModel & decisionModel);
+    void addOrUpdateModel(const std::string &modelName, const DecisionModel & decisionModel);
     void deleteModel(const std::string& modelName);
     size_t size() const;
     bool count(const std::string & modelName) const;

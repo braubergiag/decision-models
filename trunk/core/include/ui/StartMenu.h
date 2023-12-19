@@ -16,10 +16,16 @@ public:
     explicit StartMenu(QWidget *parent = nullptr);
 
     ~StartMenu() override;
+signals:
+    void decisionModelDialogAccepted();
+    void modelUpdated();
+
 
 private slots:
     void onCreateModelButtonClicked();
     void onDeleteModelButtonClicked();
+    void onEditModelButtonClicked();
+    void onDecisionModelDialogAccepted(const DecisionModelDialog *createModelDialog, const std::string &oldModelName = {});
     void onModelListUpdate();
 private:
     DecisionModelsDB modelsDb_;
