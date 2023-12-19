@@ -37,9 +37,13 @@ void StartMenu::onCreateModelButtonClicked()
 }
 
 void StartMenu::onDeleteModelButtonClicked() {
-    auto modelNameIndex = ui->modelsList->currentRow();
-    if (modelNameIndex < 0) {
+    auto modelNameRowIndex = ui->modelsList->currentRow();
+    if (ui->modelsList->count() == 0){
         QMessageBox::information(this,"Модели","В вашем списке пока нет моделей");
+        return;
+    }
+    if (modelNameRowIndex < 0) {
+        QMessageBox::information(this,"Модели","Выберите модель для удаления");
         return;
     }
     auto modelName = ui->modelsList->currentItem()->text().toStdString();
@@ -47,7 +51,7 @@ void StartMenu::onDeleteModelButtonClicked() {
         ui->alternativesList->clear();
         ui->criteriaList->clear();
 
-        auto item = ui->modelsList->takeItem(modelNameIndex);
+        auto item = ui->modelsList->takeItem(modelNameRowIndex);
         modelsDb_.deleteModel(modelName);
         delete item;
     }
@@ -56,6 +60,28 @@ void StartMenu::onDeleteModelButtonClicked() {
     ui->deleteModelButton->setEnabled(modelsDb_.size() > 0);
     ui->editModelButton->setEnabled(modelsDb_.size() > 0);
 
+
+}
+
+void StartMenu::onEditModelButtonClicked() {
+    auto modelNameRowIndex = ui->modelsList->currentRow();
+    if (ui->modelsList->count() == 0){
+        QMessageBox::information(this, "Модели", "В вашем списке пока нет моделей");
+        return;
+    }
+    else if (modelNameRowIndex < 0) {
+        QMessageBox::information(this, "Модели", "Выберите модель для редактирования");
+        return;
+    }
+    auto modelName = ui->modelsList->currentItem()->text().toStdString();
+    if (modelsDb_.count(modelName)) {
+        auto createModelDialog = new DecisionModelDialog(modelsDb_, modelName,this);
+        auto res = createModelDialog->exec();
+        if (res == QDialog::Accepted){
+            emit onDecisionModelDialogAccepted(createModelDialog, modelName);
+        }
+
+    }
 
 }
 
@@ -83,24 +109,6 @@ void StartMenu::onModelListUpdate() {
 
 }
 
-void StartMenu::onEditModelButtonClicked() {
-    auto modelNameIndex = ui->modelsList->currentRow();
-    if (modelNameIndex < 0) {
-        QMessageBox::information(this, "Модели", "В вашем списке пока нет моделей");
-        return;
-    }
-    auto modelName = ui->modelsList->currentItem()->text().toStdString();
-    if (modelsDb_.count(modelName)) {
-        auto createModelDialog = new DecisionModelDialog(modelsDb_, modelName,this);
-        auto res = createModelDialog->exec();
-        if (res == QDialog::Accepted){
-            emit onDecisionModelDialogAccepted(createModelDialog, modelName);
-        }
-
-    }
-
-}
-
 void StartMenu::onDecisionModelDialogAccepted(const DecisionModelDialog *createModelDialog,
                                               const std::string &oldModelName) {
         qDebug() << "Accepted DecisionModelDialog";
@@ -117,22 +125,21 @@ void StartMenu::onDecisionModelDialogAccepted(const DecisionModelDialog *createM
         for (const auto& criterionName : criteriaNames) {
             decisionModel.addCriteria(criterionName.toStdString());
         }
-#if 0
-        if (modelName.toStdString() != oldModelName){
+         modelsDb_.addOrUpdateModel(decisionModel.decisionName(), decisionModel);
+
+        if (!oldModelName.empty() && oldModelName != modelName.toStdString()){
             modelsDb_.deleteModel(oldModelName);
 
             auto modelNameIndex = ui->modelsList->currentRow();
             auto item = ui->modelsList->takeItem(modelNameIndex);
             delete item;
             ui->modelsList->insertItem(modelNameIndex,modelName);
+            emit modelUpdated();
+        } else {
+            ui->modelsList->addItem(modelName);
+            auto currentModelIndex = ui->modelsList->count() - 1;
+            ui->modelsList->setCurrentRow(currentModelIndex);
 
         }
-#endif
-        if (oldModelName.empty())
-                ui->modelsList->addItem(modelName);
-        modelsDb_.addOrUpdateModel(decisionModel.decisionName(), decisionModel);
-        auto currentModelIndex = ui->modelsList->count() - 1;
-        ui->modelsList->setCurrentRow(currentModelIndex);
-        emit modelUpdated();
 }
 
