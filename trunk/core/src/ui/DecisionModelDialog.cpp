@@ -10,6 +10,7 @@ DecisionModelDialog::DecisionModelDialog(const DecisionModelsDB &modelsDb, QWidg
     connect(ui->addAlternative, &QPushButton::clicked,this, &DecisionModelDialog::onAddAlternativeButtonClicked);
     connect(ui->addCriteria, &QPushButton::clicked,this, &DecisionModelDialog::onAddCriteriaButtonClicked);
     connect(ui->buttonBox,&QDialogButtonBox::accepted,this,&DecisionModelDialog::onButtonBoxAccepted);
+    connect(ui->buttonBox,&QDialogButtonBox::rejected,this,&DecisionModelDialog::onButtonBoxRejected);
 }
 
 DecisionModelDialog::~DecisionModelDialog() {
@@ -91,5 +92,9 @@ void DecisionModelDialog::onButtonBoxAccepted()
         criteriaNames_.append(ui->criteriaList->item(i)->text());
     }
     accept();
+}
+
+void DecisionModelDialog::onButtonBoxRejected() {
+    reject();
 }
 

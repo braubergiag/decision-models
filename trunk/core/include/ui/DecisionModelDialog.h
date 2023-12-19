@@ -21,6 +21,7 @@ private slots:
     void onAddAlternativeButtonClicked();
     void onAddCriteriaButtonClicked();
     void onButtonBoxAccepted();
+    void onButtonBoxRejected();
 
 public:
     const QVector<QString> &alternativesNames() const;
