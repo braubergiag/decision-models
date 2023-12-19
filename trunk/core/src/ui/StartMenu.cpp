@@ -21,6 +21,7 @@ StartMenu::StartMenu(QWidget *parent) :
     ui->compareAlternativesButton->setEnabled(false);
     ui->compareCriteriaButton->setEnabled(false);
 
+    ui->deleteModelButton->setEnabled(false);
 }
 
 StartMenu::~StartMenu() {
@@ -67,9 +68,12 @@ void StartMenu::onDeleteModelButtonClicked() {
         ui->criteriaList->clear();
 
         auto item = ui->modelsList->takeItem(modelNameIndex);
-        delete item;
         modelsDb_.deleteModel(modelName);
+        delete item;
     }
+    ui->deleteModelButton->setEnabled(modelsDb_.size() > 0);
+
+
 }
 
 void StartMenu::onModelListUpdate() {
@@ -89,7 +93,9 @@ void StartMenu::onModelListUpdate() {
 
         ui->compareCriteriaButton->setEnabled(true);
         ui->compareAlternativesButton->setEnabled(true);
+        ui->deleteModelButton->setEnabled(true);
     }
+
 
 }
 
