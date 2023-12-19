@@ -20,6 +20,9 @@ public:
 private slots:
     void onAddAlternativeButtonClicked();
     void onAddCriteriaButtonClicked();
+    void onDeleteAlternativeButtonClicked();
+    void onDeleteCriterionButtonClicked();
+
     void onButtonBoxAccepted();
     void onButtonBoxRejected();
 

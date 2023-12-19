@@ -1,8 +1,8 @@
-
-#include "../../include/ui/DecisionModelDialog.h"
 #include "ui_DecisionModelDialog.h"
 #include <QDebug>
 #include <QMessageBox>
+#include "../../include/ui/DecisionModelDialog.h"
+
 DecisionModelDialog::DecisionModelDialog(const DecisionModelsDB &modelsDb, QWidget *parent) :
         QDialog(parent),
         modelsDb_(modelsDb),
@@ -34,6 +34,8 @@ void DecisionModelDialog::initSignalAndSlots() {
     connect(ui->addCriteria, &QPushButton::clicked,this, &DecisionModelDialog::onAddCriteriaButtonClicked);
     connect(ui->buttonBox,&QDialogButtonBox::accepted,this,&DecisionModelDialog::onButtonBoxAccepted);
     connect(ui->buttonBox,&QDialogButtonBox::rejected,this,&DecisionModelDialog::onButtonBoxRejected);
+    connect(ui->deleteAlternative,&QPushButton::clicked,this,&DecisionModelDialog::onDeleteAlternativeButtonClicked);
+    connect(ui->deleteCriteria,&QPushButton::clicked,this,&DecisionModelDialog::onDeleteCriterionButtonClicked);
 }
 
 DecisionModelDialog::~DecisionModelDialog() {
@@ -70,20 +72,6 @@ void DecisionModelDialog::onAddCriteriaButtonClicked()
 
 }
 
-
-
-const QVector<QString> &DecisionModelDialog::alternativesNames() const {
-    return alternativesNames_;
-}
-
-const QVector<QString> &DecisionModelDialog::criteriaNames() const {
-    return criteriaNames_;
-}
-
-const QString &DecisionModelDialog::modelName() const {
-    return modelName_;
-}
-
 void DecisionModelDialog::onButtonBoxAccepted()
 {
     modelName_ = ui->modelNameLineEdit->text();
@@ -117,9 +105,6 @@ void DecisionModelDialog::onButtonBoxAccepted()
     accept();
 }
 
-void DecisionModelDialog::onButtonBoxRejected() {
-    reject();
-}
 
 void DecisionModelDialog::setAlternativesListWidget(const DecisionModelsDB &modelsDb) {
     auto  modelNameStd = modelName_.toStdString();
@@ -142,3 +127,47 @@ void DecisionModelDialog::setCriteriaListWidget(const DecisionModelsDB &modelsDb
     }
 }
 
+void DecisionModelDialog::onDeleteAlternativeButtonClicked() {
+    auto alternativeNameRowIndex = ui->alternativesList->currentRow();
+    if (ui->alternativesList->count() == 0) {
+        QMessageBox::information(this,"Альтернативы","В вашем списке нет альтернатив");
+        return;
+    } else if (alternativeNameRowIndex < 0) {
+        QMessageBox::information(this,"Альтернативы","Выберите альтернативу для удаления");
+        return;
+    }
+    auto item = ui->alternativesList->takeItem(alternativeNameRowIndex);
+    delete item;
+
+}
+
+void DecisionModelDialog::onDeleteCriterionButtonClicked() {
+    auto criterionNameRowIndex = ui->criteriaList->currentRow();
+    if (ui->criteriaList->count() == 0) {
+        QMessageBox::information(this,"Критерии","В вашем списке нет критериев");
+        return;
+    } else if (criterionNameRowIndex < 0){
+        QMessageBox::information(this,"Критерии","Выберите критерий для удаления");
+        return;
+    }
+    auto item = ui->criteriaList->takeItem(criterionNameRowIndex);
+    delete item;
+}
+
+void DecisionModelDialog::onButtonBoxRejected() {
+    reject();
+}
+
+
+
+const QVector<QString> &DecisionModelDialog::alternativesNames() const {
+    return alternativesNames_;
+}
+
+const QVector<QString> &DecisionModelDialog::criteriaNames() const {
+    return criteriaNames_;
+}
+
+const QString &DecisionModelDialog::modelName() const {
+    return modelName_;
+}

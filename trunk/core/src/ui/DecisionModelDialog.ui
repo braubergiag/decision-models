@@ -6,33 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>417</width>
-    <height>612</height>
+    <width>472</width>
+    <height>669</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>DecisionModelDialog</string>
   </property>
-  <widget class="QDialogButtonBox" name="buttonBox">
+  <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>110</x>
-     <y>570</y>
-     <width>166</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="standardButtons">
-    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-   </property>
-  </widget>
-  <widget class="QWidget" name="layoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>60</y>
-     <width>356</width>
-     <height>491</height>
+     <x>31</x>
+     <y>61</y>
+     <width>427</width>
+     <height>522</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -69,6 +56,13 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QPushButton" name="deleteAlternative">
+        <property name="text">
+         <string>Удалить</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </item>
     <item>
@@ -93,10 +87,24 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QPushButton" name="deleteCriteria">
+        <property name="text">
+         <string>Удалить</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </item>
     <item>
      <widget class="QListWidget" name="criteriaList"/>
+    </item>
+    <item>
+     <widget class="QDialogButtonBox" name="buttonBox">
+      <property name="standardButtons">
+       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
