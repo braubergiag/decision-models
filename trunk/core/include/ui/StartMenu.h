@@ -3,6 +3,8 @@
 #include <QWidget>
 #include <QPushButton>
 #include "DecisionModelDialog.h"
+#include "CompareAlternativesDialog.h"
+#include "CompareCriteriaDialog.h"
 #include "../DecisionModelsDB.h"
 #include <memory>
 QT_BEGIN_NAMESPACE
@@ -25,6 +27,8 @@ private slots:
     void onCreateModelButtonClicked();
     void onDeleteModelButtonClicked();
     void onEditModelButtonClicked();
+    void onCompareAlternativesButtonClicked();
+    void onCompareCriteriaButtonClicked();
     void onDecisionModelDialogAccepted(const DecisionModelDialog *createModelDialog, const std::string &oldModelName = {});
     void onModelListUpdate();
 private:

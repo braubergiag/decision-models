@@ -13,6 +13,8 @@ StartMenu::StartMenu(QWidget *parent) :
     connect(this,&StartMenu::modelUpdated,this, &StartMenu::onModelListUpdate);
     connect(ui->deleteModelButton,&QPushButton::clicked,this,&StartMenu::onDeleteModelButtonClicked);
     connect(ui->editModelButton,&QPushButton::clicked,this,&StartMenu::onEditModelButtonClicked);
+    connect(ui->compareAlternativesButton,&QPushButton::clicked,this, &StartMenu::onCompareAlternativesButtonClicked);
+    connect(ui->compareCriteriaButton,&QPushButton::clicked,this, &StartMenu::onCompareCriteriaButtonClicked);
 
     ui->compareAlternativesButton->setEnabled(false);
     ui->compareCriteriaButton->setEnabled(false);
@@ -141,5 +143,20 @@ void StartMenu::onDecisionModelDialogAccepted(const DecisionModelDialog *createM
             ui->modelsList->setCurrentRow(currentModelIndex);
 
         }
+}
+
+void StartMenu::onCompareAlternativesButtonClicked() {
+    if (ui->alternativesList->count() > 0) {
+        auto compareAlternativesDialog = new CompareAlternativesDialog(this);
+        compareAlternativesDialog->exec();
+    }
+
+}
+
+void StartMenu::onCompareCriteriaButtonClicked() {
+    if (ui->criteriaList->count() > 0){
+        auto compareCriteriaDialog = new CompareCriteriaDialog(this);
+        compareCriteriaDialog->exec();
+    }
 }
 
