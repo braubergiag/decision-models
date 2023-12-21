@@ -146,6 +146,8 @@ void StartMenu::onDecisionModelDialogAccepted(const DecisionModelDialog *createM
 }
 
 void StartMenu::onCompareAlternativesButtonClicked() {
+    auto modelName = ui->modelsList->currentItem()->text().toStdString();
+
     if (ui->alternativesList->count() > 0) {
         auto compareAlternativesDialog = new CompareAlternativesDialog(this);
         compareAlternativesDialog->exec();
@@ -154,8 +156,11 @@ void StartMenu::onCompareAlternativesButtonClicked() {
 }
 
 void StartMenu::onCompareCriteriaButtonClicked() {
+    auto modelName = ui->modelsList->currentItem()->text().toStdString();
+
     if (ui->criteriaList->count() > 0){
-        auto compareCriteriaDialog = new CompareCriteriaDialog(this);
+
+        auto compareCriteriaDialog = new CompareCriteriaDialog(this,modelsDb_.model(modelName).criteriaNames());
         compareCriteriaDialog->exec();
     }
 }
