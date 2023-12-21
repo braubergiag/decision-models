@@ -32,3 +32,11 @@ void DecisionModel::setCriteriaNames(const vector<std::string> &criteriaNames) {
 void DecisionModel::setAlternativesNames(const vector<std::string> &alternativesNames) {
     alternativesNames_ = alternativesNames;
 }
+
+const MatrixXd &DecisionModel::criteriaComparisons() const {
+    return criteriaComparisons_;
+}
+
+void DecisionModel::setCriteriaComparisons(const MatrixXd &criteriaComparisons) {
+    criteriaComparisons_ = criteriaComparisons;
+}

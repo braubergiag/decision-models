@@ -12,7 +12,11 @@ bool DecisionModelsDB::count(const string &modelName) const {
     return modelsDb_.count(modelName);
 }
 
-const DecisionModel &DecisionModelsDB::model(const string &modelName) const {
+const DecisionModel & DecisionModelsDB::model(const std::string &modelName) const {
+    return modelsDb_.at(modelName);
+}
+
+DecisionModel &DecisionModelsDB::model(const string &modelName) {
     return modelsDb_.at(modelName);
 }
 

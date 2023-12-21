@@ -161,7 +161,10 @@ void StartMenu::onCompareCriteriaButtonClicked() {
     if (ui->criteriaList->count() > 0){
 
         auto compareCriteriaDialog = new CompareCriteriaDialog(this,modelsDb_.model(modelName).criteriaNames());
-        compareCriteriaDialog->exec();
+        auto res = compareCriteriaDialog->exec();
+        if (res == QDialog::Accepted){
+            modelsDb_.model(modelName).setCriteriaComparisons(compareCriteriaDialog->criteriaComparisons());
+        }
     }
 }
 

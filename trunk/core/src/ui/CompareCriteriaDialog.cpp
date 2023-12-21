@@ -79,3 +79,7 @@ void CompareCriteriaDialog::onButtonBoxAccepted() {
     accept();
 
 }
+
+const Eigen::MatrixXd &CompareCriteriaDialog::criteriaComparisons() const {
+    return criteriaComparisons_;
+}
