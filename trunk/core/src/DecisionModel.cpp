@@ -45,11 +45,11 @@ void DecisionModel::setCriteriaComparisons(const MatrixXd &criteriaComparisons,
 }
 
 const vector<Eigen::MatrixXd> &DecisionModel::alternativesComparisons() const {
-    return alternativesComparisons_;
+    return alternativesComps_;
 }
 
 void DecisionModel::setAlternativesComparisons(const vector<Eigen::MatrixXd> &alternativesComparisons) {
-    alternativesComparisons_ = alternativesComparisons;
+    alternativesComps_ = alternativesComparisons;
 }
 
 int DecisionModel::criteriaCount() const {
@@ -67,3 +67,16 @@ bool DecisionModel::criteriaComparisonMatrixIsInit() const {
 const DecisionModel::ComparisonMatrixView &DecisionModel::criteriaComparisonsMatrixView() const {
     return criteriaComparisonsMatrixView_;
 }
+
+void DecisionModel::setAlternativesCompsAt(const Eigen::MatrixXd &alternativesComps,
+                                           const ComparisionMatrixView &alternativesCompsView, int index) {
+    if (alternativesComps_.size() != criteriaCount()){
+        alternativesComps_.resize(criteriaCount());
+        alternativesCompsViews_.resize(criteriaCount());
+        alternativesCompsIsInit_.resize(criteriaCount());
+    }
+    alternativesComps_.at(index) = alternativesComps;
+    alternativesCompsViews_.at(index) = alternativesCompsView;
+    alternativesCompsIsInit_.at(index) = true;
+}
+

@@ -26,8 +26,11 @@ public:
     void setCriteriaNames(const vector<std::string> &criteriaNames);
     void setAlternativesNames(const vector<std::string> &alternativesNames);
     void setCriteriaComparisons(const MatrixXd &criteriaComparisons, const ComparisionMatrixView &criteriaMatrixView);
+
+
     void setAlternativesComparisons(const vector<Eigen::MatrixXd> &alternativesComparisons);
-    void setAlternativeComparisonsMatrixView(const ComparisionMatrixView& comparisonMatrixView, int index);
+    void setAlternativesCompsAt(const Eigen::MatrixXd &alternativesComps,
+                                const ComparisionMatrixView &alternativesCompsView, int index);
 
 public:
     const string &decisionName() const;
@@ -36,10 +39,9 @@ public:
 
     const MatrixXd &criteriaComparisons() const;
     const ComparisonMatrixView &criteriaComparisonsMatrixView() const;
+    bool criteriaComparisonMatrixIsInit() const;
 
     const vector<Eigen::MatrixXd> &alternativesComparisons() const;
-
-    bool criteriaComparisonMatrixIsInit() const;
 
     int criteriaCount() const;
     int alternativesCount() const;
@@ -49,11 +51,12 @@ private:
     std::vector<std::string> criteriaNames_;
     std::vector<std::string> alternativesNames_;
 
-    Eigen::MatrixXd criteriaComparisons_;
-    std::vector<Eigen::MatrixXd> alternativesComparisons_;
-
     ComparisonMatrixView criteriaComparisonsMatrixView_;
-    std::vector<ComparisonMatrixView> alternativesComparisonsMatricesViews_;
+    Eigen::MatrixXd criteriaComparisons_;
+
+    std::vector<Eigen::MatrixXd> alternativesComps_;
+    std::vector<ComparisonMatrixView> alternativesCompsViews_;
+    std::vector<bool> alternativesCompsIsInit_;
 
 
     bool criteriaComparisonMatrixIsInit_{false};

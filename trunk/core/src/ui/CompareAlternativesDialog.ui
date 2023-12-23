@@ -1,22 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
-    <author/>
-    <comment/>
-    <exportmacro/>
-    <class>CompareAlternativesDialog</class>
-    <widget class="QDialog" name="CompareAlternativesDialog">
-        <property name="geometry">
-            <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>400</width>
-                <height>300</height>
-            </rect>
-        </property>
-        <property name="windowTitle">
-            <string>CompareAlternativesDialog</string>
-        </property>
-    </widget>
-    <pixmapfunction/>
-    <connections/>
+ <class>CompareAlternativesDialog</class>
+ <widget class="QDialog" name="CompareAlternativesDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>508</width>
+    <height>457</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>CompareAlternativesDialog</string>
+  </property>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>20</y>
+     <width>361</width>
+     <height>391</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Сравнение альтернатив</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QComboBox" name="criteriaComboBox"/>
+    </item>
+    <item>
+     <widget class="QTableWidget" name="alternativesTableWidget"/>
+    </item>
+    <item>
+     <widget class="QDialogButtonBox" name="buttonBox">
+      <property name="standardButtons">
+       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
 </ui>
