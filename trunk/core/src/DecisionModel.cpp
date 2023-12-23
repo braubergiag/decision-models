@@ -37,6 +37,33 @@ const MatrixXd &DecisionModel::criteriaComparisons() const {
     return criteriaComparisons_;
 }
 
-void DecisionModel::setCriteriaComparisons(const MatrixXd &criteriaComparisons) {
+void DecisionModel::setCriteriaComparisons(const MatrixXd &criteriaComparisons,
+                                           const ComparisionMatrixView &criteriaMatrixView) {
     criteriaComparisons_ = criteriaComparisons;
+    criteriaComparisonsMatrixView_ = criteriaMatrixView;
+    criteriaComparisonMatrixIsInit_ = true;
+}
+
+const vector<Eigen::MatrixXd> &DecisionModel::alternativesComparisons() const {
+    return alternativesComparisons_;
+}
+
+void DecisionModel::setAlternativesComparisons(const vector<Eigen::MatrixXd> &alternativesComparisons) {
+    alternativesComparisons_ = alternativesComparisons;
+}
+
+int DecisionModel::criteriaCount() const {
+    return criteriaNames_.size();
+}
+
+int DecisionModel::alternativesCount() const {
+    return alternativesNames_.size();
+}
+
+bool DecisionModel::criteriaComparisonMatrixIsInit() const {
+    return criteriaComparisonMatrixIsInit_;
+}
+
+const DecisionModel::ComparisonMatrixView &DecisionModel::criteriaComparisonsMatrixView() const {
+    return criteriaComparisonsMatrixView_;
 }

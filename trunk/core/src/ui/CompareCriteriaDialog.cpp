@@ -4,26 +4,16 @@
 #include <QDebug>
 #include <iostream>
 
-CompareCriteriaDialog::CompareCriteriaDialog(QWidget *parent, std::vector<std::string> criteriaNames) :
-        QDialog(parent), criteriaNames_(criteriaNames), ui(new Ui::CompareCriteriaDialog) {
+CompareCriteriaDialog::CompareCriteriaDialog(DecisionModel &decisionModel, QWidget *parent) :
+        decisionModel_(decisionModel),
+        QDialog(parent),
+        ui(new Ui::CompareCriteriaDialog) {
     ui->setupUi(this);
-    rowCount_ = columnCount_ = criteriaNames_.size();
-    ui->criteriaTableWidget->setRowCount(rowCount_);
-    ui->criteriaTableWidget->setColumnCount(columnCount_);
-    static const int kColumnWidth = 20;
-    ui->criteriaTableWidget->resize(rowCount_ * 10, columnCount_ * kColumnWidth);
 
-    for (int row = 0; row < rowCount_; ++row) {
-        auto headerItem = new QTableWidgetItem(QString::fromStdString(criteriaNames.at(row)));
-        ui->criteriaTableWidget->setHorizontalHeaderItem(row, headerItem);
-        ui->criteriaTableWidget->setVerticalHeaderItem(row, headerItem);
-        for (int column = 0; column < columnCount_; ++column) {
-            auto item = new QTableWidgetItem("1");
-            ui->criteriaTableWidget->setItem(row, column, item);
-            ui->criteriaTableWidget->item(row, column)->setData(Qt::WhatsThisRole, "1.");
-
-        }
-    }
+    if (decisionModel_.criteriaComparisonMatrixIsInit())
+        loadCriteriaTableWidget();
+    else
+        initCriteriaTableWidget();
 
 
     connect(ui->criteriaTableWidget,&QTableWidget::cellChanged,this, &CompareCriteriaDialog::onCellChanged);
@@ -67,19 +57,60 @@ void CompareCriteriaDialog::onCellChanged(int row, int column) {
 
 void CompareCriteriaDialog::onButtonBoxAccepted() {
     criteriaComparisons_.resize(rowCount_,columnCount_);
+    criteriaMatrixView_.resize(rowCount_,columnCount_);
     for (int row = 0; row < rowCount_; ++row) {
         for (int col = 0; col < columnCount_; ++col) {
             auto value = ui->criteriaTableWidget->item(row,col)->data(Qt::WhatsThisRole).toString();
-            double d =  value.toDouble();
-            qDebug() << value << " " << d;
-            criteriaComparisons_(row,col) = d;
+            auto valueView = ui->criteriaTableWidget->item(row,col)->text();
+            criteriaComparisons_(row,col) = value.toDouble();
+            criteriaMatrixView_(row,col) = valueView.toStdString();
         }
     }
+    decisionModel_.setCriteriaComparisons(criteriaComparisons_,criteriaMatrixView_);
     std::cout << criteriaComparisons_ << "\n";
+    std::cout << criteriaMatrixView_ << "\n";
     accept();
 
 }
 
-const Eigen::MatrixXd &CompareCriteriaDialog::criteriaComparisons() const {
-    return criteriaComparisons_;
+void CompareCriteriaDialog::initCriteriaTableWidget() {
+    rowCount_ = columnCount_ = decisionModel_.criteriaCount();
+    ui->criteriaTableWidget->setRowCount(rowCount_);
+    ui->criteriaTableWidget->setColumnCount(columnCount_);
+
+    for (int row = 0; row < rowCount_; ++row) {
+        auto headerItem = new QTableWidgetItem(QString::fromStdString(decisionModel_.criteriaNames().at(row)));
+        ui->criteriaTableWidget->setHorizontalHeaderItem(row, headerItem);
+        ui->criteriaTableWidget->setVerticalHeaderItem(row, headerItem);
+        for (int column = 0; column < columnCount_; ++column) {
+            auto item = new QTableWidgetItem("1");
+            ui->criteriaTableWidget->setItem(row, column, item);
+            ui->criteriaTableWidget->item(row, column)->setData(Qt::WhatsThisRole, "1.");
+
+        }
+    }
+}
+
+void CompareCriteriaDialog::loadCriteriaTableWidget() {
+    rowCount_ = columnCount_ = decisionModel_.criteriaCount();
+    ui->criteriaTableWidget->setRowCount(rowCount_);
+    ui->criteriaTableWidget->setColumnCount(columnCount_);
+
+    criteriaComparisons_ = decisionModel_.criteriaComparisons();
+    criteriaMatrixView_ = decisionModel_.criteriaComparisonsMatrixView();
+    for (int row = 0; row < rowCount_; ++row) {
+        auto headerItem = new QTableWidgetItem(QString::fromStdString(decisionModel_.criteriaNames().at(row)));
+        ui->criteriaTableWidget->setHorizontalHeaderItem(row, headerItem);
+        ui->criteriaTableWidget->setVerticalHeaderItem(row, headerItem);
+        for (int column = 0; column < columnCount_; ++column) {
+            auto valueView = criteriaMatrixView_(row,column);
+            auto item = new QTableWidgetItem(QString::fromStdString(valueView));
+            ui->criteriaTableWidget->setItem(row, column, item);
+
+            auto value = criteriaComparisons_(row,column);
+            ui->criteriaTableWidget->item(row, column)->setData(Qt::WhatsThisRole, value);
+
+        }
+    }
+
 }

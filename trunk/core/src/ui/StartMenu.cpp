@@ -149,21 +149,22 @@ void StartMenu::onCompareAlternativesButtonClicked() {
     auto modelName = ui->modelsList->currentItem()->text().toStdString();
 
     if (ui->alternativesList->count() > 0) {
-        auto compareAlternativesDialog = new CompareAlternativesDialog(this);
-        compareAlternativesDialog->exec();
+        auto compareAlternativesDialog = new CompareAlternativesDialog(modelsDb_.model(modelName), this);
+        auto res = compareAlternativesDialog->exec();
+        if (res == QDialog::Accepted){
+        }
     }
 
 }
 
 void StartMenu::onCompareCriteriaButtonClicked() {
     auto modelName = ui->modelsList->currentItem()->text().toStdString();
-
     if (ui->criteriaList->count() > 0){
 
-        auto compareCriteriaDialog = new CompareCriteriaDialog(this,modelsDb_.model(modelName).criteriaNames());
+        auto compareCriteriaDialog = new CompareCriteriaDialog(modelsDb_.model(modelName), this);
         auto res = compareCriteriaDialog->exec();
         if (res == QDialog::Accepted){
-            modelsDb_.model(modelName).setCriteriaComparisons(compareCriteriaDialog->criteriaComparisons());
+
         }
     }
 }
