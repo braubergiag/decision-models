@@ -16,13 +16,21 @@ public:
 public:
 
 public slots:
-    void onCriteriaChanged(int index);
+    void onCriterionChanged(int index);
+    void onCriterionActivated(int index);
     void onCellChanged(int row, int column);
+    void onButtonBoxAccepted();
+    void onButtonBoxRejected();
 
 private:
     void initMatrixViews();
     void initTableWidget();
     void initComboBoxItems();
+    void initSignalsAndSlotsConnections();
+    void loadTableWidgetAt(int index);
+    void setDefaultTableWidgetValues();
+    void updateTableWidget(int index);
+    void saveDataFromTableWidget();
 
 private:
     DecisionModel & decisionModel_;
@@ -35,6 +43,10 @@ private:
     int rowCount_;
     int columnCount_;
     int lastActiveIndex_{0};
+
+    const double kDefaultValue{1.};
+    const QString kDefaultValueView{"1"};
+    bool inUpdateState{false};
 
 private:
     Ui::CompareAlternativesDialog *ui;

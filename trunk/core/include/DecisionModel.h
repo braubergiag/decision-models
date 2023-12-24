@@ -32,6 +32,9 @@ public:
     void setAlternativesCompsAt(const Eigen::MatrixXd &alternativesComps,
                                 const ComparisionMatrixView &alternativesCompsView, int index);
 
+    const ComparisionMatrixView& compsViewAt(int index) const;
+    const MatrixXd & compsAt(int index) const;
+    bool compsIsInitAt(int index) const;
 public:
     const string &decisionName() const;
     const vector<std::string> &criteriaNames() const;

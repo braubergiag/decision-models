@@ -80,3 +80,17 @@ void DecisionModel::setAlternativesCompsAt(const Eigen::MatrixXd &alternativesCo
     alternativesCompsIsInit_.at(index) = true;
 }
 
+const ComparisionMatrixView &DecisionModel::compsViewAt(int index) const {
+    return alternativesCompsViews_.at(index);
+}
+
+const MatrixXd &DecisionModel::compsAt(int index) const {
+    return alternativesComps_.at(index);
+}
+
+bool DecisionModel::compsIsInitAt(int index) const {
+    if (index < alternativesCompsIsInit_.size())
+        return alternativesCompsIsInit_.at(index);
+    return false;
+}
+
