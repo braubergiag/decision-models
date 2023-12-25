@@ -38,9 +38,7 @@ public:
                                                                          const MaxAlgMatrixXd &Q, int index) const;
     MaxAlgMatrixXd calc_worst_differentiating_vector_ratings_alternatives(const MaxAlgMatrixXd &S) const;
     std::vector<double> best_diff_vector() const;
-    std::string best_diff_vector_str() const;
     std::vector<double> worst_diff_vector() const;
-    std::string worst_diff_vector_str() const;
 private:
     void set_final_weights(const pair<MaxAlgMatrixXd, MaxAlgMatrixXd> &final_weights);
 

@@ -179,23 +179,3 @@ std::vector<double> tropical_decision_method::worst_diff_vector() const {
     }
     return v;
 }
-
-std::string tropical_decision_method::best_diff_vector_str() const {
-    auto best_diff_v = final_weights_.first;
-    std::string best_diff_vec_str;
-
-    for (int i = 0; i < best_diff_v.rows(); ++i) {
-        best_diff_vec_str.append(std::to_string(static_cast<double>( best_diff_v(i, 0))) + " ");
-    }
-    return best_diff_vec_str;
-}
-
-std::string tropical_decision_method::worst_diff_vector_str() const {
-    auto words_diff_v = final_weights_.second;
-    std::string words_diff_vec_str;
-
-    for (int i = 0; i < words_diff_v.rows(); ++i) {
-        words_diff_vec_str.append(std::to_string(static_cast<double>( words_diff_v(i, 0))) + " ");
-    }
-    return words_diff_vec_str;
-}
