@@ -13,6 +13,12 @@ QT_END_NAMESPACE
 
 class StartMenu : public QWidget {
 Q_OBJECT
+private:
+    enum class eMode  {
+        eModelNotPrepared,
+        eModelPrepared
+};
+
 
 public:
     explicit StartMenu(QWidget *parent = nullptr);
@@ -22,7 +28,8 @@ signals:
     void decisionModelDialogAccepted();
     void modelUpdated();
     void modelReady();
-
+private:
+    void switchState(eMode newState);
 
 private slots:
     void onCreateModelButtonClicked();
@@ -35,6 +42,7 @@ private slots:
     void onEstimateButtonClicked();
     void onModelReady();
 private:
+    eMode currentState{eMode::eModelNotPrepared};
     DecisionModelsDB modelsDb_;
     Ui::StartMenu *ui;
 };

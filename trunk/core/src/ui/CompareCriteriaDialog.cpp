@@ -14,10 +14,9 @@ CompareCriteriaDialog::CompareCriteriaDialog(DecisionModel &decisionModel, QWidg
         loadCriteriaTableWidget();
     else
         initCriteriaTableWidget();
-
-
     connect(ui->criteriaTableWidget,&QTableWidget::cellChanged,this, &CompareCriteriaDialog::onCellChanged);
     connect(ui->buttonBox,&QDialogButtonBox::accepted,this,&CompareCriteriaDialog::onButtonBoxAccepted);
+    connect(ui->buttonBox,&QDialogButtonBox::rejected,this,&CompareCriteriaDialog::onButtonBoxRejected);
 
 }
 
@@ -30,12 +29,11 @@ void CompareCriteriaDialog::onCellChanged(int row, int column) {
     static const double kMaxVal = 10;
     if ( row == column )
     {
-        ui->criteriaTableWidget->item( column, row )->setText("1");
+        ui->criteriaTableWidget->item( column, row )->setText(kDefaultValueView);
         return;
     }
     auto item_value = ui->criteriaTableWidget->item(row, column)->text();
-    qDebug() << item_value;
-    if (item_value == '1')
+    if (item_value == kDefaultValueView)
         return;
 
     if (item_value.contains("/")) {
@@ -67,8 +65,6 @@ void CompareCriteriaDialog::onButtonBoxAccepted() {
         }
     }
     decisionModel_.setCriteriaComparisons(criteriaComparisons_,criteriaMatrixView_);
-    std::cout << criteriaComparisons_ << "\n";
-    std::cout << criteriaMatrixView_ << "\n";
     accept();
 
 }
@@ -83,9 +79,9 @@ void CompareCriteriaDialog::initCriteriaTableWidget() {
         ui->criteriaTableWidget->setHorizontalHeaderItem(row, headerItem);
         ui->criteriaTableWidget->setVerticalHeaderItem(row, headerItem);
         for (int column = 0; column < columnCount_; ++column) {
-            auto item = new QTableWidgetItem("1");
+            auto item = new QTableWidgetItem(kDefaultValueView);
             ui->criteriaTableWidget->setItem(row, column, item);
-            ui->criteriaTableWidget->item(row, column)->setData(Qt::WhatsThisRole, "1.");
+            ui->criteriaTableWidget->item(row, column)->setData(Qt::WhatsThisRole, kDefaultValue);
 
         }
     }
@@ -112,5 +108,10 @@ void CompareCriteriaDialog::loadCriteriaTableWidget() {
 
         }
     }
+
+}
+
+void CompareCriteriaDialog::onButtonBoxRejected() {
+    reject();
 
 }

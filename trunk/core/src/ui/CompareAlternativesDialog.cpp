@@ -32,6 +32,7 @@ void CompareAlternativesDialog::initSignalsAndSlotsConnections() {
             &CompareAlternativesDialog::onCriterionActivated);
     connect(ui->alternativesTableWidget,&QTableWidget::cellChanged,this,&CompareAlternativesDialog::onCellChanged);
     connect(ui->buttonBox,&QDialogButtonBox::accepted,this, &CompareAlternativesDialog::onButtonBoxAccepted);
+    connect(ui->buttonBox,&QDialogButtonBox::rejected,this, &CompareAlternativesDialog::onButtonBoxRejected);
 }
 
 void CompareAlternativesDialog::initMatrixViews() {
@@ -72,8 +73,6 @@ void CompareAlternativesDialog::initTableWidget() {
 
 void CompareAlternativesDialog::onCriterionChanged(int index) {
 
-    qDebug() << "last active index " << lastActiveIndex_;
-    qDebug() << "On criteria Changed() current index:; " << index;
     saveDataFromTableWidget();
     updateTableWidget(index);
 
@@ -153,7 +152,6 @@ void CompareAlternativesDialog::onButtonBoxAccepted() {
 }
 
 void CompareAlternativesDialog::onCriterionActivated(int index) {
-    qDebug() << "Criterion activated";
     if (decisionModel_.compsIsInitAt(index))
         updateTableWidget(index);
 
@@ -173,8 +171,6 @@ void CompareAlternativesDialog::saveDataFromTableWidget() {
     decisionModel_.setAlternativesCompsAt(matrixValues_.at(lastActiveIndex_),
                                           matrixViews_.at(lastActiveIndex_),
                                           lastActiveIndex_);
-    std::cout << matrixViews_.at(lastActiveIndex_) << "\n";
-    std::cout << matrixValues_.at(lastActiveIndex_) << "\n";
 }
 
 void CompareAlternativesDialog::onButtonBoxRejected() {

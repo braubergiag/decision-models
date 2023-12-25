@@ -20,6 +20,7 @@ private:
 private slots:
     void onCellChanged(int row, int column);
     void onButtonBoxAccepted();
+    void onButtonBoxRejected();
 
 private:
 
@@ -30,6 +31,8 @@ private:
 
     int rowCount_;
     int columnCount_;
+    const double kDefaultValue{1.};
+    const QString kDefaultValueView{"1"};
     Ui::CompareCriteriaDialog *ui;
 };
 

@@ -103,7 +103,9 @@ void DecisionModel::performTropicalMethod() {
 }
 
 bool DecisionModel::alternativesComparisonsMatricesIsInit() const {
-    return std::all_of(begin(alternativesCompsIsInit_),end(alternativesCompsIsInit_),[](bool isInit){
+
+    return alternativesCompsIsInit_.size() == criteriaCount() &&
+    std::all_of(begin(alternativesCompsIsInit_),end(alternativesCompsIsInit_),[](bool isInit){
         return isInit;
     });
 }

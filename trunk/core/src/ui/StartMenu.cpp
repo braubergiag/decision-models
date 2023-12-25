@@ -24,10 +24,8 @@ StartMenu::StartMenu(QWidget *parent) :
     ui->editModelButton->setEnabled(false);
     ui->compareAlternativesButton->setEnabled(false);
     ui->compareCriteriaButton->setEnabled(false);
-    ui->estimateButton->setEnabled(false);
-    ui->ahpCheckBox->setEnabled(false);
-    ui->gmCheckBox->setEnabled(false);
-    ui->tmCheckBox->setEnabled(false);
+
+    switchState(eMode::eModelNotPrepared);
 }
 
 StartMenu::~StartMenu() {
@@ -40,6 +38,7 @@ void StartMenu::onCreateModelButtonClicked()
     auto res = createModelDialog->exec();
     if (res == QDialog::Accepted){
         emit onDecisionModelDialogAccepted(createModelDialog);
+        switchState(eMode::eModelNotPrepared);
     }
 
 }
@@ -87,6 +86,7 @@ void StartMenu::onEditModelButtonClicked() {
         auto res = createModelDialog->exec();
         if (res == QDialog::Accepted){
             emit onDecisionModelDialogAccepted(createModelDialog, modelName);
+            switchState(eMode::eModelNotPrepared);
         }
 
     }
@@ -135,19 +135,22 @@ void StartMenu::onDecisionModelDialogAccepted(const DecisionModelDialog *createM
         }
          modelsDb_.addOrUpdateModel(decisionModel.decisionName(), decisionModel);
 
-        if (!oldModelName.empty() && oldModelName != modelName.toStdString()){
-            modelsDb_.deleteModel(oldModelName);
-
-            auto modelNameIndex = ui->modelsList->currentRow();
-            auto item = ui->modelsList->takeItem(modelNameIndex);
-            delete item;
-            ui->modelsList->insertItem(modelNameIndex,modelName);
-            emit modelUpdated();
-        } else {
+        if (oldModelName.empty()){
             ui->modelsList->addItem(modelName);
             auto currentModelIndex = ui->modelsList->count() - 1;
             ui->modelsList->setCurrentRow(currentModelIndex);
+        }
 
+        else if (oldModelName != modelName.toStdString() ){
+            modelsDb_.deleteModel(oldModelName);
+            auto oldModelNameIndex = ui->modelsList->currentRow();
+            auto item = ui->modelsList->takeItem(oldModelNameIndex);
+            delete item;
+            ui->modelsList->insertItem(oldModelNameIndex, modelName);
+            ui->modelsList->setCurrentRow(oldModelNameIndex);
+            emit modelUpdated();
+        } else {
+            emit modelUpdated();
         }
 }
 
@@ -160,7 +163,7 @@ void StartMenu::onCompareAlternativesButtonClicked() {
         auto res = compareAlternativesDialog->exec();
         if (res == QDialog::Accepted){
             if (model.criteriaComparisonMatrixIsInit() && model.alternativesComparisonsMatricesIsInit())
-                emit modelReady();
+                switchState(eMode::eModelPrepared);
         }
     }
 
@@ -174,7 +177,7 @@ void StartMenu::onCompareCriteriaButtonClicked() {
         auto res = compareCriteriaDialog->exec();
         if (res == QDialog::Accepted){
             if (model.criteriaComparisonMatrixIsInit() && model.alternativesComparisonsMatricesIsInit())
-                    emit modelReady();
+                switchState(eMode::eModelPrepared);
         }
     }
 }
@@ -211,21 +214,26 @@ void StartMenu::onEstimateButtonClicked() {
 
     }
 
-
-
-
-
-
-
-
-
-
 }
 
 void StartMenu::onModelReady() {
-    ui->estimateButton->setEnabled(true);
-    ui->ahpCheckBox->setEnabled(true);
-    ui->gmCheckBox->setEnabled(true);
-    ui->tmCheckBox->setEnabled(true);
+
+}
+
+void StartMenu::switchState(StartMenu::eMode newState) {
+    switch (newState) {
+        case eMode::eModelNotPrepared:
+            ui->estimateButton->setEnabled(false);
+            ui->ahpCheckBox->setEnabled(false);
+            ui->gmCheckBox->setEnabled(false);
+            ui->tmCheckBox->setEnabled(false);
+            break;
+        case eMode::eModelPrepared:
+            ui->estimateButton->setEnabled(true);
+            ui->ahpCheckBox->setEnabled(true);
+            ui->gmCheckBox->setEnabled(true);
+            ui->tmCheckBox->setEnabled(true);
+    }
+
 }
 
