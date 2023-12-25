@@ -1,5 +1,5 @@
 #include "../include/DecisionModel.h"
-
+#include <algorithm>
 void DecisionModel::addAlternative(const std::string &alternative) {
     alternativesNames_.emplace_back(alternative);
 }
@@ -92,5 +92,55 @@ bool DecisionModel::compsIsInitAt(int index) const {
     if (index < alternativesCompsIsInit_.size())
         return alternativesCompsIsInit_.at(index);
     return false;
+}
+
+void DecisionModel::performTropicalMethod() {
+    tropicalDecisionMethod_  = tropical_decision_method(alternativesComps_, criteriaComparisons_);
+    tropicalDecisionMethod_.perform();
+
+
+
+}
+
+bool DecisionModel::alternativesComparisonsMatricesIsInit() const {
+    return std::all_of(begin(alternativesCompsIsInit_),end(alternativesCompsIsInit_),[](bool isInit){
+        return isInit;
+    });
+}
+
+void DecisionModel::performAhpMethod() {
+    ahpDecisionMethod_ = ahp_decision_method(alternativesComps_, criteriaComparisons_);
+    ahpDecisionMethod_.perform();
+
+
+
+}
+
+void DecisionModel::performGmMethod() {
+    gmDecisionMethod_ = gm_decision_method(alternativesComps_, criteriaComparisons_);
+    gmDecisionMethod_.perform();
+}
+
+std::string DecisionModel::ahpResult() const {
+    auto res = ahpDecisionMethod_.final_weights();
+    std::stringstream ss;
+    ss << res;
+    return ss.str();
+}
+
+std::string DecisionModel::gmResult() const {
+    auto res = gmDecisionMethod_.final_weights();
+    std::stringstream ss;
+    ss << res;
+    return ss.str();
+}
+
+std::pair<std::string, std::string> DecisionModel::tropicalResult() const {
+
+    auto [best,worst] = tropicalDecisionMethod_.final_weights();
+    std::stringstream ss_best,ss_worst;
+    ss_best << best;
+    ss_worst << worst;
+    return {ss_best.str(),ss_worst.str()};
 }
 

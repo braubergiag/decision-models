@@ -57,7 +57,6 @@ void CompareAlternativesDialog::initTableWidget() {
     rowCount_ = columnCount_ = decisionModel_.alternativesCount();
     ui->alternativesTableWidget->setRowCount(rowCount_);
     ui->alternativesTableWidget->setColumnCount(columnCount_);
-
     for (int row = 0; row < rowCount_; ++row) {
         auto headerItem = new QTableWidgetItem(QString::fromStdString(decisionModel_.alternativesNames().at(row)));
         ui->alternativesTableWidget->setHorizontalHeaderItem(row, headerItem);

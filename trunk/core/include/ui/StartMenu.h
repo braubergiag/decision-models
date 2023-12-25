@@ -21,6 +21,7 @@ public:
 signals:
     void decisionModelDialogAccepted();
     void modelUpdated();
+    void modelReady();
 
 
 private slots:
@@ -31,6 +32,8 @@ private slots:
     void onCompareCriteriaButtonClicked();
     void onDecisionModelDialogAccepted(const DecisionModelDialog *createModelDialog, const std::string &oldModelName = {});
     void onModelListUpdate();
+    void onEstimateButtonClicked();
+    void onModelReady();
 private:
     DecisionModelsDB modelsDb_;
     Ui::StartMenu *ui;

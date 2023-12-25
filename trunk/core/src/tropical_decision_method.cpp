@@ -6,6 +6,30 @@ tropical_decision_method::tropical_decision_method(const vector<MaxAlgMatrixXd> 
                                                    const MaxAlgMatrixXd &criteria) : alternatives_(alternatives),
                                                                                      criteria_(criteria) {}
 
+tropical_decision_method::tropical_decision_method(const vector<Eigen::MatrixXd> &alternatives,
+                                                   const MatrixXd &criteria) {
+
+    alternatives_.resize(alternatives.size());
+    for (int i = 0; i < alternatives_.size(); ++i){
+        auto & alt = alternatives_.at(i);
+        alt.resize(alternatives.front().rows(),alternatives.front().cols());
+        for (int row = 0; row < alt.rows(); ++row) {
+            for (int column = 0; column < alt.cols(); ++column) {
+                alt(row,column) = alternatives.at(i)(row,column);
+            }
+        }
+    }
+
+
+
+    criteria_.resize(criteria.rows(),criteria.cols());
+    for (int row = 0; row < criteria_.rows(); ++row) {
+        for (int column = 0; column < criteria_.cols(); ++column) {
+            criteria_(row,column) = criteria(row,column);
+        }
+    }
+}
+
 const vector<MaxAlgMatrixXd> &tropical_decision_method::alternatives() const {
     return alternatives_;
 }
@@ -21,7 +45,6 @@ const MaxAlgMatrixXd &tropical_decision_method::criteria() const {
 void tropical_decision_method::set_criteria(const MaxAlgMatrixXd &criteria)  {
     criteria_ = criteria;
 }
-
 void tropical_decision_method::perform()  {
     double lambda = spectral_radius(criteria());
     MaxAlgMatrixXd D = construction_generating_matrix_optimal_weights(criteria(), lambda);
@@ -39,6 +62,7 @@ void tropical_decision_method::perform()  {
     set_final_weights(std::make_pair(x,y));
 
 }
+
 int tropical_decision_method::best_differentiating_weight_vector_index(const MaxAlgMatrixXd & D) const{
 
     MaxAlgVectorXd I(D.rows());
@@ -134,4 +158,44 @@ const pair<MaxAlgMatrixXd, MaxAlgMatrixXd> &tropical_decision_method::final_weig
 
 void tropical_decision_method::set_final_weights(const pair<MaxAlgMatrixXd, MaxAlgMatrixXd> &final_weights) {
     final_weights_ = final_weights;
+}
+
+std::vector<double> tropical_decision_method::best_diff_vector() const {
+    auto best_diff_v = final_weights_.first;
+    std::vector<double> v(best_diff_v.rows());
+
+    for (int i = 0; i < v.size(); ++i) {
+        v[i] = static_cast<double>( best_diff_v(i, 0));
+    }
+    return v;
+}
+
+std::vector<double> tropical_decision_method::worst_diff_vector() const {
+    auto words_diff_v = final_weights_.second;
+    std::vector<double> v(words_diff_v.rows());
+
+    for (int i = 0; i < v.size(); ++i) {
+        v[i] = static_cast<double>( words_diff_v(i, 0));
+    }
+    return v;
+}
+
+std::string tropical_decision_method::best_diff_vector_str() const {
+    auto best_diff_v = final_weights_.first;
+    std::string best_diff_vec_str;
+
+    for (int i = 0; i < best_diff_v.rows(); ++i) {
+        best_diff_vec_str.append(std::to_string(static_cast<double>( best_diff_v(i, 0))) + " ");
+    }
+    return best_diff_vec_str;
+}
+
+std::string tropical_decision_method::worst_diff_vector_str() const {
+    auto words_diff_v = final_weights_.second;
+    std::string words_diff_vec_str;
+
+    for (int i = 0; i < words_diff_v.rows(); ++i) {
+        words_diff_vec_str.append(std::to_string(static_cast<double>( words_diff_v(i, 0))) + " ");
+    }
+    return words_diff_vec_str;
 }
