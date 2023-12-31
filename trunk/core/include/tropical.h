@@ -1,6 +1,4 @@
-
-#ifndef TROPICAL_TROPICAL_H
-#define TROPICAL_TROPICAL_H
+#pragma once
 
 #include "max_algebra.h"
 #include <iostream>
@@ -30,4 +28,3 @@ inline double d(double p, double q) {
     return p / q;
 }
 
-#endif //TROPICAL_TROPICAL_H

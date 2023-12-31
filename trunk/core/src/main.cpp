@@ -1,14 +1,14 @@
-#include "mainwindow.h"
 
 #include <QApplication>
-#include "core/include/tropical_decision_method.h"
+
+#include "../include/ui/StartMenu.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
 
+    StartMenu startMenu;
+    startMenu.show();
 
-    w.show();
     return a.exec();
 }
