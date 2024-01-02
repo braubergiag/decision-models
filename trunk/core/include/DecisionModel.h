@@ -22,6 +22,15 @@ public:
     void addAlternative(const std::string &alternative);
     void addCriteria(const std::string &criteria);
 public:
+    void performTropicalMethod();
+    void performAhpMethod();
+    void performGmMethod();
+
+    std::string ahpResult() const;
+    std::string gmResult() const;
+    std::pair<std::string, std::string> tropicalResult() const;
+
+public:
     void setDecisionName(const string &decisionName);
     void setCriteriaNames(const vector<std::string> &criteriaNames);
     void setAlternativesNames(const vector<std::string> &alternativesNames);
@@ -43,6 +52,7 @@ public:
     const MatrixXd &criteriaComparisons() const;
     const ComparisonMatrixView &criteriaComparisonsMatrixView() const;
     bool criteriaComparisonMatrixIsInit() const;
+    bool alternativesComparisonsMatricesIsInit() const;
 
     const vector<Eigen::MatrixXd> &alternativesComparisons() const;
 
@@ -65,9 +75,9 @@ private:
     bool criteriaComparisonMatrixIsInit_{false};
     bool alternativesComparisonsMatricesIsInit_{false};
 
-    ahp_decision_method ahp;
-    gm_decision_method gm;
-    tropical_decision_method tr;
+    ahp_decision_method ahpDecisionMethod_;
+    gm_decision_method gmDecisionMethod_;
+    tropical_decision_method tropicalDecisionMethod_;
 
 };
 

@@ -15,6 +15,8 @@ StartMenu::StartMenu(QWidget *parent) :
     connect(ui->editModelButton,&QPushButton::clicked,this,&StartMenu::onEditModelButtonClicked);
     connect(ui->compareAlternativesButton,&QPushButton::clicked,this, &StartMenu::onCompareAlternativesButtonClicked);
     connect(ui->compareCriteriaButton,&QPushButton::clicked,this, &StartMenu::onCompareCriteriaButtonClicked);
+    connect(ui->estimateButton,&QPushButton::clicked,this, &StartMenu::onEstimateButtonClicked);
+    connect(this,&StartMenu::modelReady,this, &StartMenu::onModelReady);
 
     ui->compareAlternativesButton->setEnabled(false);
     ui->compareCriteriaButton->setEnabled(false);
@@ -22,6 +24,8 @@ StartMenu::StartMenu(QWidget *parent) :
     ui->editModelButton->setEnabled(false);
     ui->compareAlternativesButton->setEnabled(false);
     ui->compareCriteriaButton->setEnabled(false);
+
+    switchState(eMode::eModelNotPrepared);
 }
 
 StartMenu::~StartMenu() {
@@ -34,6 +38,7 @@ void StartMenu::onCreateModelButtonClicked()
     auto res = createModelDialog->exec();
     if (res == QDialog::Accepted){
         emit onDecisionModelDialogAccepted(createModelDialog);
+        switchState(eMode::eModelNotPrepared);
     }
 
 }
@@ -81,6 +86,7 @@ void StartMenu::onEditModelButtonClicked() {
         auto res = createModelDialog->exec();
         if (res == QDialog::Accepted){
             emit onDecisionModelDialogAccepted(createModelDialog, modelName);
+            switchState(eMode::eModelNotPrepared);
         }
 
     }
@@ -129,19 +135,22 @@ void StartMenu::onDecisionModelDialogAccepted(const DecisionModelDialog *createM
         }
          modelsDb_.addOrUpdateModel(decisionModel.decisionName(), decisionModel);
 
-        if (!oldModelName.empty() && oldModelName != modelName.toStdString()){
-            modelsDb_.deleteModel(oldModelName);
-
-            auto modelNameIndex = ui->modelsList->currentRow();
-            auto item = ui->modelsList->takeItem(modelNameIndex);
-            delete item;
-            ui->modelsList->insertItem(modelNameIndex,modelName);
-            emit modelUpdated();
-        } else {
+        if (oldModelName.empty()){
             ui->modelsList->addItem(modelName);
             auto currentModelIndex = ui->modelsList->count() - 1;
             ui->modelsList->setCurrentRow(currentModelIndex);
+        }
 
+        else if (oldModelName != modelName.toStdString() ){
+            modelsDb_.deleteModel(oldModelName);
+            auto oldModelNameIndex = ui->modelsList->currentRow();
+            auto item = ui->modelsList->takeItem(oldModelNameIndex);
+            delete item;
+            ui->modelsList->insertItem(oldModelNameIndex, modelName);
+            ui->modelsList->setCurrentRow(oldModelNameIndex);
+            emit modelUpdated();
+        } else {
+            emit modelUpdated();
         }
 }
 
@@ -149,9 +158,12 @@ void StartMenu::onCompareAlternativesButtonClicked() {
     auto modelName = ui->modelsList->currentItem()->text().toStdString();
 
     if (ui->alternativesList->count() > 0) {
-        auto compareAlternativesDialog = new CompareAlternativesDialog(modelsDb_.model(modelName), this);
+        auto & model = (modelsDb_.model(modelName));
+        auto compareAlternativesDialog = new CompareAlternativesDialog(model, this);
         auto res = compareAlternativesDialog->exec();
         if (res == QDialog::Accepted){
+            if (model.criteriaComparisonMatrixIsInit() && model.alternativesComparisonsMatricesIsInit())
+                switchState(eMode::eModelPrepared);
         }
     }
 
@@ -160,12 +172,68 @@ void StartMenu::onCompareAlternativesButtonClicked() {
 void StartMenu::onCompareCriteriaButtonClicked() {
     auto modelName = ui->modelsList->currentItem()->text().toStdString();
     if (ui->criteriaList->count() > 0){
-
-        auto compareCriteriaDialog = new CompareCriteriaDialog(modelsDb_.model(modelName), this);
+        auto & model = (modelsDb_.model(modelName));
+        auto compareCriteriaDialog = new CompareCriteriaDialog(model, this);
         auto res = compareCriteriaDialog->exec();
         if (res == QDialog::Accepted){
-
+            if (model.criteriaComparisonMatrixIsInit() && model.alternativesComparisonsMatricesIsInit())
+                switchState(eMode::eModelPrepared);
         }
     }
+}
+
+void StartMenu::onEstimateButtonClicked() {
+    auto modelName = ui->modelsList->currentItem()->text().toStdString();
+    auto model = modelsDb_.model(modelName);
+
+    auto [ahp,gm,tropical] = std::tuple(ui->ahpCheckBox->isChecked(),ui->gmCheckBox->isChecked(),ui->tmCheckBox->isChecked());
+    QString result;
+
+    if (ahp){
+        model.performAhpMethod();
+        ui->ahpLabel->setText(QString::fromStdString("Метод анализа иерархий\n\n\n" + model.ahpResult()));
+    } else {
+        ui->ahpLabel->clear();
+    }
+
+    if (gm){
+        model.performGmMethod();
+        ui->gmLabel->setText(QString::fromStdString("Метод геометрический средних\n\n\n" + model.gmResult()));
+    } else {
+        ui->gmLabel->clear();
+    }
+
+    if (tropical){
+        model.performTropicalMethod();
+        auto [best,worst] = model.tropicalResult();
+        ui->tmBestLabel->setText(QString::fromStdString( "Метод log-чебышевской аппроксимации\nНаилучший дифференцирующий вектор\n\n" + best));
+        ui->tmWorstLabel->setText(QString::fromStdString( "Метод log-чебышевской аппроксимации\nНаихудший дифференцирующий вектор\n\n" + worst));
+    } else {
+        ui->tmBestLabel->clear();
+        ui->tmWorstLabel->clear();
+
+    }
+
+}
+
+void StartMenu::onModelReady() {
+
+}
+
+void StartMenu::switchState(StartMenu::eMode newState) {
+    switch (newState) {
+        case eMode::eModelNotPrepared:
+            ui->estimateButton->setEnabled(false);
+            ui->ahpCheckBox->setEnabled(false);
+            ui->gmCheckBox->setEnabled(false);
+            ui->tmCheckBox->setEnabled(false);
+            break;
+        case eMode::eModelPrepared:
+            ui->estimateButton->setEnabled(true);
+            ui->ahpCheckBox->setEnabled(true);
+            ui->gmCheckBox->setEnabled(true);
+            ui->tmCheckBox->setEnabled(true);
+    }
+
 }
 

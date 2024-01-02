@@ -6,42 +6,36 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>571</width>
-    <height>554</height>
+    <width>643</width>
+    <height>548</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>CompareCriteriaDialog</string>
+   <string>Сравнение критериев</string>
   </property>
-  <widget class="QWidget" name="">
-   <property name="geometry">
-    <rect>
-     <x>70</x>
-     <y>20</y>
-     <width>411</width>
-     <height>421</height>
-    </rect>
-   </property>
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>Сравнение критериев</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QTableWidget" name="criteriaTableWidget"/>
-    </item>
-    <item>
-     <widget class="QDialogButtonBox" name="buttonBox">
-      <property name="standardButtons">
-       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Сравнение критериев</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTableWidget" name="criteriaTableWidget"/>
+     </item>
+     <item>
+      <widget class="QDialogButtonBox" name="buttonBox">
+       <property name="standardButtons">
+        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>

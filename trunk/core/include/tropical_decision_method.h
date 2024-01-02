@@ -9,6 +9,7 @@ class tropical_decision_method : public decision_method{
 public:
     tropical_decision_method() = default;
     tropical_decision_method(const vector<MaxAlgMatrixXd> &alternatives, const MaxAlgMatrixXd &criteria);
+    tropical_decision_method(const vector<Eigen::MatrixXd> &alternatives, const Eigen::MatrixXd &criteria);
     void perform() override;
 
 public:
@@ -36,7 +37,8 @@ public:
     MaxAlgMatrixXd calc_best_differentiating_vector_ratings_alternatives(const MaxAlgMatrixXd &D,
                                                                          const MaxAlgMatrixXd &Q, int index) const;
     MaxAlgMatrixXd calc_worst_differentiating_vector_ratings_alternatives(const MaxAlgMatrixXd &S) const;
-
+    std::vector<double> best_diff_vector() const;
+    std::vector<double> worst_diff_vector() const;
 private:
     void set_final_weights(const pair<MaxAlgMatrixXd, MaxAlgMatrixXd> &final_weights);
 
