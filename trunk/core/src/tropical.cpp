@@ -55,9 +55,3 @@ double Tr(const MaxAlgMatrixXd& matrixXd) {
     return current_det;
 }
 
-double SpectralRadiusAdvance(const MaxAlgMatrixXd &matrixXd) {
-
-    std::vector<MaxAlgMatrixXd> matrices;
-
-    return 0;
-}

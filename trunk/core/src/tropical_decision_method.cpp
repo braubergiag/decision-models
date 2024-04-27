@@ -53,8 +53,7 @@ void tropical_decision_method::perform()  {
     MaxAlgMatrixXd w = worst_differentiating_weight_vector(D);
     MaxAlgMatrixXd P = computing_weighted_sum_pairwise_comparison_matrices(alternatives(), v);
     MaxAlgMatrixXd Q = build_generating_matrix_optimal_ratings_alternatives(P);
-    MaxAlgMatrixXd x = calc_best_differentiating_vector_ratings_alternatives(D, Q, weight_vector_index);
-
+    MaxAlgMatrixXd x = calc_best_differentiating_vector_ratings_alternatives(D, Q);
     MaxAlgMatrixXd R = computing_weighted_sum_pairwise_comparison_matrices(alternatives(), w);
     MaxAlgMatrixXd S = build_generating_matrix_optimal_ratings_alternatives(R);
     MaxAlgMatrixXd y = calc_worst_differentiating_vector_ratings_alternatives(S);
@@ -123,8 +122,8 @@ MaxAlgMatrixXd tropical_decision_method::build_generating_matrix_optimal_ratings
 }
 
 MaxAlgMatrixXd
-tropical_decision_method::calc_best_differentiating_vector_ratings_alternatives(const MaxAlgMatrixXd &D,
-                                                                                const MaxAlgMatrixXd &Q, int index) const {
+tropical_decision_method::calc_best_differentiating_vector_ratings_alternatives(
+    const MaxAlgMatrixXd &D, const MaxAlgMatrixXd &Q) const {
     MaxAlgVectorXd I(D.rows());
     I.setOnes();
     I.resize(Q.rows());
@@ -141,7 +140,7 @@ tropical_decision_method::calc_best_differentiating_vector_ratings_alternatives(
         }
 
     }
-    MaxAlgMatrixXd X = Q.col(vector_index) * d(1, static_cast<double>(Q.col(index).sum()));
+    MaxAlgMatrixXd X = Q.col(vector_index) * d(1, static_cast<double>(Q.col(vector_index).sum()));
     return X;
 }
 
