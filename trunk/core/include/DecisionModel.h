@@ -13,8 +13,6 @@ using ComparisionMatrixView = Eigen::Matrix<std::string, Dynamic, Dynamic>;
 class DecisionModel {
 public:
 	using ComparisonMatrixView = Eigen::Matrix<std::string, Dynamic, Dynamic>;
-
-
 	DecisionModel() = default;
 
 public:
@@ -31,13 +29,13 @@ public:
 	std::pair<std::string, std::string> tropicalResult() const;
 
 public:
-	void setDecisionName(const string &decisionName);
-	void setCriteriaNames(const vector<std::string> &criteriaNames);
-	void setAlternativesNames(const vector<std::string> &alternativesNames);
+	void setDecisionName(const std::string &decisionName);
+	void setCriteriaNames(const std::vector<std::string> &criteriaNames);
+	void setAlternativesNames(const std::vector<std::string> &alternativesNames);
 	void setCriteriaComparisons(const MatrixXd &criteriaComparisons, const ComparisionMatrixView &criteriaMatrixView);
 
 
-	void setAlternativesComparisons(const vector<Eigen::MatrixXd> &alternativesComparisons);
+	void setAlternativesComparisons(const std::vector<Eigen::MatrixXd> &alternativesComparisons);
 	void setAlternativesCompsAt(const Eigen::MatrixXd &alternativesComps,
 								const ComparisionMatrixView &alternativesCompsView, int index);
 
@@ -46,16 +44,16 @@ public:
 	bool compsIsInitAt(int index) const;
 
 public:
-	const string &decisionName() const;
-	const vector<std::string> &criteriaNames() const;
-	const vector<std::string> &alternativesNames() const;
+	const std::string &decisionName() const;
+	const std::vector<std::string> &criteriaNames() const;
+	const std::vector<std::string> &alternativesNames() const;
 
 	const MatrixXd &criteriaComparisons() const;
 	const ComparisonMatrixView &criteriaComparisonsMatrixView() const;
 	bool criteriaComparisonMatrixIsInit() const;
 	bool alternativesComparisonsMatricesIsInit() const;
 
-	const vector<Eigen::MatrixXd> &alternativesComparisons() const;
+	const std::vector<Eigen::MatrixXd> &alternativesComparisons() const;
 
 	int criteriaCount() const;
 	int alternativesCount() const;
