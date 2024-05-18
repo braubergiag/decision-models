@@ -3,12 +3,11 @@
 
 #include "../include/ui/StartMenu.h"
 
-int main(int argc, char *argv[])
-{
-    QApplication a(argc, argv);
+int main(int argc, char *argv[]) {
+	QApplication a(argc, argv);
 
-    StartMenu startMenu;
-    startMenu.show();
+	StartMenu startMenu;
+	startMenu.show();
 
-    return a.exec();
+	return a.exec();
 }

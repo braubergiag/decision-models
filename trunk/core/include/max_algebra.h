@@ -1,87 +1,66 @@
 #pragma once
-#include <Eigen/Dense>
+
 #include <vector>
-
 #include <algorithm>
+#include <Eigen/Dense>
+
 using namespace Eigen;
-using namespace std;
-template <typename T>
+
+template<typename T>
 struct MaxAlg {
-    T scalar;
-    MaxAlg() = default;
-    MaxAlg(T scalar) noexcept : scalar(scalar) {}
-    explicit operator T() const noexcept {return scalar;}
+	T scalar;
+	MaxAlg() = default;
+	MaxAlg(T scalar) noexcept : scalar(scalar) {}
+	explicit operator T() const noexcept { return scalar; }
 
-    MaxAlg& operator+=(MaxAlg right) noexcept {
-        scalar = std::max(scalar, right.scalar);
-        return *this;
-    }
+	MaxAlg &operator+=(MaxAlg right) noexcept {
+		scalar = std::max(scalar, right.scalar);
+		return *this;
+	}
 
-    friend MaxAlg operator+(MaxAlg left, MaxAlg right) noexcept {
-        left += right;
-        return left;
-    }
-    MaxAlg& operator *=(MaxAlg right) noexcept {
-        scalar *= right.scalar;
-        return * this;
-    }
-    MaxAlg& operator /=(MaxAlg right) noexcept {
-        scalar /= right.scalar;
-        return * this;
-    }
-    friend MaxAlg operator-=(MaxAlg left, MaxAlg right) noexcept {
-        return left;
-    }
-    friend MaxAlg operator*(MaxAlg left, MaxAlg right) noexcept {
-        left *= right;
-        return left;
-    }
-    friend MaxAlg operator-(MaxAlg left, MaxAlg right) noexcept {
-        return left;
-    }
-    friend MaxAlg operator/(MaxAlg left, MaxAlg right) noexcept {
-        left /= right;
-        return left;
-    }
-    friend bool operator==(MaxAlg left, MaxAlg right) noexcept {
-        return left.scalar == right.scalar;
-    }
-    friend bool operator!=(MaxAlg left, MaxAlg right) noexcept {
-        return left.scalar != right.scalar;
-    }
-    friend bool operator>(MaxAlg left, MaxAlg right) noexcept {
-        return left.scalar > right.scalar;
-    }
-    friend bool operator>=(MaxAlg left, MaxAlg right) noexcept {
-        return left.scalar >= right.scalar;
-    }
-    friend bool operator<(MaxAlg left, MaxAlg right) noexcept {
-        return left.scalar < right.scalar;
-    }
-    friend bool operator<=(MaxAlg left, MaxAlg right) noexcept {
-        return left.scalar <= right.scalar;
-    }
-    friend std::ostream &operator<<(std::ostream & stream, MaxAlg right) noexcept {
-        return stream << right.scalar;
-    }
-
+	friend MaxAlg operator+(MaxAlg left, MaxAlg right) noexcept {
+		left += right;
+		return left;
+	}
+	MaxAlg &operator*=(MaxAlg right) noexcept {
+		scalar *= right.scalar;
+		return *this;
+	}
+	MaxAlg &operator/=(MaxAlg right) noexcept {
+		scalar /= right.scalar;
+		return *this;
+	}
+	friend MaxAlg operator-=(MaxAlg left, MaxAlg right) noexcept { return left; }
+	friend MaxAlg operator*(MaxAlg left, MaxAlg right) noexcept {
+		left *= right;
+		return left;
+	}
+	friend MaxAlg operator-(MaxAlg left, MaxAlg right) noexcept { return left; }
+	friend MaxAlg operator/(MaxAlg left, MaxAlg right) noexcept {
+		left /= right;
+		return left;
+	}
+	friend bool operator==(MaxAlg left, MaxAlg right) noexcept { return left.scalar == right.scalar; }
+	friend bool operator!=(MaxAlg left, MaxAlg right) noexcept { return left.scalar != right.scalar; }
+	friend bool operator>(MaxAlg left, MaxAlg right) noexcept { return left.scalar > right.scalar; }
+	friend bool operator>=(MaxAlg left, MaxAlg right) noexcept { return left.scalar >= right.scalar; }
+	friend bool operator<(MaxAlg left, MaxAlg right) noexcept { return left.scalar < right.scalar; }
+	friend bool operator<=(MaxAlg left, MaxAlg right) noexcept { return left.scalar <= right.scalar; }
+	friend std::ostream &operator<<(std::ostream &stream, MaxAlg right) noexcept { return stream << right.scalar; }
 };
 
 
-template <class T>
-double sqrt(const MaxAlg<T> & val) {
-    return ::sqrt(val.scalar);
+template<class T>
+double sqrt(const MaxAlg<T> &val) {
+	return ::sqrt(val.scalar);
 }
 
 
-
+template<class T, Eigen::Index Rows, Eigen::Index Cols>
+using MaxAlgMatrix = Eigen::Matrix<MaxAlg<T>, Rows, Cols>;
 
 template<class T, Eigen::Index Rows, Eigen::Index Cols>
-using MaxAlgMatrix = Eigen::Matrix<MaxAlg<T>,Rows,Cols>;
-
-template<class T, Eigen::Index Rows,Eigen::Index Cols>
-using MaxAlgArray = Eigen::Array<MaxAlg<T>, Rows,Cols>;
-
+using MaxAlgArray = Eigen::Array<MaxAlg<T>, Rows, Cols>;
 
 
 #if 0
@@ -174,4 +153,3 @@ void TestMatrixMultiplication(){
 
 }
 #endif
-

@@ -5,5 +5,5 @@
 class decision_method {
 
 public:
-    virtual void perform()  = 0;
+	virtual void perform() = 0;
 };
