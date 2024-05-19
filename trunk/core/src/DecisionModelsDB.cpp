@@ -8,7 +8,7 @@ size_t DecisionModelsDB::size() const {
 	return modelsDb_.size();
 }
 
-bool DecisionModelsDB::count(const string &modelName) const {
+bool DecisionModelsDB::count(const std::string &modelName) const {
 	return modelsDb_.count(modelName);
 }
 
@@ -16,11 +16,11 @@ const DecisionModel &DecisionModelsDB::model(const std::string &modelName) const
 	return modelsDb_.at(modelName);
 }
 
-DecisionModel &DecisionModelsDB::model(const string &modelName) {
+DecisionModel &DecisionModelsDB::model(const std::string &modelName) {
 	return modelsDb_.at(modelName);
 }
 
-void DecisionModelsDB::deleteModel(const string &modelName) {
+void DecisionModelsDB::deleteModel(const std::string &modelName) {
 	if (modelsDb_.count(modelName))
 		modelsDb_.erase(modelName);
 }

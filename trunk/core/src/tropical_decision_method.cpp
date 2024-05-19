@@ -1,13 +1,12 @@
 #include "../include/tropical_decision_method.h"
 
-tropical_decision_method::tropical_decision_method(const vector<MaxAlgMatrixXd> &alternatives,
+tropical_decision_method::tropical_decision_method(const std::vector<MaxAlgMatrixXd> &alternatives,
 												   const MaxAlgMatrixXd &criteria)
 	: alternatives_(alternatives), criteria_(criteria) {
 }
 
-tropical_decision_method::tropical_decision_method(const vector<Eigen::MatrixXd> &alternatives,
+tropical_decision_method::tropical_decision_method(const std::vector<Eigen::MatrixXd> &alternatives,
 												   const MatrixXd &criteria) {
-
 	alternatives_.resize(alternatives.size());
 	for (int i = 0; i < alternatives_.size(); ++i) {
 		auto &alt = alternatives_.at(i);
@@ -18,8 +17,6 @@ tropical_decision_method::tropical_decision_method(const vector<Eigen::MatrixXd>
 			}
 		}
 	}
-
-
 	criteria_.resize(criteria.rows(), criteria.cols());
 	for (int row = 0; row < criteria_.rows(); ++row) {
 		for (int column = 0; column < criteria_.cols(); ++column) {
@@ -28,11 +25,11 @@ tropical_decision_method::tropical_decision_method(const vector<Eigen::MatrixXd>
 	}
 }
 
-const vector<MaxAlgMatrixXd> &tropical_decision_method::alternatives() const {
+const std::vector<MaxAlgMatrixXd> &tropical_decision_method::alternatives() const {
 	return alternatives_;
 }
 
-void tropical_decision_method::set_alternatives(const vector<MaxAlgMatrixXd> &alternatives) {
+void tropical_decision_method::set_alternatives(const std::vector<MaxAlgMatrixXd> &alternatives) {
 	alternatives_ = alternatives;
 }
 
@@ -52,7 +49,7 @@ void tropical_decision_method::perform() {
 	MaxAlgMatrixXd w = worst_differentiating_weight_vector(D);
 	MaxAlgMatrixXd P = computing_weighted_sum_pairwise_comparison_matrices(alternatives(), v);
 	MaxAlgMatrixXd Q = build_generating_matrix_optimal_ratings_alternatives(P);
-	MaxAlgMatrixXd x = calc_best_differentiating_vector_ratings_alternatives(D, Q, weight_vector_index);
+	MaxAlgMatrixXd x = calc_best_differentiating_vector_ratings_alternatives(Q);
 
 	MaxAlgMatrixXd R = computing_weighted_sum_pairwise_comparison_matrices(alternatives(), w);
 	MaxAlgMatrixXd S = build_generating_matrix_optimal_ratings_alternatives(R);
@@ -118,12 +115,9 @@ tropical_decision_method::build_generating_matrix_optimal_ratings_alternatives(c
 	return Q;
 }
 
-MaxAlgMatrixXd tropical_decision_method::calc_best_differentiating_vector_ratings_alternatives(const MaxAlgMatrixXd &D,
-																							   const MaxAlgMatrixXd &Q,
-																							   int index) const {
-	MaxAlgVectorXd I(D.rows());
-	I.setOnes();
-	I.resize(Q.rows());
+MaxAlgMatrixXd
+tropical_decision_method::calc_best_differentiating_vector_ratings_alternatives(const MaxAlgMatrixXd &Q) const {
+	MaxAlgVectorXd I(Q.rows());
 	I.setOnes();
 	double current_max = 0;
 	int vector_index = 0;
@@ -136,7 +130,7 @@ MaxAlgMatrixXd tropical_decision_method::calc_best_differentiating_vector_rating
 			current_max = r1(0).scalar;
 		}
 	}
-	MaxAlgMatrixXd X = Q.col(vector_index) * d(1, static_cast<double>(Q.col(index).sum()));
+	MaxAlgMatrixXd X = Q.col(vector_index) * d(1, static_cast<double>(Q.col(vector_index).sum()));
 	return X;
 }
 
@@ -148,11 +142,11 @@ tropical_decision_method::calc_worst_differentiating_vector_ratings_alternatives
 	return y;
 }
 
-const pair<MaxAlgMatrixXd, MaxAlgMatrixXd> &tropical_decision_method::final_weights() const {
+const std::pair<MaxAlgMatrixXd, MaxAlgMatrixXd> &tropical_decision_method::final_weights() const {
 	return final_weights_;
 }
 
-void tropical_decision_method::set_final_weights(const pair<MaxAlgMatrixXd, MaxAlgMatrixXd> &final_weights) {
+void tropical_decision_method::set_final_weights(const std::pair<MaxAlgMatrixXd, MaxAlgMatrixXd> &final_weights) {
 	final_weights_ = final_weights;
 }
 

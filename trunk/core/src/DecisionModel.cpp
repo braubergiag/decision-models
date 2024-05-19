@@ -9,27 +9,27 @@ void DecisionModel::addCriteria(const std::string &criteria) {
 	criteriaNames_.emplace_back(criteria);
 }
 
-void DecisionModel::setDecisionName(const string &decisionName) {
+void DecisionModel::setDecisionName(const std::string &decisionName) {
 	decisionName_ = decisionName;
 }
 
-const string &DecisionModel::decisionName() const {
+const std::string &DecisionModel::decisionName() const {
 	return decisionName_;
 }
 
-const vector<std::string> &DecisionModel::criteriaNames() const {
+const std::vector<std::string> &DecisionModel::criteriaNames() const {
 	return criteriaNames_;
 }
 
-const vector<std::string> &DecisionModel::alternativesNames() const {
+const std::vector<std::string> &DecisionModel::alternativesNames() const {
 	return alternativesNames_;
 }
 
-void DecisionModel::setCriteriaNames(const vector<std::string> &criteriaNames) {
+void DecisionModel::setCriteriaNames(const std::vector<std::string> &criteriaNames) {
 	criteriaNames_ = criteriaNames;
 }
 
-void DecisionModel::setAlternativesNames(const vector<std::string> &alternativesNames) {
+void DecisionModel::setAlternativesNames(const std::vector<std::string> &alternativesNames) {
 	alternativesNames_ = alternativesNames;
 }
 
@@ -44,11 +44,11 @@ void DecisionModel::setCriteriaComparisons(const MatrixXd &criteriaComparisons,
 	criteriaComparisonMatrixIsInit_ = true;
 }
 
-const vector<Eigen::MatrixXd> &DecisionModel::alternativesComparisons() const {
+const std::vector<Eigen::MatrixXd> &DecisionModel::alternativesComparisons() const {
 	return alternativesComps_;
 }
 
-void DecisionModel::setAlternativesComparisons(const vector<Eigen::MatrixXd> &alternativesComparisons) {
+void DecisionModel::setAlternativesComparisons(const std::vector<Eigen::MatrixXd> &alternativesComparisons) {
 	alternativesComps_ = alternativesComparisons;
 }
 
@@ -131,7 +131,6 @@ std::string DecisionModel::gmResult() const {
 }
 
 std::pair<std::string, std::string> DecisionModel::tropicalResult() const {
-
 	auto [best, worst] = tropicalDecisionMethod_.final_weights();
 	std::stringstream ss_best, ss_worst;
 	ss_best << best;
