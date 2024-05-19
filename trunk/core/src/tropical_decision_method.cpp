@@ -142,8 +142,8 @@ tropical_decision_method::calc_worst_differentiating_vector_ratings_alternatives
 	return y;
 }
 
-const std::pair<MaxAlgMatrixXd, MaxAlgMatrixXd> &tropical_decision_method::final_weights() const {
-	return final_weights_;
+std::pair<VectorXd, VectorXd> tropical_decision_method::final_weights() const {
+	return {to_VectorXd(final_weights_.first), to_VectorXd(final_weights_.second)};
 }
 
 void tropical_decision_method::set_final_weights(const std::pair<MaxAlgMatrixXd, MaxAlgMatrixXd> &final_weights) {
@@ -166,6 +166,13 @@ std::vector<double> tropical_decision_method::worst_diff_vector() const {
 
 	for (int i = 0; i < v.size(); ++i) {
 		v[i] = static_cast<double>(words_diff_v(i, 0));
+	}
+	return v;
+}
+VectorXd tropical_decision_method::to_VectorXd(const MaxAlgMatrixXd &maxAlgMatrixXd) const {
+	VectorXd v(maxAlgMatrixXd.rows());
+	for (int i = 0; i < v.size(); ++i) {
+		v[i] = static_cast<double>(maxAlgMatrixXd(i,0));
 	}
 	return v;
 }

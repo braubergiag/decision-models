@@ -37,12 +37,11 @@ void gm_decision_method::perform() {
 			matrix_powers(j, i) = pow(matrix_weights(j, i), crit_vector(i));
 		}
 	}
-#if 1
+
 	for (int i = 0; i < criter_num; ++i) {
 		for (int j = 0; j < alter_num; ++j)
 			final_weights(j) *= matrix_powers(j, i);
 	}
-#endif
 
 	double final_vector_sum = final_weights.maxCoeff();
 	std::transform(final_weights.begin(), final_weights.end(), final_weights.begin(),

@@ -15,7 +15,6 @@ void PrintLog(const T &t, std::string hint = {}, std::string delim = "\n") {
 	std::cout << t << std::endl;
 }
 std::ostream &operator<<(std::ostream &stream, const MaxAlgMatrixXd &matrixXd);
-MaxAlgMatrixXd power(const MaxAlgMatrixXd &matrixXd, int n = 1);
 MaxAlgMatrixXd clini(const MaxAlgMatrixXd &matrixXd);
 double spectral_radius(const MaxAlgMatrixXd &matrixXd);
 

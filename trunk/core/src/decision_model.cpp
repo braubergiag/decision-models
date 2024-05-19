@@ -1,5 +1,6 @@
-#include "../include/DecisionModel.h"
 #include <algorithm>
+#include <map>
+#include "../include/decision_model.h"
 
 void DecisionModel::addAlternative(const std::string &alternative) {
 	alternativesNames_.emplace_back(alternative);
@@ -118,8 +119,10 @@ void DecisionModel::performGmMethod() {
 
 std::string DecisionModel::ahpResult() const {
 	auto res = ahpDecisionMethod_.final_weights();
+
 	std::stringstream ss;
 	ss << res;
+	ss << modelRanking(res);
 	return ss.str();
 }
 
@@ -127,13 +130,36 @@ std::string DecisionModel::gmResult() const {
 	auto res = gmDecisionMethod_.final_weights();
 	std::stringstream ss;
 	ss << res;
+
+	ss << modelRanking(res);
 	return ss.str();
 }
 
 std::pair<std::string, std::string> DecisionModel::tropicalResult() const {
 	auto [best, worst] = tropicalDecisionMethod_.final_weights();
 	std::stringstream ss_best, ss_worst;
+
 	ss_best << best;
+	ss_best << modelRanking(best);
+
 	ss_worst << worst;
+	ss_worst << modelRanking(worst);
+
 	return {ss_best.str(), ss_worst.str()};
+}
+
+std::string DecisionModel::modelRanking(const VectorXd &weights) const {
+	std::vector<std::pair<double, int>> rankings;
+	for (int i = 0; i < weights.size(); ++i) {
+		rankings.emplace_back(weights(i), i + 1);
+	}
+	std::sort(begin(rankings), end(rankings), std::greater{});
+
+	std::stringstream ss;
+	ss << "\n\n";
+	for (int i = 0; i < rankings.size(); ++i) {
+		auto alternative = rankings.at(i).second;
+		ss << "A" + std::to_string(alternative) + (i + 1 < rankings.size() ? " > " : "");
+	}
+	return ss.str();
 }

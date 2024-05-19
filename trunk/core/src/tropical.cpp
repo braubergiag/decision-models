@@ -1,5 +1,4 @@
 #include "../include/tropical.h"
-using std::string;
 
 std::ostream &operator<<(std::ostream &stream, const MaxAlgMatrixXd &matrixXd) {
 	return stream << matrixXd.cast<double>();
@@ -31,12 +30,4 @@ MaxAlgMatrixXd clini(const MaxAlgMatrixXd &matrixXd) {
 		A += temp;
 	}
 	return A;
-}
-
-MaxAlgMatrixXd power(const MaxAlgMatrixXd &matrixXd, int n) {
-	MaxAlgMatrixXd temp = matrixXd;
-	for (int i = 1; i < n; ++i) {
-		temp *= matrixXd;
-	}
-	return temp;
 }

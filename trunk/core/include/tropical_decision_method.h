@@ -15,7 +15,7 @@ public:
 public:
 	const std::vector<MaxAlgMatrixXd> &alternatives() const;
 	const MaxAlgMatrixXd &criteria() const;
-	const std::pair<MaxAlgMatrixXd, MaxAlgMatrixXd> &final_weights() const;
+	std::pair<VectorXd, VectorXd> final_weights() const;
 
 public:
 	void set_criteria(const MaxAlgMatrixXd &criteria);
@@ -33,6 +33,7 @@ public:
 	MaxAlgMatrixXd calc_worst_differentiating_vector_ratings_alternatives(const MaxAlgMatrixXd &S) const;
 	std::vector<double> best_diff_vector() const;
 	std::vector<double> worst_diff_vector() const;
+	VectorXd to_VectorXd(const MaxAlgMatrixXd& maxAlgMatrixXd) const;
 
 private:
 	void set_final_weights(const std::pair<MaxAlgMatrixXd, MaxAlgMatrixXd> &final_weights);

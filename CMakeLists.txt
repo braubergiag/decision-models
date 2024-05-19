@@ -17,13 +17,12 @@ find_package (Eigen3 3.3 REQUIRED NO_MODULE)
 link_directories(${Eigen_INCLUDE_DIRS})
 set (PROJECT_SOURCES
         trunk/core/src/ahp_decision_method.cpp
-        trunk/core/src/decision_method.cpp
         trunk/core/src/gm_decision_method.cpp
         trunk/core/src/heuristic_decision_method.cpp
         trunk/core/src/tropical.cpp
         trunk/core/src/tropical_decision_method.cpp
-        trunk/core/src/DecisionModelsDB.cpp
-        trunk/core/src/DecisionModel.cpp
+        trunk/core/src/decision_models_db.cpp
+        trunk/core/src/decision_model.cpp
         trunk/core/src/main.cpp
 
         trunk/core/src/ui/StartMenu.cpp
@@ -42,7 +41,7 @@ set (PROJECT_HEADERS
         trunk/core/include/ui/CompareCriteriaDialog.h
         trunk/core/include/ui/CompareAlternativesDialog.h
 
-        trunk/core/include/DecisionModel.h
+        trunk/core/include/decision_model.h
 )
 
 
@@ -115,7 +114,6 @@ enable_testing()
 add_executable(
         DecisionModelsTests
         trunk/core/src/ahp_decision_method.cpp
-        trunk/core/src/decision_method.cpp
         trunk/core/src/gm_decision_method.cpp
         trunk/core/src/heuristic_decision_method.cpp
         trunk/core/src/tropical.cpp
