@@ -9,7 +9,6 @@
 
 using ComparisionMatrixView = Eigen::Matrix<std::string, Dynamic, Dynamic>;
 
-
 class DecisionModel {
 public:
 	using ComparisonMatrixView = Eigen::Matrix<std::string, Dynamic, Dynamic>;
@@ -27,15 +26,13 @@ public:
 	std::string ahpResult() const;
 	std::string gmResult() const;
 	std::pair<std::string, std::string> tropicalResult() const;
-	std::string modelRanking(const VectorXd & weights) const;
+	std::string modelRanking(const VectorXd &weights) const;
 
 public:
 	void setDecisionName(const std::string &decisionName);
 	void setCriteriaNames(const std::vector<std::string> &criteriaNames);
 	void setAlternativesNames(const std::vector<std::string> &alternativesNames);
 	void setCriteriaComparisons(const MatrixXd &criteriaComparisons, const ComparisionMatrixView &criteriaMatrixView);
-
-
 	void setAlternativesComparisons(const std::vector<Eigen::MatrixXd> &alternativesComparisons);
 	void setAlternativesCompsAt(const Eigen::MatrixXd &alternativesComps,
 								const ComparisionMatrixView &alternativesCompsView, int index);

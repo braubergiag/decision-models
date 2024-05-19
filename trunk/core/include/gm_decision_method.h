@@ -2,7 +2,6 @@
 
 #include "heuristic_decision_method.h"
 
-
 class gm_decision_method : public heuristic_decision_method {
 public:
 	gm_decision_method() = default;

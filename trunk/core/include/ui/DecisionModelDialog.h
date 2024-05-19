@@ -1,4 +1,5 @@
 #pragma once
+
 #include <QDialog>
 #include <QLineEdit>
 #include <QListWidget>
@@ -6,6 +7,7 @@
 #include <QVector>
 #include <QString>
 #include "../decision_models_db.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 	class DecisionModelDialog;
