@@ -5,7 +5,7 @@
 #include "DecisionModelDialog.h"
 #include "CompareAlternativesDialog.h"
 #include "CompareCriteriaDialog.h"
-#include "../DecisionModelsDB.h"
+#include "../decision_models_db.h"
 #include <memory>
 QT_BEGIN_NAMESPACE
 namespace Ui {

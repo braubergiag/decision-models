@@ -2,7 +2,7 @@
 
 #include <map>
 #include <string>
-#include "DecisionModel.h"
+#include "decision_model.h"
 #include <Eigen/Core>
 
 class DecisionModelsDB {
