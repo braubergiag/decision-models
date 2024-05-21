@@ -32,7 +32,7 @@ public:
 	void setDecisionName(const std::string &decisionName);
 	void setCriteriaNames(const std::vector<std::string> &criteriaNames);
 	void setAlternativesNames(const std::vector<std::string> &alternativesNames);
-	void setCriteriaComparisons(const MatrixXd &criteriaComparisons, const ComparisionMatrixView &criteriaMatrixView);
+	void setCriteriaComparisons(const Eigen::MatrixXd &criteriaComparisons, const ComparisionMatrixView &criteriaMatrixView);
 
 
 	void setAlternativesComparisons(const std::vector<Eigen::MatrixXd> &alternativesComparisons);
@@ -40,7 +40,7 @@ public:
 								const ComparisionMatrixView &alternativesCompsView, int index);
 
 	const ComparisionMatrixView &compsViewAt(int index) const;
-	const MatrixXd &compsAt(int index) const;
+	const Eigen::MatrixXd &compsAt(int index) const;
 	bool compsIsInitAt(int index) const;
 
 public:
@@ -48,7 +48,7 @@ public:
 	const std::vector<std::string> &criteriaNames() const;
 	const std::vector<std::string> &alternativesNames() const;
 
-	const MatrixXd &criteriaComparisons() const;
+	const Eigen::MatrixXd &criteriaComparisons() const;
 	const ComparisonMatrixView &criteriaComparisonsMatrixView() const;
 	bool criteriaComparisonMatrixIsInit() const;
 	bool alternativesComparisonsMatricesIsInit() const;

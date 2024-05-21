@@ -33,11 +33,11 @@ void DecisionModel::setAlternativesNames(const std::vector<std::string> &alterna
 	alternativesNames_ = alternativesNames;
 }
 
-const MatrixXd &DecisionModel::criteriaComparisons() const {
+const Eigen::MatrixXd &DecisionModel::criteriaComparisons() const {
 	return criteriaComparisons_;
 }
 
-void DecisionModel::setCriteriaComparisons(const MatrixXd &criteriaComparisons,
+void DecisionModel::setCriteriaComparisons(const Eigen::MatrixXd &criteriaComparisons,
 										   const ComparisionMatrixView &criteriaMatrixView) {
 	criteriaComparisons_ = criteriaComparisons;
 	criteriaComparisonsMatrixView_ = criteriaMatrixView;
@@ -84,7 +84,7 @@ const ComparisionMatrixView &DecisionModel::compsViewAt(int index) const {
 	return alternativesCompsViews_.at(index);
 }
 
-const MatrixXd &DecisionModel::compsAt(int index) const {
+const Eigen::MatrixXd &DecisionModel::compsAt(int index) const {
 	return alternativesComps_.at(index);
 }
 

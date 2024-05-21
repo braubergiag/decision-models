@@ -6,13 +6,9 @@ inline double d(double p, double q) {
     return p / q;
 }
 
-using Eigen::VectorXd;
-using Eigen::MatrixXcd;
-using Eigen::MatrixXd;
-
 TEST(GmModule, Task_5_1) {
     //5.1. Решение задачи о выборе места работы"
-    MatrixXd A1(3, 3), A2(3, 3), A3(3, 3), A4(3, 3), A5(3, 3), A6(3, 3);
+    Eigen::MatrixXd A1(3, 3), A2(3, 3), A3(3, 3), A4(3, 3), A5(3, 3), A6(3, 3);
 
     A1 << 1, d(1, 4), d(1, 2),
             4, 1, 3,
@@ -34,7 +30,7 @@ TEST(GmModule, Task_5_1) {
             d(1, 9), d(1, 5), 1;
 
 
-    MatrixXd C(6, 6);
+	Eigen::MatrixXd C(6, 6);
     C << 1, 1, 1, 4, 1, d(1, 2),
             1, 1, 2, 4, 1, d(1, 2),
             1, d(1, 2), 1, 5, 3, d(1, 2),

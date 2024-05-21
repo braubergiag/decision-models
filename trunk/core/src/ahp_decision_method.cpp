@@ -2,17 +2,12 @@
 #include <Eigen/Eigenvalues>
 #include "../include/ahp_decision_method.h"
 
-using Eigen::EigenSolver;
-using Eigen::MatrixXd;
-using Eigen::VectorXd;
-
-
-ahp_decision_method::ahp_decision_method(const std::vector<Eigen::MatrixXd> &alternatives, const MatrixXd &criteria)
-	: heuristic_decision_method(alternatives, criteria) {
+ahp_decision_method::ahp_decision_method(const std::vector<Eigen::MatrixXd> &alternatives, const Eigen::MatrixXd &criteria)
+	: decision_method(alternatives, criteria) {
 }
 
-Eigen::MatrixXcd ahp_decision_method::main_eigenvector(const MatrixXd &matrix) const {
-	EigenSolver<MatrixXd> eigen_solver(matrix);
+Eigen::MatrixXcd ahp_decision_method::main_eigenvector(const Eigen::MatrixXd &matrix) const {
+	Eigen::EigenSolver<Eigen::MatrixXd> eigen_solver(matrix);
 	Eigen::VectorXcd eigen_vector = eigen_solver.eigenvectors().col(0).real();
 	double sum = eigen_vector.cwiseAbs().sum();
 	std::transform(eigen_vector.begin(), eigen_vector.end(), eigen_vector.begin(),
@@ -30,7 +25,6 @@ ahp_decision_method::weight_matrix(const std::vector<Eigen::MatrixXcd> &alternat
 			weights(j, i) = alternatives_main_eigen_vectors.at(i).coeff(j).real();
 		}
 	}
-
 	return weights;
 }
 

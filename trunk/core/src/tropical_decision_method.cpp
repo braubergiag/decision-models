@@ -1,7 +1,5 @@
-#include "../include/tropical_decision_method.h"
 #include <numeric>
-
-using namespace Eigen;
+#include "../include/tropical_decision_method.h"
 
 tropical_decision_method::tropical_decision_method(const std::vector<MaxAlgMatrixXd> &alternatives,
 												   const MaxAlgMatrixXd &criteria)
@@ -9,7 +7,7 @@ tropical_decision_method::tropical_decision_method(const std::vector<MaxAlgMatri
 }
 
 tropical_decision_method::tropical_decision_method(const std::vector<Eigen::MatrixXd> &alternatives,
-												   const MatrixXd &criteria) {
+												   const Eigen::MatrixXd &criteria) {
 	alternatives_.resize(alternatives.size());
 	for (int i = 0; i < alternatives_.size(); ++i) {
 		auto &alt = alternatives_.at(i);

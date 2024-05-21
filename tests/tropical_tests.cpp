@@ -1,10 +1,6 @@
 #include <gtest/gtest.h>
 #include <Eigen/Dense>
 #include "../trunk/core/include/tropical.h"
-using MaxAlgMatrixXd = MaxAlgMatrix<double ,Eigen::Dynamic,Eigen::Dynamic>;
-using MaxAlgVectorXd = MaxAlgMatrix<double, Eigen::Dynamic,1>;
-using MaxAlgArrayXXd = MaxAlgArray<double , Eigen::Dynamic, Eigen::Dynamic>;
-using MaxAlgArrayXd = MaxAlgArray<double, Eigen::Dynamic,1>;
 
 TEST(TropicalModule, spectral_radius){
     MaxAlgMatrixXd A1(4,4);
@@ -27,7 +23,6 @@ TEST(TropicalModule, spectral_radius){
 }
 
 TEST(TropicalModule, kleene_star){
-
     MaxAlgMatrixXd  A1(4,4), A_clini(4,4);
     const double epsilon = 0.001;
     A1 << d(1,2), d(3,2), 2, 1,
@@ -75,5 +70,4 @@ TEST(TropicalModule,Trace){
             0,  10, 1,
             3,  1,  1;
     ASSERT_EQ(A3.trace(), 100.0);
-
 }

@@ -17,9 +17,8 @@ find_package (Eigen3 3.3 REQUIRED NO_MODULE)
 link_directories(${Eigen_INCLUDE_DIRS})
 set (PROJECT_SOURCES
         trunk/core/src/ahp_decision_method.cpp
-        trunk/core/src/decision_method.cpp
         trunk/core/src/gm_decision_method.cpp
-        trunk/core/src/heuristic_decision_method.cpp
+        trunk/core/src/decision_method.cpp
         trunk/core/src/tropical.cpp
         trunk/core/src/tropical_decision_method.cpp
         trunk/core/src/DecisionModelsDB.cpp
@@ -115,9 +114,8 @@ enable_testing()
 add_executable(
         DecisionModelsTests
         trunk/core/src/ahp_decision_method.cpp
-        trunk/core/src/decision_method.cpp
         trunk/core/src/gm_decision_method.cpp
-        trunk/core/src/heuristic_decision_method.cpp
+        trunk/core/src/decision_method.cpp
         trunk/core/src/tropical.cpp
         trunk/core/src/tropical_decision_method.cpp
 
