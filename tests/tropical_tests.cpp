@@ -26,7 +26,7 @@ TEST(TropicalModule, spectral_radius){
 
 }
 
-TEST(TropicalModule, clini){
+TEST(TropicalModule, kleene_star){
 
     MaxAlgMatrixXd  A1(4,4), A_clini(4,4);
     const double epsilon = 0.001;
@@ -40,7 +40,7 @@ TEST(TropicalModule, clini){
                 d(1,2),3,1,2,
                 d(1,4),d(3,2),d(1,2),1;
 
-    ASSERT_NEAR(clini(A1).norm().scalar, A_clini.norm().scalar,epsilon);
+    ASSERT_NEAR(kleene_star(A1).norm().scalar, A_clini.norm().scalar,epsilon);
 
     MaxAlgMatrixXd A2(4,4);
     A2 << d(1,2), d(1,6),d(1,4),d(1,6),
@@ -53,7 +53,7 @@ TEST(TropicalModule, clini){
                 3,1,2,2,
                 d(3,2),d(1,2),1,1,
                 d(3,2),d(1,2),1,1;
-    ASSERT_NEAR(clini(A2).norm().scalar, A2_clini.norm().scalar,epsilon);
+    ASSERT_NEAR(kleene_star(A2).norm().scalar, A2_clini.norm().scalar,epsilon);
 }
 
 

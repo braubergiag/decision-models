@@ -18,14 +18,12 @@ void gm_decision_method::perform() {
 	VectorXd crit_vector = VectorXd::Ones(criter_num);
 	VectorXd final_weights = VectorXd::Ones(alter_num);
 
-
 	for (int i = 0; i < criter_num; ++i) {
 		crit_vector(i) = pow(criteria().row(i).prod(), 1. / criter_num);
 		for (int j = 0; j < alter_num; ++j) {
 			matrix_weights(j, i) = pow(alternatives().at(i).row(j).prod(), 1. / alter_num);
 		}
 	}
-
 
 	double criteria_vector_sum = crit_vector.sum();
 	std::transform(crit_vector.begin(), crit_vector.end(), crit_vector.begin(),
@@ -37,12 +35,10 @@ void gm_decision_method::perform() {
 			matrix_powers(j, i) = pow(matrix_weights(j, i), crit_vector(i));
 		}
 	}
-#if 1
 	for (int i = 0; i < criter_num; ++i) {
 		for (int j = 0; j < alter_num; ++j)
 			final_weights(j) *= matrix_powers(j, i);
 	}
-#endif
 
 	double final_vector_sum = final_weights.maxCoeff();
 	std::transform(final_weights.begin(), final_weights.end(), final_weights.begin(),

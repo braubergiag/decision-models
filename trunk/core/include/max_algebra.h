@@ -58,7 +58,6 @@ double sqrt(const MaxAlg<T> &val) {
 	return ::sqrt(val.scalar);
 }
 
-
 template<class T, Eigen::Index Rows, Eigen::Index Cols>
 using MaxAlgMatrix = Eigen::Matrix<MaxAlg<T>, Rows, Cols>;
 

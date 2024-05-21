@@ -16,8 +16,8 @@ void PrintLog(const T &t, std::string hint = {}, std::string delim = "\n") {
 }
 std::ostream &operator<<(std::ostream &stream, const MaxAlgMatrixXd &matrixXd);
 MaxAlgMatrixXd power(const MaxAlgMatrixXd &matrixXd, int n = 1);
-MaxAlgMatrixXd clini(const MaxAlgMatrixXd &matrixXd);
-double spectral_radius(const MaxAlgMatrixXd &matrixXd);
+MaxAlgMatrixXd kleene_star(const MaxAlgMatrixXd &mat);
+double spectral_radius(const MaxAlgMatrixXd &mat);
 
 
 inline double d(double p, double q) {

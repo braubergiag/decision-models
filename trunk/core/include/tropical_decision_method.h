@@ -23,16 +23,14 @@ public:
 
 public:
 	int best_differentiating_weight_vector_index(const MaxAlgMatrixXd &D) const;
-	MaxAlgMatrixXd best_differentiating_weight_vector(const MaxAlgMatrixXd &D, int index) const;
-	MaxAlgMatrixXd worst_differentiating_weight_vector(const MaxAlgMatrixXd &D) const;
+	MaxAlgVectorXd best_differentiating_weight_vector(const MaxAlgMatrixXd &D, int index) const;
+	MaxAlgVectorXd worst_differentiating_weight_vector(const MaxAlgMatrixXd &D) const;
 	MaxAlgMatrixXd construction_generating_matrix_optimal_weights(const MaxAlgMatrixXd &Criteria, double lambda) const;
 	MaxAlgMatrixXd computing_weighted_sum_pairwise_comparison_matrices(std::vector<MaxAlgMatrixXd> alternatives,
-																	   const MaxAlgMatrixXd &v) const;
+																	   const MaxAlgVectorXd &v) const;
 	MaxAlgMatrixXd build_generating_matrix_optimal_ratings_alternatives(const MaxAlgMatrixXd &P) const;
 	MaxAlgMatrixXd calc_best_differentiating_vector_ratings_alternatives(const MaxAlgMatrixXd &Q) const;
 	MaxAlgMatrixXd calc_worst_differentiating_vector_ratings_alternatives(const MaxAlgMatrixXd &S) const;
-	std::vector<double> best_diff_vector() const;
-	std::vector<double> worst_diff_vector() const;
 
 private:
 	void set_final_weights(const std::pair<MaxAlgMatrixXd, MaxAlgMatrixXd> &final_weights);
