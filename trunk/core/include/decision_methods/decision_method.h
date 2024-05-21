@@ -4,7 +4,6 @@
 #include <Eigen/Dense>
 #include <Eigen/Core>
 
-
 class decision_method {
 public:
 	decision_method() = default;

@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <Eigen/Dense>
-#include "../trunk/core/include/tropical.h"
+#include "../trunk/core/include/decision_methods/tropical.h"
 
 TEST(TropicalModule, spectral_radius){
     MaxAlgMatrixXd A1(4,4);

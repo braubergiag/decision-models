@@ -1,4 +1,4 @@
-#include "../include/tropical.h"
+#include "../../include/decision_methods/tropical.h"
 
 std::ostream &operator<<(std::ostream &stream, const MaxAlgMatrixXd &matrixXd) {
 	return stream << matrixXd.cast<double>();

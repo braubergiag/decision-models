@@ -4,7 +4,6 @@
 #include <vector>
 #include "decision_method.h"
 
-
 class ahp_decision_method : public decision_method {
 
 public:

@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
-#include "../trunk/core/include/tropical.h"
-#include "../trunk/core/include/tropical_decision_method.h"
+#include "../trunk/core/include/decision_methods/tropical.h"
+#include "../trunk/core/include/decision_methods/tropical_decision_method.h"
 
 TEST(TropicalModule,TropicalTask_5_1) {
         //5.1. Решение задачи о выборе места работы"

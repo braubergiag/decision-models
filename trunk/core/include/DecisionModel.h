@@ -3,12 +3,11 @@
 #include <vector>
 #include <string>
 #include <Eigen/Core>
-#include "ahp_decision_method.h"
-#include "gm_decision_method.h"
-#include "tropical_decision_method.h"
+#include "decision_methods/ahp_decision_method.h"
+#include "decision_methods/gm_decision_method.h"
+#include "decision_methods/tropical_decision_method.h"
 
 using ComparisionMatrixView = Eigen::Matrix<std::string, Eigen::Dynamic, Eigen::Dynamic>;
-
 
 class DecisionModel {
 public:

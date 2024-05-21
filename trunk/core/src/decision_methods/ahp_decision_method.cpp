@@ -1,6 +1,6 @@
 #include <iostream>
 #include <Eigen/Eigenvalues>
-#include "../include/ahp_decision_method.h"
+#include "../../include/decision_methods/ahp_decision_method.h"
 
 ahp_decision_method::ahp_decision_method(const std::vector<Eigen::MatrixXd> &alternatives, const Eigen::MatrixXd &criteria)
 	: decision_method(alternatives, criteria) {

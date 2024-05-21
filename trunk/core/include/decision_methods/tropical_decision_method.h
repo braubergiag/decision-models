@@ -4,13 +4,13 @@
 #include "decision_method.h"
 #include "tropical.h"
 
-class tropical_decision_method : public decision_method {
+class tropical_decision_method {
 
 public:
 	tropical_decision_method() = default;
 	tropical_decision_method(const std::vector<MaxAlgMatrixXd> &alternatives, const MaxAlgMatrixXd &criteria);
 	tropical_decision_method(const std::vector<Eigen::MatrixXd> &alternatives, const Eigen::MatrixXd &criteria);
-	void perform() override;
+	void perform();
 
 public:
 	const std::vector<MaxAlgMatrixXd> &alternatives() const;

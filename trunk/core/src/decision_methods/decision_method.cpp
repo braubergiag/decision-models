@@ -1,4 +1,4 @@
-#include "../include/decision_method.h"
+#include "../../include/decision_methods/decision_method.h"
 
 decision_method::decision_method(const std::vector<Eigen::MatrixXd> &alternatives,
 													 const Eigen::MatrixXd &criteria)

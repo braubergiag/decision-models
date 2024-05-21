@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <Eigen/Dense>
-#include "../trunk/core/include/ahp_decision_method.h"
+#include "../trunk/core/include/decision_methods/ahp_decision_method.h"
 
 inline double d(double p, double q) {
     return p / q;
