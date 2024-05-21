@@ -7,12 +7,12 @@
 #include "gm_decision_method.h"
 #include "tropical_decision_method.h"
 
-using ComparisionMatrixView = Eigen::Matrix<std::string, Dynamic, Dynamic>;
+using ComparisionMatrixView = Eigen::Matrix<std::string, Eigen::Dynamic, Eigen::Dynamic>;
 
 
 class DecisionModel {
 public:
-	using ComparisonMatrixView = Eigen::Matrix<std::string, Dynamic, Dynamic>;
+	using ComparisonMatrixView = Eigen::Matrix<std::string, Eigen::Dynamic, Eigen::Dynamic>;
 	DecisionModel() = default;
 
 public:
