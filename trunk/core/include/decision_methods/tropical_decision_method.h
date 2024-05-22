@@ -9,8 +9,10 @@ using tropical::MaxAlgMatrixXd;
 using tropical::MaxAlgVectorXd;
 
 class tropical_decision_method {
+	using FinalWeights = std::pair<std::vector<MaxAlgVectorXd>, MaxAlgVectorXd>;
 
 public:
+
 	tropical_decision_method() = default;
 	tropical_decision_method(const std::vector<MaxAlgMatrixXd> &alternatives, const MaxAlgMatrixXd &criteria);
 	tropical_decision_method(const std::vector<Eigen::MatrixXd> &alternatives, const Eigen::MatrixXd &criteria);
@@ -19,7 +21,7 @@ public:
 public:
 	const std::vector<MaxAlgMatrixXd> &alternatives() const;
 	const MaxAlgMatrixXd &criteria() const;
-	const std::pair<std::vector<MaxAlgVectorXd>, MaxAlgVectorXd> &final_weights() const;
+	const FinalWeights &final_weights() const;
 
 public:
 	void set_criteria(const MaxAlgMatrixXd &criteria);
@@ -37,10 +39,10 @@ public:
 	MaxAlgVectorXd worst_diff_alternatives_ratings_vector(const MaxAlgMatrixXd &S) const;
 
 private:
-	void set_final_weights(const std::pair<std::vector<MaxAlgVectorXd>, MaxAlgVectorXd> &final_weights);
+	void set_final_weights(const FinalWeights &final_weights);
 
 private:
 	std::vector<MaxAlgMatrixXd> alternatives_;
-	std::pair<std::vector<MaxAlgVectorXd>, MaxAlgVectorXd> final_weights_;
+	FinalWeights final_weights_;
 	MaxAlgMatrixXd criteria_;
 };

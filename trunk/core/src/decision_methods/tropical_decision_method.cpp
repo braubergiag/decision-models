@@ -8,7 +8,7 @@ tropical_decision_method::tropical_decision_method(const std::vector<MaxAlgMatri
 
 tropical_decision_method::tropical_decision_method(const std::vector<Eigen::MatrixXd> &alternatives,
 												   const Eigen::MatrixXd &criteria) {
-	for (const auto & alt : alternatives) {
+	for (const auto &alt: alternatives) {
 		alternatives_.emplace_back(tropical::to_MaxAlgMatrixXd(alt));
 	}
 	criteria_ = tropical::to_MaxAlgMatrixXd(criteria);
@@ -118,11 +118,10 @@ MaxAlgVectorXd tropical_decision_method::worst_diff_alternatives_ratings_vector(
 	return (i.transpose() * S).cwiseInverse();
 }
 
-void tropical_decision_method::set_final_weights(
-		const std::pair<std::vector<MaxAlgVectorXd>, MaxAlgVectorXd> &final_weights) {
+void tropical_decision_method::set_final_weights(const FinalWeights &final_weights) {
 	final_weights_ = final_weights;
 }
-const std::pair<std::vector<MaxAlgVectorXd>, MaxAlgVectorXd> &tropical_decision_method::final_weights() const {
+
+const tropical_decision_method::FinalWeights &tropical_decision_method::final_weights() const {
 	return final_weights_;
 }
-
