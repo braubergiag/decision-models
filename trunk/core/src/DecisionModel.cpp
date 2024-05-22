@@ -131,9 +131,11 @@ std::string DecisionModel::gmResult() const {
 }
 
 std::pair<std::string, std::string> DecisionModel::tropicalResult() const {
-	auto [best, worst] = tropicalDecisionMethod_.final_weights();
+	auto [best_vectors, worst_vector] = tropicalDecisionMethod_.final_weights();
 	std::stringstream ss_best, ss_worst;
-	ss_best << best;
-	ss_worst << worst;
+	for (const auto &best: best_vectors) {
+		ss_best << best << "\n\n";
+	}
+	ss_worst << worst_vector;
 	return {ss_best.str(), ss_worst.str()};
 }
