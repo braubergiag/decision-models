@@ -59,17 +59,13 @@ void tropical_decision_method::perform() {
 }
 
 int tropical_decision_method::best_differentiating_weight_vector_index(const MaxAlgMatrixXd &D) const {
-
-	auto i_tr = MaxAlgVectorXd::Ones(D.rows()).transpose();
 	double current_max = 0;
 	int vector_idx = 0;
 	for (auto i = 0; i < D.cols(); ++i) {
-		MaxAlgMatrixXd x = D.col(i);
-		MaxAlgMatrixXd x_ = D.col(i).cwiseInverse();
-		auto r1 = ((i_tr * x) * (i_tr * x_));
-		if (current_max < r1(0).scalar) {
+		auto norm_product = D.col(i).maxCoeff() * D.col(i).cwiseInverse().maxCoeff();
+		if (current_max < norm_product) {
 			vector_idx = i;
-			current_max = r1(0).scalar;
+			current_max = norm_product;
 		}
 	}
 	return vector_idx;
