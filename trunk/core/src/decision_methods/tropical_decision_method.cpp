@@ -85,7 +85,7 @@ std::vector<MaxAlgVectorXd> tropical_decision_method::best_diff_weight_vectors(c
 		auto v = D.col(index) * d(1, D.col(index).maxCoeff());
 		best_weight_vectors.emplace_back(v);
 	}
-
+	remove_dominating_vectors(best_weight_vectors);
 	return best_weight_vectors;
 }
 
@@ -122,6 +122,7 @@ tropical_decision_method::best_diff_alternatives_ratings_vectors(const MaxAlgMat
 	for (auto i: vector_indices) {
 		best_vectors.emplace_back(Q.col(i) * d(1, Q.col(i).sum()));
 	}
+	remove_dominating_vectors(best_vectors);
 	return best_vectors;
 }
 

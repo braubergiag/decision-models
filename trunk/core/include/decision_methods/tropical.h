@@ -66,6 +66,10 @@ using MaxAlgArrayXd = MaxAlgArray<double, Eigen::Dynamic, 1>;
 
 
 std::ostream &operator<<(std::ostream &stream, const MaxAlgMatrixXd &matrixXd);
+bool operator>=(const MaxAlgVectorXd &lhs, const MaxAlgVectorXd &rhs);
 
 MaxAlgMatrixXd kleene_star(const MaxAlgMatrixXd &mat);
 double spectral_radius(const MaxAlgMatrixXd &mat);
+
+std::pair<bool, int> find_dominating_vector(const std::vector<MaxAlgVectorXd> &v);
+void remove_dominating_vectors(std::vector<MaxAlgVectorXd> &v);
