@@ -95,18 +95,17 @@ MaxAlgMatrixXd tropical_decision_method::optimal_weights_matrix(const MaxAlgMatr
 
 MaxAlgVectorXd tropical_decision_method::worst_diff_weight_vector(const MaxAlgMatrixXd &D) const {
 	auto I = MaxAlgVectorXd::Ones(D.rows()).transpose();
-	return (I * D).array().inverse();
+	return (I * D).cwiseInverse();
 }
 
 MaxAlgMatrixXd
 tropical_decision_method::weighted_sum_pairwise_comparison_matrices(std::vector<MaxAlgMatrixXd> alternatives,
-																	const MaxAlgVectorXd &v) const {
+																	const MaxAlgVectorXd &v) {
 	for (size_t i = 0, sz = v.size(); i < sz; ++i) {
 		alternatives[i] *= v(i);
 	}
-
-	MaxAlgMatrixXd P = MaxAlgMatrixXd::Identity(alternatives.front().rows(), alternatives.front().cols());
-	return std::accumulate(begin(alternatives), end(alternatives), P);
+	int alternatives_count = alternatives.front().rows();
+	return std::accumulate(begin(alternatives), end(alternatives), tropical::eye(alternatives_count));
 }
 
 MaxAlgMatrixXd tropical_decision_method::build_alternatives_ratings_matrix(const MaxAlgMatrixXd &P) const {
@@ -128,9 +127,8 @@ tropical_decision_method::best_diff_alternatives_ratings_vectors(const MaxAlgMat
 
 MaxAlgVectorXd tropical_decision_method::worst_diff_alternatives_ratings_vector(const MaxAlgMatrixXd &S) const {
 	auto i_tr = MaxAlgVectorXd::Ones(S.rows()).transpose();
-	return (i_tr * S).array().inverse().transpose();
+	return (i_tr * S).cwiseInverse();
 }
-
 
 void tropical_decision_method::set_final_weights(
 		const std::pair<std::vector<MaxAlgVectorXd>, MaxAlgVectorXd> &final_weights) {
@@ -139,3 +137,4 @@ void tropical_decision_method::set_final_weights(
 const std::pair<std::vector<MaxAlgVectorXd>, MaxAlgVectorXd> &tropical_decision_method::final_weights() const {
 	return final_weights_;
 }
+

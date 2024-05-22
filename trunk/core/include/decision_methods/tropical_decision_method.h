@@ -4,6 +4,10 @@
 #include "decision_method.h"
 #include "tropical.h"
 
+using tropical::d;
+using tropical::MaxAlgMatrixXd;
+using tropical::MaxAlgVectorXd;
+
 class tropical_decision_method {
 
 public:
@@ -27,7 +31,7 @@ public:
 	MaxAlgVectorXd worst_diff_weight_vector(const MaxAlgMatrixXd &D) const;
 	MaxAlgMatrixXd optimal_weights_matrix(const MaxAlgMatrixXd &Criteria, double lambda) const;
 	MaxAlgMatrixXd weighted_sum_pairwise_comparison_matrices(std::vector<MaxAlgMatrixXd> alternatives,
-															 const MaxAlgVectorXd &v) const;
+															 const MaxAlgVectorXd &v);
 	MaxAlgMatrixXd build_alternatives_ratings_matrix(const MaxAlgMatrixXd &P) const;
 	std::vector<MaxAlgVectorXd> best_diff_alternatives_ratings_vectors(const MaxAlgMatrixXd &Q) const;
 	MaxAlgVectorXd worst_diff_alternatives_ratings_vector(const MaxAlgMatrixXd &S) const;

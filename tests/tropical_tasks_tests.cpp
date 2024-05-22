@@ -2,6 +2,8 @@
 #include "../trunk/core/include/decision_methods/tropical.h"
 #include "../trunk/core/include/decision_methods/tropical_decision_method.h"
 
+using  tropical::d;
+
 TEST(TropicalModule,TropicalTask_5_1) {
         //5.1. Решение задачи о выборе места работы"
         MaxAlgMatrixXd A1(3,3),A2(3,3),A3(3,3),A4(3,3),A5(3,3),A6(3,3);

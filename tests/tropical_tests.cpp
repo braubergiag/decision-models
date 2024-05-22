@@ -2,6 +2,8 @@
 #include <Eigen/Dense>
 #include "../trunk/core/include/decision_methods/tropical.h"
 
+using namespace tropical;
+
 TEST(TropicalModule, spectral_radius){
     MaxAlgMatrixXd A1(4,4);
     const double epsilon = 0.001;
