@@ -74,7 +74,9 @@ namespace tropical {
 
 	std::pair<bool, int> find_dominating_vector(const std::vector<MaxAlgVectorXd> &v);
 	void remove_dominating_vectors(std::vector<MaxAlgVectorXd> &v);
+	MaxAlgMatrixXd to_MaxAlgMatrixXd(const Eigen::MatrixXd &mat);
 
-	MaxAlgMatrixXd eye(int rows, int cols);
-	MaxAlgMatrixXd eye(int n);
+	MaxAlgMatrixXd eye(Eigen::Index rows, Eigen::Index cols);
+	MaxAlgMatrixXd eye(Eigen::Index n);
+	MaxAlgVectorXd ones(Eigen::Index n);
 }

@@ -58,11 +58,27 @@ namespace tropical {
 			std::tie(is_found, ind) = find_dominating_vector(v);
 		}
 	}
-	MaxAlgMatrixXd eye(int rows, int cols) {
+
+
+	MaxAlgMatrixXd to_MaxAlgMatrixXd(const Eigen::MatrixXd &mat) {
+		MaxAlgMatrixXd maxAlgMatrixXd = MaxAlgMatrixXd::Zero(mat.rows(), mat.cols());
+		for (auto row = 0; row < mat.rows(); ++row) {
+			for (auto column = 0; column < mat.cols(); ++column) {
+				maxAlgMatrixXd(row, column) = mat(row, column);
+			}
+		}
+		return maxAlgMatrixXd;
+	}
+
+
+	MaxAlgMatrixXd eye(Eigen::Index rows, Eigen::Index cols) {
 		return MaxAlgMatrixXd::Identity(rows, cols);
 	}
-	MaxAlgMatrixXd eye(int n) {
+	MaxAlgMatrixXd eye(Eigen::Index n) {
 		return MaxAlgMatrixXd::Identity(n, n);
+	}
+	MaxAlgVectorXd ones(Eigen::Index n) {
+		return MaxAlgVectorXd::Ones(n);
 	}
 
 
