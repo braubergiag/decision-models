@@ -3,31 +3,21 @@
 
 tropical_decision_method::tropical_decision_method(const std::vector<MaxAlgMatrixXd> &alternatives,
 												   const MaxAlgMatrixXd &criteria)
-	: alternatives_(alternatives), criteria_(criteria) {
+	: decision_method(alternatives, criteria) {
 }
 
 tropical_decision_method::tropical_decision_method(const std::vector<Eigen::MatrixXd> &alternatives,
-												   const Eigen::MatrixXd &criteria) {
+												   const Eigen::MatrixXd &criteria)
+	: decision_method(convert_alternatives(alternatives), tropical::to_MaxAlgMatrixXd(criteria)) {
+}
+
+std::vector<MaxAlgMatrixXd>
+tropical_decision_method::convert_alternatives(const std::vector<Eigen::MatrixXd> &alternatives) const {
+	std::vector<MaxAlgMatrixXd> converted_alternatives;
 	for (const auto &alt: alternatives) {
-		alternatives_.emplace_back(tropical::to_MaxAlgMatrixXd(alt));
+		converted_alternatives.emplace_back(tropical::to_MaxAlgMatrixXd(alt));
 	}
-	criteria_ = tropical::to_MaxAlgMatrixXd(criteria);
-}
-
-const std::vector<MaxAlgMatrixXd> &tropical_decision_method::alternatives() const {
-	return alternatives_;
-}
-
-void tropical_decision_method::set_alternatives(const std::vector<MaxAlgMatrixXd> &alternatives) {
-	alternatives_ = alternatives;
-}
-
-const MaxAlgMatrixXd &tropical_decision_method::criteria() const {
-	return criteria_;
-}
-
-void tropical_decision_method::set_criteria(const MaxAlgMatrixXd &criteria) {
-	criteria_ = criteria;
+	return converted_alternatives;
 }
 
 void tropical_decision_method::perform() {
@@ -116,12 +106,4 @@ tropical_decision_method::best_diff_alternatives_ratings_vectors(const MaxAlgMat
 MaxAlgVectorXd tropical_decision_method::worst_diff_alternatives_ratings_vector(const MaxAlgMatrixXd &S) const {
 	auto i = tropical::ones(S.rows());
 	return (i.transpose() * S).cwiseInverse();
-}
-
-void tropical_decision_method::set_final_weights(const FinalWeights &final_weights) {
-	final_weights_ = final_weights;
-}
-
-const tropical_decision_method::FinalWeights &tropical_decision_method::final_weights() const {
-	return final_weights_;
 }

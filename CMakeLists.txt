@@ -18,7 +18,6 @@ link_directories(${Eigen_INCLUDE_DIRS})
 set (PROJECT_SOURCES
         trunk/core/src/decision_methods/ahp_decision_method.cpp
         trunk/core/src/decision_methods/gm_decision_method.cpp
-        trunk/core/src/decision_methods/decision_method.cpp
         trunk/core/src/decision_methods/tropical.cpp
         trunk/core/src/decision_methods/tropical_decision_method.cpp
         trunk/core/src/DecisionModelsDB.cpp
@@ -115,7 +114,6 @@ add_executable(
         DecisionModelsTests
         trunk/core/src/decision_methods/ahp_decision_method.cpp
         trunk/core/src/decision_methods/gm_decision_method.cpp
-        trunk/core/src/decision_methods/decision_method.cpp
         trunk/core/src/decision_methods/tropical.cpp
         trunk/core/src/decision_methods/tropical_decision_method.cpp
 
