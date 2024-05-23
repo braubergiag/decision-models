@@ -21,8 +21,8 @@ set (PROJECT_SOURCES
         trunk/core/src/decision_methods/decision_method.cpp
         trunk/core/src/decision_methods/tropical.cpp
         trunk/core/src/decision_methods/tropical_decision_method.cpp
-        trunk/core/src/DecisionModelsDB.cpp
-        trunk/core/src/DecisionModel.cpp
+        trunk/core/src/decision_model.cpp
+        trunk/core/src/decision_models_db.cpp
         trunk/core/src/main.cpp
 
         trunk/core/src/ui/StartMenu.cpp
@@ -40,8 +40,7 @@ set (PROJECT_HEADERS
         trunk/core/include/ui/DecisionModelDialog.h
         trunk/core/include/ui/CompareCriteriaDialog.h
         trunk/core/include/ui/CompareAlternativesDialog.h
-
-        trunk/core/include/DecisionModel.h
+        trunk/core/include/decision_model.h
 )
 
 

@@ -26,7 +26,7 @@ public:
 	std::string ahpResult() const;
 	std::string gmResult() const;
 	std::pair<std::string, std::string> tropicalResult() const;
-	std::string modelRanking(const VectorXd & weights) const;
+	std::string modelRanking(const Eigen::VectorXd & weights) const;
 
 public:
 	void setDecisionName(const std::string &decisionName);
