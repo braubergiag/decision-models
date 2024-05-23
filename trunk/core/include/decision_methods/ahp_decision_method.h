@@ -8,7 +8,6 @@ class ahp_decision_method : public decision_method<Eigen::MatrixXd, Eigen::Vecto
 public:
 	ahp_decision_method() = default;
 	ahp_decision_method(const std::vector<Eigen::MatrixXd> &alternatives, const Eigen::MatrixXd &criteria);
-	void perform() override;
 
 public:
 	Eigen::MatrixXd weight_matrix(const std::vector<Eigen::MatrixXd> &alternatives_main_eigen_vectors) const;
@@ -17,4 +16,7 @@ public:
 								  const std::vector<Eigen::MatrixXd> &alternatives_main_eigen_vectors) const;
 
 	Eigen::MatrixXd main_eigenvector(const Eigen::MatrixXd &matrix) const;
+
+public:
+	void perform() override;
 };

@@ -1,5 +1,7 @@
 #include "../../include/decision_methods/tropical.h"
+#include "../../include/decision_methods/utils.h"
 
+using utils::d;
 namespace tropical {
 
 	std::ostream &operator<<(std::ostream &stream, const MaxAlgMatrixXd &matrixXd) {
@@ -13,7 +15,6 @@ namespace tropical {
 		}
 		return true;
 	}
-
 
 	double spectral_radius(const MaxAlgMatrixXd &mat) {
 		double max_trace = mat.trace();
@@ -59,7 +60,6 @@ namespace tropical {
 		}
 	}
 
-
 	MaxAlgMatrixXd to_MaxAlgMatrixXd(const Eigen::MatrixXd &mat) {
 		MaxAlgMatrixXd maxAlgMatrixXd = MaxAlgMatrixXd::Zero(mat.rows(), mat.cols());
 		for (auto row = 0; row < mat.rows(); ++row) {
@@ -70,7 +70,6 @@ namespace tropical {
 		return maxAlgMatrixXd;
 	}
 
-
 	MaxAlgMatrixXd eye(Eigen::Index rows, Eigen::Index cols) {
 		return MaxAlgMatrixXd::Identity(rows, cols);
 	}
@@ -80,6 +79,4 @@ namespace tropical {
 	MaxAlgVectorXd ones(Eigen::Index n) {
 		return MaxAlgVectorXd::Ones(n);
 	}
-
-
 } // namespace tropical

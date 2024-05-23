@@ -41,7 +41,7 @@ set (PROJECT_HEADERS
         trunk/core/include/ui/CompareAlternativesDialog.h
 
         trunk/core/include/DecisionModel.h
-)
+        trunk/core/include/decision_methods/utils.h)
 
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

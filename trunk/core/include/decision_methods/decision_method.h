@@ -21,9 +21,9 @@ public:
 	const MatrixT &criteria() const { return criteria_; }
 
 public:
-	void set_criteria(const MatrixT &criteria) { criteria_ = criteria;}
-	void set_final_weights(const FinalWeightT &final_weights) { final_weights_ = final_weights;}
-	void set_alternatives(const std::vector<MatrixT> &alternatives) { alternatives_ = alternatives;}
+	void set_criteria(const MatrixT &criteria) { criteria_ = criteria; }
+	void set_final_weights(const FinalWeightT &final_weights) { final_weights_ = final_weights; }
+	void set_alternatives(const std::vector<MatrixT> &alternatives) { alternatives_ = alternatives; }
 
 public:
 	const FinalWeightT &final_weights() const { return final_weights_; }
@@ -34,3 +34,4 @@ private:
 	FinalWeightT final_weights_;
 	MatrixT criteria_;
 };
+
