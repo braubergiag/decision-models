@@ -40,7 +40,10 @@ TEST(GmModule, Task_5_1) {
 
 
     gm_decision_method gm_model({A1, A2, A3, A4, A5, A6}, C);
-    gm_model.perform();
+
+
+
+	    gm_model.perform();
 
 
     Eigen::MatrixXd final_weights(1, 3);

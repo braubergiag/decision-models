@@ -1,6 +1,9 @@
 #include <gtest/gtest.h>
 #include <Eigen/Dense>
 #include "../trunk/core/include/decision_methods/tropical.h"
+#include "../trunk/core/include/decision_methods/utils.h"
+
+using utils::d;
 
 using namespace tropical;
 

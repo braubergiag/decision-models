@@ -41,8 +41,8 @@ TEST(AHPModule,AHP_Task_1) {
 
     ahp_decision_method ahp_model({A1,A2,A3,A4,A5,A6},C);
     double eps = 0.01;
-    Eigen::MatrixXcd main_eigen_vector = ahp_model.main_eigenvector(C).col(0).real();
-    Eigen::MatrixXcd actual_main_eigen_vector(1,6);
+    Eigen::MatrixXd main_eigen_vector = ahp_model.main_eigenvector(C).col(0);
+    Eigen::MatrixXd actual_main_eigen_vector(1,6);
     actual_main_eigen_vector << 0.32, 0.14, 0.03, 0.13, 0.24, 0.14;
     ASSERT_NEAR(actual_main_eigen_vector.norm(),main_eigen_vector.norm(),eps);
 

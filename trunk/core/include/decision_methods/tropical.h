@@ -43,16 +43,6 @@ namespace tropical {
 		}
 	};
 
-
-	template<class T>
-	double sqrt(const MaxAlg<T> &val) {
-		return ::sqrt(val.scalar);
-	}
-
-	inline double d(double p, double q) {
-		return p / q;
-	}
-
 	template<class T, Eigen::Index Rows, Eigen::Index Cols>
 	using MaxAlgMatrix = Eigen::Matrix<MaxAlg<T>, Rows, Cols>;
 

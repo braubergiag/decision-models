@@ -4,28 +4,15 @@
 #include "decision_method.h"
 #include "tropical.h"
 
-using tropical::d;
 using tropical::MaxAlgMatrixXd;
 using tropical::MaxAlgVectorXd;
+using FinalWeights = std::pair<std::vector<MaxAlgVectorXd>, MaxAlgVectorXd>;
 
-class tropical_decision_method {
-	using FinalWeights = std::pair<std::vector<MaxAlgVectorXd>, MaxAlgVectorXd>;
-
+class tropical_decision_method : public decision_method<MaxAlgMatrixXd, MaxAlgVectorXd, FinalWeights> {
 public:
-
 	tropical_decision_method() = default;
 	tropical_decision_method(const std::vector<MaxAlgMatrixXd> &alternatives, const MaxAlgMatrixXd &criteria);
 	tropical_decision_method(const std::vector<Eigen::MatrixXd> &alternatives, const Eigen::MatrixXd &criteria);
-	void perform();
-
-public:
-	const std::vector<MaxAlgMatrixXd> &alternatives() const;
-	const MaxAlgMatrixXd &criteria() const;
-	const FinalWeights &final_weights() const;
-
-public:
-	void set_criteria(const MaxAlgMatrixXd &criteria);
-	void set_alternatives(const std::vector<MaxAlgMatrixXd> &alternatives);
 
 public:
 	std::vector<int> best_diff_weight_vector_indices(const MaxAlgMatrixXd &D) const;
@@ -38,11 +25,9 @@ public:
 	std::vector<MaxAlgVectorXd> best_diff_alternatives_ratings_vectors(const MaxAlgMatrixXd &Q) const;
 	MaxAlgVectorXd worst_diff_alternatives_ratings_vector(const MaxAlgMatrixXd &S) const;
 
-private:
-	void set_final_weights(const FinalWeights &final_weights);
+public:
+	void perform() override;
 
 private:
-	std::vector<MaxAlgMatrixXd> alternatives_;
-	FinalWeights final_weights_;
-	MaxAlgMatrixXd criteria_;
+	std::vector<MaxAlgMatrixXd> convert_alternatives(const std::vector<Eigen::MatrixXd> &alternatives) const;
 };
