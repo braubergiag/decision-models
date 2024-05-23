@@ -3,12 +3,11 @@
 #include <vector>
 #include <Eigen/Dense>
 #include <Eigen/Core>
-#include "decision_method.h"
 
-class heuristic_decision_method : public decision_method {
+class decision_method {
 public:
-	heuristic_decision_method() = default;
-	heuristic_decision_method(const std::vector<Eigen::MatrixXd> &alternatives, const Eigen::MatrixXd &criteria);
+	decision_method() = default;
+	decision_method(const std::vector<Eigen::MatrixXd> &alternatives, const Eigen::MatrixXd &criteria);
 
 public:
 	int criteria_count() const;
@@ -25,6 +24,7 @@ public:
 
 public:
 	const Eigen::VectorXd &final_weights() const;
+	virtual void perform() = 0;
 
 private:
 	std::vector<Eigen::MatrixXd> alternatives_;

@@ -16,12 +16,11 @@ find_package (Eigen3 3.3 REQUIRED NO_MODULE)
 
 link_directories(${Eigen_INCLUDE_DIRS})
 set (PROJECT_SOURCES
-        trunk/core/src/ahp_decision_method.cpp
-        trunk/core/src/decision_method.cpp
-        trunk/core/src/gm_decision_method.cpp
-        trunk/core/src/heuristic_decision_method.cpp
-        trunk/core/src/tropical.cpp
-        trunk/core/src/tropical_decision_method.cpp
+        trunk/core/src/decision_methods/ahp_decision_method.cpp
+        trunk/core/src/decision_methods/gm_decision_method.cpp
+        trunk/core/src/decision_methods/decision_method.cpp
+        trunk/core/src/decision_methods/tropical.cpp
+        trunk/core/src/decision_methods/tropical_decision_method.cpp
         trunk/core/src/DecisionModelsDB.cpp
         trunk/core/src/DecisionModel.cpp
         trunk/core/src/main.cpp
@@ -114,12 +113,11 @@ enable_testing()
 
 add_executable(
         DecisionModelsTests
-        trunk/core/src/ahp_decision_method.cpp
-        trunk/core/src/decision_method.cpp
-        trunk/core/src/gm_decision_method.cpp
-        trunk/core/src/heuristic_decision_method.cpp
-        trunk/core/src/tropical.cpp
-        trunk/core/src/tropical_decision_method.cpp
+        trunk/core/src/decision_methods/ahp_decision_method.cpp
+        trunk/core/src/decision_methods/gm_decision_method.cpp
+        trunk/core/src/decision_methods/decision_method.cpp
+        trunk/core/src/decision_methods/tropical.cpp
+        trunk/core/src/decision_methods/tropical_decision_method.cpp
 
         tests/ahp_tasks_tests.cpp
         tests/gm_tasks_tests.cpp

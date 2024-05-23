@@ -33,11 +33,11 @@ void DecisionModel::setAlternativesNames(const std::vector<std::string> &alterna
 	alternativesNames_ = alternativesNames;
 }
 
-const MatrixXd &DecisionModel::criteriaComparisons() const {
+const Eigen::MatrixXd &DecisionModel::criteriaComparisons() const {
 	return criteriaComparisons_;
 }
 
-void DecisionModel::setCriteriaComparisons(const MatrixXd &criteriaComparisons,
+void DecisionModel::setCriteriaComparisons(const Eigen::MatrixXd &criteriaComparisons,
 										   const ComparisionMatrixView &criteriaMatrixView) {
 	criteriaComparisons_ = criteriaComparisons;
 	criteriaComparisonsMatrixView_ = criteriaMatrixView;
@@ -84,7 +84,7 @@ const ComparisionMatrixView &DecisionModel::compsViewAt(int index) const {
 	return alternativesCompsViews_.at(index);
 }
 
-const MatrixXd &DecisionModel::compsAt(int index) const {
+const Eigen::MatrixXd &DecisionModel::compsAt(int index) const {
 	return alternativesComps_.at(index);
 }
 
@@ -131,9 +131,12 @@ std::string DecisionModel::gmResult() const {
 }
 
 std::pair<std::string, std::string> DecisionModel::tropicalResult() const {
-	auto [best, worst] = tropicalDecisionMethod_.final_weights();
+	auto [best_vectors, worst_vector] = tropicalDecisionMethod_.final_weights();
 	std::stringstream ss_best, ss_worst;
-	ss_best << best;
-	ss_worst << worst;
+	for (size_t i = 0, sz = best_vectors.size(); i < sz; ++i) {
+		ss_best << best_vectors[i];
+		ss_best << (i + 1 < sz ? "\n\n" : "");
+	}
+	ss_worst << worst_vector;
 	return {ss_best.str(), ss_worst.str()};
 }

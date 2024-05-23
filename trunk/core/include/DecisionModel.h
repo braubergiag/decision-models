@@ -3,16 +3,15 @@
 #include <vector>
 #include <string>
 #include <Eigen/Core>
-#include "ahp_decision_method.h"
-#include "gm_decision_method.h"
-#include "tropical_decision_method.h"
+#include "decision_methods/ahp_decision_method.h"
+#include "decision_methods/gm_decision_method.h"
+#include "decision_methods/tropical_decision_method.h"
 
-using ComparisionMatrixView = Eigen::Matrix<std::string, Dynamic, Dynamic>;
-
+using ComparisionMatrixView = Eigen::Matrix<std::string, Eigen::Dynamic, Eigen::Dynamic>;
 
 class DecisionModel {
 public:
-	using ComparisonMatrixView = Eigen::Matrix<std::string, Dynamic, Dynamic>;
+	using ComparisonMatrixView = Eigen::Matrix<std::string, Eigen::Dynamic, Eigen::Dynamic>;
 	DecisionModel() = default;
 
 public:
@@ -32,7 +31,7 @@ public:
 	void setDecisionName(const std::string &decisionName);
 	void setCriteriaNames(const std::vector<std::string> &criteriaNames);
 	void setAlternativesNames(const std::vector<std::string> &alternativesNames);
-	void setCriteriaComparisons(const MatrixXd &criteriaComparisons, const ComparisionMatrixView &criteriaMatrixView);
+	void setCriteriaComparisons(const Eigen::MatrixXd &criteriaComparisons, const ComparisionMatrixView &criteriaMatrixView);
 
 
 	void setAlternativesComparisons(const std::vector<Eigen::MatrixXd> &alternativesComparisons);
@@ -40,7 +39,7 @@ public:
 								const ComparisionMatrixView &alternativesCompsView, int index);
 
 	const ComparisionMatrixView &compsViewAt(int index) const;
-	const MatrixXd &compsAt(int index) const;
+	const Eigen::MatrixXd &compsAt(int index) const;
 	bool compsIsInitAt(int index) const;
 
 public:
@@ -48,7 +47,7 @@ public:
 	const std::vector<std::string> &criteriaNames() const;
 	const std::vector<std::string> &alternativesNames() const;
 
-	const MatrixXd &criteriaComparisons() const;
+	const Eigen::MatrixXd &criteriaComparisons() const;
 	const ComparisonMatrixView &criteriaComparisonsMatrixView() const;
 	bool criteriaComparisonMatrixIsInit() const;
 	bool alternativesComparisonsMatricesIsInit() const;
