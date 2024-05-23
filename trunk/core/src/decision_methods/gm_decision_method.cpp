@@ -1,5 +1,6 @@
 #include <algorithm>
 #include "../../include/decision_methods/gm_decision_method.h"
+#include "../../include/decision_methods/utils.h"
 
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
@@ -10,8 +11,10 @@ gm_decision_method::gm_decision_method(const std::vector<Eigen::MatrixXd> &alter
 }
 
 void gm_decision_method::perform() {
-	const int n_alternatives = alternatives_count();
-	const int n_criteria = criteria_count();
+	using utils::d;
+
+	const auto n_alternatives = alternatives_count();
+	const auto n_criteria = criteria_count();
 	MatrixXd matrix_weights(n_alternatives, n_criteria);
 	MatrixXd matrix_powers(n_alternatives, n_criteria);
 	MatrixXd matrix_norm_weights(n_alternatives, n_criteria);
@@ -19,10 +22,10 @@ void gm_decision_method::perform() {
 	VectorXd criteria_weight_vector = VectorXd::Ones(n_criteria);
 	VectorXd final_weights = VectorXd::Ones(n_alternatives);
 
-	for (int i = 0; i < n_criteria; ++i) {
-		criteria_weight_vector(i) = pow(criteria().row(i).prod(), 1. / n_criteria);
-		for (int j = 0; j < n_alternatives; ++j) {
-			matrix_weights(j, i) = pow(alternatives().at(i).row(j).prod(), 1. / n_alternatives);
+	for (auto i = 0; i < n_criteria; ++i) {
+		criteria_weight_vector(i) = pow(criteria().row(i).prod(), d(1, n_criteria));
+		for (auto j = 0; j < n_alternatives; ++j) {
+			matrix_weights(j, i) = pow(alternatives().at(i).row(j).prod(), d( 1, n_alternatives));
 		}
 	}
 
@@ -30,14 +33,14 @@ void gm_decision_method::perform() {
 	for (auto &criteria_weight: criteria_weight_vector)
 		criteria_weight /= criteria_vector_sum;
 
-	for (int i = 0; i < n_criteria; ++i) {
-		for (int j = 0; j < n_alternatives; ++j) {
+	for (auto i = 0; i < n_criteria; ++i) {
+		for (auto j = 0; j < n_alternatives; ++j) {
 			matrix_powers(j, i) = pow(matrix_weights(j, i), criteria_weight_vector(i));
 		}
 	}
 
-	for (int i = 0; i < n_criteria; ++i) {
-		for (int j = 0; j < n_alternatives; ++j)
+	for (auto i = 0; i < n_criteria; ++i) {
+		for (auto j = 0; j < n_alternatives; ++j)
 			final_weights(j) *= matrix_powers(j, i);
 	}
 

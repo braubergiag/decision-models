@@ -4,13 +4,9 @@
 #include "decision_method.h"
 #include "tropical.h"
 
-using tropical::d;
 using tropical::MaxAlgMatrixXd;
 using tropical::MaxAlgVectorXd;
-
-
 using FinalWeights = std::pair<std::vector<MaxAlgVectorXd>, MaxAlgVectorXd>;
-
 
 class tropical_decision_method : public decision_method<MaxAlgMatrixXd, MaxAlgVectorXd, FinalWeights> {
 public:

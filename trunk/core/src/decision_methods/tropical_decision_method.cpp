@@ -1,5 +1,8 @@
 #include <numeric>
 #include "../../include/decision_methods/tropical_decision_method.h"
+#include "../../include/decision_methods/utils.h"
+
+using utils::d;
 
 tropical_decision_method::tropical_decision_method(const std::vector<MaxAlgMatrixXd> &alternatives,
 												   const MaxAlgMatrixXd &criteria)
