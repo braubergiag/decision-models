@@ -40,7 +40,12 @@ void tropical_decision_method::perform() {
 	auto S = build_alternatives_ratings_matrix(R);
 	auto y = worst_diff_alternatives_ratings_vector(S);
 
-	set_final_weights({best_alternatives_vectors, y});
+	std::vector<Eigen::VectorXd> best_alternatives_converted;
+	for (const auto & v : best_alternatives_vectors) {
+		best_alternatives_converted.emplace_back(tropical::to_VectorXd(v));
+	}
+
+	set_final_weights({best_alternatives_converted, tropical::to_VectorXd(y)});
 }
 
 std::vector<int> tropical_decision_method::best_diff_weight_vector_indices(const MaxAlgMatrixXd &D) const {
@@ -105,7 +110,6 @@ tropical_decision_method::best_diff_alternatives_ratings_vectors(const MaxAlgMat
 	remove_dominating_vectors(best_vectors);
 	return best_vectors;
 }
-
 MaxAlgVectorXd tropical_decision_method::worst_diff_alternatives_ratings_vector(const MaxAlgMatrixXd &S) const {
 	auto i = tropical::ones(S.rows());
 	return (i.transpose() * S).cwiseInverse();

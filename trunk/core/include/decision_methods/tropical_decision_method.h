@@ -6,7 +6,7 @@
 
 using tropical::MaxAlgMatrixXd;
 using tropical::MaxAlgVectorXd;
-using FinalWeights = std::pair<std::vector<MaxAlgVectorXd>, MaxAlgVectorXd>;
+using FinalWeights = std::pair<std::vector<Eigen::VectorXd>, Eigen::VectorXd>;
 
 class tropical_decision_method : public decision_method<MaxAlgMatrixXd, MaxAlgVectorXd, FinalWeights> {
 public:
@@ -30,4 +30,5 @@ public:
 
 private:
 	std::vector<MaxAlgMatrixXd> convert_alternatives(const std::vector<Eigen::MatrixXd> &alternatives) const;
+	std::vector<Eigen::VectorXd> convert_best_final_weight(const std::vector<Eigen::MatrixXd> &alternatives) const;
 };
