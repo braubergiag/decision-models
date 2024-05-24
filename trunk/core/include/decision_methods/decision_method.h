@@ -27,6 +27,7 @@ public:
 
 public:
 	const FinalWeightT &final_weights() const { return final_weights_; }
+	VectorT normalize_weights(const VectorT &weights, double scale) const;
 	virtual void perform() = 0;
 
 private:
@@ -34,4 +35,11 @@ private:
 	FinalWeightT final_weights_;
 	MatrixT criteria_;
 };
-
+template<typename MatrixT, typename VectorT, typename FinalWeightT>
+VectorT decision_method<MatrixT, VectorT, FinalWeightT>::normalize_weights(const VectorT &weights, double scale) const {
+	VectorT normalized_weights = VectorT::Zero(weights.size());
+	for (auto i = 0; i < weights.size(); ++i) {
+		normalized_weights(i) = weights(i) / scale;
+	}
+	return normalized_weights;
+}

@@ -29,9 +29,7 @@ void gm_decision_method::perform() {
 		}
 	}
 
-	double criteria_vector_sum = criteria_weight_vector.sum();
-	for (auto &criteria_weight: criteria_weight_vector)
-		criteria_weight /= criteria_vector_sum;
+	criteria_weight_vector = normalize_weights(criteria_weight_vector, criteria_weight_vector.sum());
 
 	for (auto i = 0; i < n_criteria; ++i) {
 		for (auto j = 0; j < n_alternatives; ++j) {
@@ -44,9 +42,5 @@ void gm_decision_method::perform() {
 			final_weights(j) *= matrix_powers(j, i);
 	}
 
-	auto final_weights_max_coeff = final_weights.maxCoeff();
-	for (auto &weight: final_weights)
-		weight /= final_weights_max_coeff;
-
-	set_final_weights(final_weights);
+	set_final_weights(normalize_weights(final_weights, final_weights.maxCoeff()));
 }

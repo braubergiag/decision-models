@@ -134,7 +134,6 @@ std::string DecisionModel::gmResult() const {
 }
 
 std::pair<std::string, std::string> DecisionModel::tropicalResult() const {
-	// TODO Add Ranking
 	auto [best_vectors, worst_vector] = tropicalDecisionMethod_.final_weights();
 	std::stringstream ss_best, ss_worst;
 	for (size_t i = 0, sz = best_vectors.size(); i < sz; ++i) {

@@ -9,7 +9,7 @@ namespace tropical {
 	}
 
 	bool operator>=(const MaxAlgVectorXd &lhs, const MaxAlgVectorXd &rhs) {
-		for (size_t i = 0, sz = std::max(lhs.size(), rhs.size()); i < sz; ++i) {
+		for (Eigen::Index i = 0, sz = std::max(lhs.size(), rhs.size()); i < sz; ++i) {
 			if (lhs(i) < rhs(i))
 				return false;
 		}
