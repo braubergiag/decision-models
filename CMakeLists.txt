@@ -116,12 +116,13 @@ add_executable(
         trunk/core/src/decision_methods/gm_decision_method.cpp
         trunk/core/src/decision_methods/tropical.cpp
         trunk/core/src/decision_methods/tropical_decision_method.cpp
+        trunk/core/src/decision_model.cpp
 
-        tests/ahp_tasks_tests.cpp
-        tests/gm_tasks_tests.cpp
-        tests/tropical_tests.cpp
-        tests/tropical_tasks_tests.cpp
-)
+        tests/decision_methods/ahp_tasks_tests.cpp
+        tests/decision_methods/gm_tasks_tests.cpp
+        tests/decision_methods/tropical_tests.cpp
+        tests/decision_methods/tropical_tasks_tests.cpp
+        tests/decision_model/model_ranking.cpp)
 
 
 target_link_libraries(DecisionModelsTests gtest_main Eigen3::Eigen)

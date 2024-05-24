@@ -121,6 +121,7 @@ std::string DecisionModel::ahpResult() const {
 	auto res = ahpDecisionMethod_.final_weights();
 	std::stringstream ss;
 	ss << res;
+	ss << "\n\n";
 	ss << modelRanking(res);
 	return ss.str();
 }
@@ -129,6 +130,7 @@ std::string DecisionModel::gmResult() const {
 	auto res = gmDecisionMethod_.final_weights();
 	std::stringstream ss;
 	ss << res;
+	ss << "\n\n";
 	ss << modelRanking(res);
 	return ss.str();
 }
@@ -138,32 +140,37 @@ std::pair<std::string, std::string> DecisionModel::tropicalResult() const {
 	std::stringstream ss_best, ss_worst;
 	for (size_t i = 0, sz = best_vectors.size(); i < sz; ++i) {
 		ss_best << best_vectors[i];
-		ss_best << (i + 1 < sz ? "\n\n" : "");
+		ss_best << "\n\n";
 		ss_best << modelRanking(best_vectors[i]);
+		ss_best << (i + 1 < sz ? "\n\n" : "");
 	}
 	ss_worst << worst_vector;
+	ss_worst << "\n\n";
 	ss_worst << modelRanking(worst_vector);
 	return {ss_best.str(), ss_worst.str()};
 }
 
-std::string DecisionModel::modelRanking(const Eigen::VectorXd &weights) const {
-	std::vector<std::pair<double, int>> rankings;
+std::string DecisionModel::modelRanking(const Eigen::VectorXd &weights) {
+	return modelRanking(rankModel(weights));
+}
+DecisionModel::ModelRanking DecisionModel::rankModel(const Eigen::VectorXd &weights) {
+	ModelRanking rankings;
 	for (int i = 0; i < weights.size(); ++i) {
 		rankings.emplace_back(weights(i), i + 1);
 	}
-	std::sort(begin(rankings), end(rankings), std::greater{});
 
+	std::stable_sort(begin(rankings), end(rankings),
+					 [](const auto &lhs, const auto &rhs) { return lhs.first > rhs.first; });
+	return rankings;
+}
+
+std::string DecisionModel::modelRanking(const ModelRanking &modelRanking) {
 	std::stringstream ss;
-	ss << "\n\n";
-
-	static const auto equality_sign = "\u2261";
-	static const auto greater_sign = "\u227B";
-	static const auto alternative_sign = "A";
-	for (int i = 0; i < rankings.size(); ++i) {
-		auto [weight, alternative_n] = rankings.at(i);
+	for (int i = 0; i < modelRanking.size(); ++i) {
+		auto [weight, alternative_n] = modelRanking.at(i);
 		ss << alternative_sign + std::to_string(alternative_n);
-		if (i + 1 < rankings.size()) {
-			auto [next_weight, next_alternative_n] = rankings.at(i + 1);
+		if (i + 1 < modelRanking.size()) {
+			auto [next_weight, next_alternative_n] = modelRanking.at(i + 1);
 			ss << (utils::approximatelyEqual(weight, next_weight) ? utils::wrap_with_spaces(equality_sign)
 																  : utils::wrap_with_spaces(greater_sign));
 		}

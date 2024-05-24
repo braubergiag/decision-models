@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
-#include "../trunk/core/include/decision_methods/tropical.h"
-#include "../trunk/core/include/decision_methods/tropical_decision_method.h"
-#include "../trunk/core/include/decision_methods/utils.h"
+#include "../../trunk/core/include/decision_methods/tropical.h"
+#include "../../trunk/core/include/decision_methods/tropical_decision_method.h"
+#include "../../trunk/core/include/decision_methods/utils.h"
 
 using utils::d;
 
