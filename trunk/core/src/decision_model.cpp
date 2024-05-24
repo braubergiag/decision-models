@@ -1,4 +1,5 @@
 #include "../include/decision_model.h"
+#include "../include/decision_methods/utils.h"
 #include <algorithm>
 
 void DecisionModel::addAlternative(const std::string &alternative) {
@@ -155,9 +156,18 @@ std::string DecisionModel::modelRanking(const Eigen::VectorXd &weights) const {
 
 	std::stringstream ss;
 	ss << "\n\n";
+
+	static const auto equality_sign = "\u2261";
+	static const auto greater_sign = "\u227B";
+	static const auto alternative_sign = "A";
 	for (int i = 0; i < rankings.size(); ++i) {
-		auto alternative = rankings.at(i).second;
-		ss << "A" + std::to_string(alternative) + (i + 1 < rankings.size() ? " > " : "");
+		auto [weight, alternative_n] = rankings.at(i);
+		ss << alternative_sign + std::to_string(alternative_n);
+		if (i + 1 < rankings.size()) {
+			auto [next_weight, next_alternative_n] = rankings.at(i + 1);
+			ss << (utils::approximatelyEqual(weight, next_weight) ? utils::wrap_with_spaces(equality_sign)
+																  : utils::wrap_with_spaces(greater_sign));
+		}
 	}
 	return ss.str();
 }
