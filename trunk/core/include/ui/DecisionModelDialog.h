@@ -1,11 +1,13 @@
 #pragma once
+
 #include <QDialog>
 #include <QLineEdit>
 #include <QListWidget>
 #include <QLabel>
 #include <QVector>
 #include <QString>
-#include "../DecisionModelsDB.h"
+#include "../decision_models_db.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 	class DecisionModelDialog;

@@ -9,7 +9,7 @@ namespace tropical {
 	}
 
 	bool operator>=(const MaxAlgVectorXd &lhs, const MaxAlgVectorXd &rhs) {
-		for (size_t i = 0, sz = std::max(lhs.size(), rhs.size()); i < sz; ++i) {
+		for (Eigen::Index i = 0, sz = std::max(lhs.size(), rhs.size()); i < sz; ++i) {
 			if (lhs(i) < rhs(i))
 				return false;
 		}
@@ -27,7 +27,7 @@ namespace tropical {
 	}
 
 	MaxAlgMatrixXd kleene_star(const MaxAlgMatrixXd &mat) {
-		MaxAlgMatrixXd res_matrix = MaxAlgMatrixXd::Identity(mat.rows(), mat.cols());
+		MaxAlgMatrixXd res_matrix = eye(mat.rows(), mat.cols());
 		MaxAlgMatrixXd curr_matrix = mat;
 		res_matrix += curr_matrix;
 		for (int i = 1; i < res_matrix.cols() - 1; ++i) {
@@ -61,7 +61,7 @@ namespace tropical {
 	}
 
 	MaxAlgMatrixXd to_MaxAlgMatrixXd(const Eigen::MatrixXd &mat) {
-		MaxAlgMatrixXd maxAlgMatrixXd = MaxAlgMatrixXd::Zero(mat.rows(), mat.cols());
+		auto maxAlgMatrixXd = eye(mat.rows(), mat.cols());
 		for (auto row = 0; row < mat.rows(); ++row) {
 			for (auto column = 0; column < mat.cols(); ++column) {
 				maxAlgMatrixXd(row, column) = mat(row, column);
@@ -70,6 +70,22 @@ namespace tropical {
 		return maxAlgMatrixXd;
 	}
 
+	Eigen::MatrixXd to_MatrixXd(const MaxAlgMatrixXd &maxAlgMatrixXd) {
+		Eigen::MatrixXd matrixXd = Eigen::MatrixXd::Zero(maxAlgMatrixXd.rows(), maxAlgMatrixXd.cols());
+		for (auto row = 0; row < maxAlgMatrixXd.rows(); ++row) {
+			for (auto column = 0; column < maxAlgMatrixXd.cols(); ++column) {
+				matrixXd(row, column) = maxAlgMatrixXd(row, column);
+			}
+		}
+		return matrixXd;
+	}
+	Eigen::VectorXd to_VectorXd(const MaxAlgVectorXd &maxAlgVectorXd) {
+		Eigen::VectorXd vectorXd = Eigen::VectorXd::Zero(maxAlgVectorXd.size());
+		for (auto i = 0; i < maxAlgVectorXd.rows(); ++i) {
+			vectorXd(i) = maxAlgVectorXd(i);
+		}
+		return vectorXd;
+	}
 	MaxAlgMatrixXd eye(Eigen::Index rows, Eigen::Index cols) {
 		return MaxAlgMatrixXd::Identity(rows, cols);
 	}

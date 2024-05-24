@@ -27,11 +27,17 @@ public:
 	std::string gmResult() const;
 	std::pair<std::string, std::string> tropicalResult() const;
 
+	using ModelRanking = std::vector<std::pair<double, int>>;
+	static ModelRanking rankModel(const Eigen::VectorXd &weights);
+	static std::string modelRanking(const ModelRanking &modelRanking);
+	static std::string modelRanking(const Eigen::VectorXd &weights);
+
 public:
 	void setDecisionName(const std::string &decisionName);
 	void setCriteriaNames(const std::vector<std::string> &criteriaNames);
 	void setAlternativesNames(const std::vector<std::string> &alternativesNames);
-	void setCriteriaComparisons(const Eigen::MatrixXd &criteriaComparisons, const ComparisionMatrixView &criteriaMatrixView);
+	void setCriteriaComparisons(const Eigen::MatrixXd &criteriaComparisons,
+								const ComparisionMatrixView &criteriaMatrixView);
 
 
 	void setAlternativesComparisons(const std::vector<Eigen::MatrixXd> &alternativesComparisons);
@@ -56,6 +62,12 @@ public:
 
 	int criteriaCount() const;
 	int alternativesCount() const;
+
+
+public:
+	constexpr static auto equality_sign = "\u2261";
+	constexpr static auto greater_sign = "\u227B";
+	constexpr static auto alternative_sign = "A";
 
 private:
 	std::string decisionName_;

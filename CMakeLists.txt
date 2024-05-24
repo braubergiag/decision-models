@@ -20,8 +20,8 @@ set (PROJECT_SOURCES
         trunk/core/src/decision_methods/gm_decision_method.cpp
         trunk/core/src/decision_methods/tropical.cpp
         trunk/core/src/decision_methods/tropical_decision_method.cpp
-        trunk/core/src/DecisionModelsDB.cpp
-        trunk/core/src/DecisionModel.cpp
+        trunk/core/src/decision_model.cpp
+        trunk/core/src/decision_models_db.cpp
         trunk/core/src/main.cpp
 
         trunk/core/src/ui/StartMenu.cpp
@@ -40,7 +40,7 @@ set (PROJECT_HEADERS
         trunk/core/include/ui/CompareCriteriaDialog.h
         trunk/core/include/ui/CompareAlternativesDialog.h
 
-        trunk/core/include/DecisionModel.h
+        trunk/core/include/decision_model.h
         trunk/core/include/decision_methods/utils.h)
 
 
@@ -116,12 +116,13 @@ add_executable(
         trunk/core/src/decision_methods/gm_decision_method.cpp
         trunk/core/src/decision_methods/tropical.cpp
         trunk/core/src/decision_methods/tropical_decision_method.cpp
+        trunk/core/src/decision_model.cpp
 
-        tests/ahp_tasks_tests.cpp
-        tests/gm_tasks_tests.cpp
-        tests/tropical_tests.cpp
-        tests/tropical_tasks_tests.cpp
-)
+        tests/decision_methods/ahp_tasks_tests.cpp
+        tests/decision_methods/gm_tasks_tests.cpp
+        tests/decision_methods/tropical_tests.cpp
+        tests/decision_methods/tropical_tasks_tests.cpp
+        tests/decision_model/model_ranking.cpp)
 
 
 target_link_libraries(DecisionModelsTests gtest_main Eigen3::Eigen)

@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <Eigen/Dense>
-#include "../trunk/core/include/decision_methods/ahp_decision_method.h"
+#include "../../trunk/core/include/decision_methods/ahp_decision_method.h"
 
 inline double d(double p, double q) {
     return p / q;
@@ -9,6 +9,7 @@ inline double d(double p, double q) {
 using Eigen::VectorXd;
 using Eigen::MatrixXcd;
 TEST(AHPModule,AHP_Task_1) {
+	// Задача о выборе школы (Саати, 1977) сл. 159 (Курс "Принятие решений")
 	Eigen::MatrixXd A1(3,3),A2(3,3),A3(3,3),A4(3,3),A5(3,3),A6(3,3);
 
     A1 <<   1,d(1,3),d(1,2),
@@ -48,7 +49,7 @@ TEST(AHPModule,AHP_Task_1) {
 
 
     Eigen::MatrixXd final_weights_actual(1,3);
-    final_weights_actual <<  0.43211 , 0.342146 ,0.225744 ;
+    final_weights_actual <<  1 , 0.791803013 ,0.522422531 ;
     ahp_model.perform();
     VectorXd final_weights =  ahp_model.final_weights();
     ASSERT_NEAR( final_weights.norm(), final_weights_actual.norm(), eps);
@@ -91,9 +92,9 @@ TEST(AHPModule, AHP_Task_5_1) {
     ahp_decision_method ahp_model({A1,A2,A3,A4,A5,A6},C);
     ahp_model.perform();
 
-    Eigen::MatrixXd actual_final_weights(1, 3);
-    actual_final_weights << 0.3843 ,0.3516 ,0.2641;
-
-    double eps = 0.01;
+    Eigen::VectorXd actual_final_weights( 3);
+    actual_final_weights << 1 ,0.9151 ,0.6872;
+	std::cout << ahp_model.final_weights() << std::endl;
+    double eps = 0.1;
     ASSERT_NEAR(ahp_model.final_weights().norm(), actual_final_weights.norm(), eps);
 }

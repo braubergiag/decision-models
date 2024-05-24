@@ -1,12 +1,13 @@
 #pragma once
 
+#include <memory>
 #include <QWidget>
 #include <QPushButton>
 #include "DecisionModelDialog.h"
 #include "CompareAlternativesDialog.h"
 #include "CompareCriteriaDialog.h"
-#include "../DecisionModelsDB.h"
-#include <memory>
+#include "../decision_models_db.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 	class StartMenu;

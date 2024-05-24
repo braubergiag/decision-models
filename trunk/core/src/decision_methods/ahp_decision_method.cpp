@@ -9,13 +9,9 @@ ahp_decision_method::ahp_decision_method(const std::vector<Eigen::MatrixXd> &alt
 Eigen::MatrixXd ahp_decision_method::main_eigenvector(const Eigen::MatrixXd &matrix) const {
 	Eigen::EigenSolver<Eigen::MatrixXd> eigen_solver(matrix);
 	Eigen::VectorXd eigen_vector = eigen_solver.eigenvectors().col(0).real();
-	double sum = eigen_vector.cwiseAbs().sum();
-	for (auto &v: eigen_vector) {
-		v = abs(v) / sum;
-	}
+	eigen_vector = normalize_weights(eigen_vector.cwiseAbs(), eigen_vector.cwiseAbs().sum());
 	return eigen_vector.real();
 }
-
 
 Eigen::MatrixXd
 ahp_decision_method::weight_matrix(const std::vector<Eigen::MatrixXd> &alternatives_main_eigen_vectors) const {
@@ -32,13 +28,13 @@ ahp_decision_method::weight_matrix(const std::vector<Eigen::MatrixXd> &alternati
 Eigen::VectorXd
 ahp_decision_method::weight_vector(const Eigen::VectorXd &criteria_main_eigen_vector,
 								   const std::vector<Eigen::MatrixXd> &alternatives_main_eigen_vectors) const {
-	return (weight_matrix(alternatives_main_eigen_vectors) * criteria_main_eigen_vector);
+	Eigen::VectorXd weights = weight_matrix(alternatives_main_eigen_vectors) * criteria_main_eigen_vector;
+	return normalize_weights(weights, weights.maxCoeff());
 }
 
 void ahp_decision_method::perform() {
 	Eigen::VectorXd criteria_main_eigen_vector = main_eigenvector(criteria());
 	std::vector<Eigen::MatrixXd> alternatives_main_eigen_vectors;
-
 	for (const auto &alternative: alternatives()) {
 		alternatives_main_eigen_vectors.emplace_back(main_eigenvector(alternative));
 	}

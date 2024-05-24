@@ -1,7 +1,7 @@
 #pragma once
 #include <QDialog>
 #include <Eigen/Core>
-#include "../DecisionModel.h"
+#include "../decision_model.h"
 QT_BEGIN_NAMESPACE
 namespace Ui {
 	class CompareAlternativesDialog;
