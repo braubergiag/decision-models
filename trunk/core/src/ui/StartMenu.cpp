@@ -188,7 +188,7 @@ void StartMenu::onEstimateButtonClicked() {
 
 	if (gm) {
 		model.performGmMethod();
-		ui->gmLabel->setText(QString::fromStdString("Метод геометрический средних\n\n\n" + model.gmResult()));
+		ui->gmLabel->setText(QString::fromStdString("Метод геометрических средних\n\n\n" + model.gmResult()));
 	} else {
 		ui->gmLabel->clear();
 	}
