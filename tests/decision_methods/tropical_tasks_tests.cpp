@@ -5,6 +5,14 @@
 
 using utils::d;
 
+/*
+ * Кривулин Н. К., Абильдаев Т., Горшечникова В. Д., Капаца Д., Магдич Е. А., Мандрикова А. А.
+ * О решении многокритериальных задач принятия решений на основе парных сравнений
+ * // Компьютерные инструменты в образовании.
+ * 2020. № 2. С. 27–58. doi: 10.32603/2071-2340-2020-2-27-58
+ * Задача о выборе места работы (стр. 45)
+ * */
+
 TEST(TropicalModule,TropicalTask_5_1) {
         //5.1. Решение задачи о выборе места работы"
         MaxAlgMatrixXd A1(3,3),A2(3,3),A3(3,3),A4(3,3),A5(3,3),A6(3,3);
@@ -126,6 +134,14 @@ TEST(TropicalModule,TropicalTask_5_1) {
     ASSERT_NEAR(y.norm().scalar, y_actual.norm().scalar,epsilon);
 }
 
+/*
+ * Кривулин Н. К., Абильдаев Т., Горшечникова В. Д., Капаца Д., Магдич Е. А., Мандрикова А. А.
+ * О решении многокритериальных задач принятия решений на основе парных сравнений
+ * // Компьютерные инструменты в образовании.
+ * 2020. № 2. С. 27–58. doi: 10.32603/2071-2340-2020-2-27-58
+ * Задача о выборе места жительства (стр. 48)
+ * */
+
 TEST(TropicalModule,TropicalTask_5_2){
     //  Решение задачи 5.2
     MaxAlgMatrixXd A1(4,4),A2(4,4),A3(4,4),A4(4,4),A5(4,4);
@@ -194,7 +210,7 @@ TEST(TropicalModule,TropicalTask_5_2){
     w_actual << 0.318463,         1,  0.169031,         1, 0.0897167;
     ASSERT_NEAR(w.norm().scalar, w_actual.norm().scalar,epsilon);
 
-
+	// 2
     // 2.1
     std::vector<MaxAlgMatrixXd> Alternatives {A1,A2,A3,A4,A5};
     MaxAlgMatrixXd P = method.weighted_sum_pairwise_comparison_matrices(Alternatives, v);
@@ -250,41 +266,4 @@ TEST(TropicalModule,TropicalTask_5_2){
     MaxAlgMatrixXd y_actual(y.rows(),y.cols());
     y_actual <<        1,   0.866025,  1,   0.75;
     ASSERT_NEAR(y.norm().scalar, y_actual.norm().scalar,epsilon);
-}
-TEST(TropicalModule,SchoolProblem) {
-    MaxAlgMatrixXd A1(3,3),A2(3,3),A3(3,3),A4(3,3),A5(3,3), A6(3,3);
-
-    A1 << 1, d(1,3), d(1,2),
-        3,1,3,
-        2,d(1,3),1;
-
-    A2 << 1, 1, 1,
-            1,1,1,
-            1,1,1;
-
-    A3 << 1, 5, 1,
-            d(1,5),1,d(1,5),
-            1,5,1;
-
-    A4 << 1,9,7,
-        d(1,9),1,d(1,5),
-        d(1,7),5,1;
-    A5 << 1,d(1,2),1,
-          2,1,2,
-          1,d(1,2),1;
-    A6 << 1,6,4,
-        d(1,6),1,d(1,3),
-        d(1,4),3,1;
-
-    MaxAlgMatrixXd C(6, 6);
-    C <<    1,5,7,5,3,1,
-            d(1,5),1,3,d(1,5),d(1,6),d(1,6),
-            d(1,7),d(1,3),1,d(1,4),d(1,5),d(1,5),
-            d(1,5),5,4,1,d(1,5),d(1,6),
-            d(1,3),6,5,5,1,1,
-            1,6,5,6,1,1;
-
-    tropical_decision_method method({A1,A2,A3,A4,A5,A6},C);
-    method.perform();
-	auto [best_weight, worst_weight] = method.final_weights();
 }

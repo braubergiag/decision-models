@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1065</width>
-    <height>879</height>
+    <height>910</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -15,6 +15,12 @@
     <width>1200</width>
     <height>1000</height>
    </size>
+  </property>
+  <property name="font">
+   <font>
+    <family>JetBrains Mono</family>
+    <pointsize>11</pointsize>
+   </font>
   </property>
   <property name="windowTitle">
    <string>Модели принятия решений</string>
@@ -24,8 +30,8 @@
     <rect>
      <x>215</x>
      <y>20</y>
-     <width>641</width>
-     <height>831</height>
+     <width>631</width>
+     <height>891</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -124,7 +130,7 @@
         <item>
          <widget class="QCheckBox" name="gmCheckBox">
           <property name="text">
-           <string>Метод геометрический средних</string>
+           <string>Метод геометрических средних</string>
           </property>
          </widget>
         </item>
