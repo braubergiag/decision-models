@@ -2,6 +2,7 @@
 #include <QDebug>
 #include "ui_CompareAlternativesDialog.h"
 #include "../../include/ui/CompareAlternativesDialog.h"
+#include "../../include/decision_methods/utils.h"
 
 CompareAlternativesDialog::CompareAlternativesDialog(DecisionModel &decisionModel, QWidget *parent)
 	: QDialog(parent), decisionModel_(decisionModel), ui(new Ui::CompareAlternativesDialog) {
@@ -102,29 +103,29 @@ void CompareAlternativesDialog::onCellChanged(int row, int column) {
 
 	if (inUpdateState)
 		return;
+	auto &altWidget = ui->alternativesTableWidget;
 
 	if (row == column) {
-		ui->alternativesTableWidget->item(column, row)->setText(kDefaultValueView);
+		altWidget->item(column, row)->setText(kDefaultValueView);
 		return;
 	}
-	auto item_value = ui->alternativesTableWidget->item(row, column)->text();
+	auto item_value = altWidget->item(row, column)->text();
 	if (item_value == kDefaultValueView)
 		return;
 
 	if (item_value.contains("/")) {
-		double symmetric_item_value =
-				ui->alternativesTableWidget->item(column, row)->data(Qt::WhatsThisRole).toDouble();
-		if (symmetric_item_value > kEpsilon) {
-			double inverse_value = 1. / symmetric_item_value;
-			ui->alternativesTableWidget->item(row, column)
-					->setData(Qt::WhatsThisRole, QString("%1").arg(inverse_value));
-		}
+		utils::Fraction frac;
+		std::istringstream is(altWidget->item(row, column)->text().toStdString());
+		is >> frac;
+		altWidget->item(row, column)->setData(Qt::WhatsThisRole, frac.value());
+		altWidget->item(column, row)->setText(QString::fromStdString(frac.inv_view()));
+		altWidget->item(column, row)->setData(Qt::WhatsThisRole, frac.inv_value());
 
 	} else {
 		double value = item_value.toDouble();
-		ui->alternativesTableWidget->item(row, column)->setData(Qt::WhatsThisRole, QString("%1").arg(value));
+		altWidget->item(row, column)->setData(Qt::WhatsThisRole, QString("%1").arg(value));
 		if (value > kEpsilon and value <= kMaxVal) {
-			ui->alternativesTableWidget->item(column, row)->setText(QString("1/%1").arg(value));
+			altWidget->item(column, row)->setText(QString("1/%1").arg(value));
 		}
 	}
 }

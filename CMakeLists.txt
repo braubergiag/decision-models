@@ -125,7 +125,7 @@ add_executable(
         tests/decision_model/model_ranking.cpp)
 
 
-target_link_libraries(DecisionModelsTests gtest_main Eigen3::Eigen)
+target_link_libraries(DecisionModelsTests gtest_main Eigen3::Eigen Qt${QT_VERSION_MAJOR}::Widgets )
 include(GoogleTest)
 gtest_discover_tests(DecisionModelsTests)
 

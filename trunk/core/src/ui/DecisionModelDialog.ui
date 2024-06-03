@@ -2,11 +2,14 @@
 <ui version="4.0">
  <class>DecisionModelDialog</class>
  <widget class="QDialog" name="DecisionModelDialog">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>707</width>
+    <width>425</width>
     <height>782</height>
    </rect>
   </property>
