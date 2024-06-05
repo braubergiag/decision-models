@@ -1,4 +1,4 @@
-#include "../include/decision_models_db.h"
+#include <decision_models_db.h>
 
 void DecisionModelsDB::addOrUpdateModel(const std::string &modelName, const DecisionModel &decisionModel) {
 	modelsDb_[modelName] = decisionModel;

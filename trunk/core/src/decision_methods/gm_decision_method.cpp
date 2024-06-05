@@ -1,6 +1,6 @@
 #include <algorithm>
-#include "../../include/decision_methods/gm_decision_method.h"
-#include "../../include/decision_methods/utils.h"
+#include <gm_decision_method.h>
+#include <utils.h>
 
 using Eigen::MatrixXd;
 using Eigen::VectorXd;

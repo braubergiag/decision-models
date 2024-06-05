@@ -1,7 +1,7 @@
 #include <QDebug>
 #include <QMessageBox>
-#include "ui_DecisionModelDialog.h"
-#include "../../include/ui/DecisionModelDialog.h"
+#include <ui_DecisionModelDialog.h>
+#include <DecisionModelDialog.h>
 
 DecisionModelDialog::DecisionModelDialog(const DecisionModelsDB &modelsDb, QWidget *parent)
 	: QDialog(parent), modelsDb_(modelsDb), ui(new Ui::DecisionModelDialog) {

@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <Eigen/Dense>
-#include "../../trunk/core/include/decision_methods/gm_decision_method.h"
-#include "../../trunk/core/include/decision_methods/utils.h"
+#include <gm_decision_method.h>
+#include <utils.h>
 
 using utils::d;
 

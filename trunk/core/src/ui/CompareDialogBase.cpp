@@ -1,7 +1,7 @@
 #include <sstream>
-#include "../../include/ui/CompareDialogBase.h"
-#include "ui_CompareDialogBase.h"
-#include "../../include/decision_methods/utils.h"
+#include <CompareDialogBase.h>
+#include <ui_CompareDialogBase.h>
+#include <utils.h>
 
 CompareDialogBase::CompareDialogBase(QWidget *parent) : QDialog(parent), ui(new Ui::CompareDialogBase) {
 	ui->setupUi(this);

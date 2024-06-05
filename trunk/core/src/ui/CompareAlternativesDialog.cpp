@@ -1,8 +1,8 @@
 #include <QComboBox>
 #include <QDebug>
-#include "ui_CompareAlternativesDialog.h"
-#include "../../include/ui/CompareAlternativesDialog.h"
-#include "../../include/decision_methods/utils.h"
+#include <ui_CompareAlternativesDialog.h>
+#include <CompareAlternativesDialog.h>
+#include <utils.h>
 
 CompareAlternativesDialog::CompareAlternativesDialog(DecisionModel &decisionModel, QWidget *parent)
 	: CompareDialogBase(parent), decisionModel_(decisionModel), ui(new Ui::CompareAlternativesDialog) {

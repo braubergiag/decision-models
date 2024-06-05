@@ -2,8 +2,8 @@
 
 #include <map>
 #include <string>
-#include "decision_model.h"
 #include <Eigen/Core>
+#include <decision_model.h>
 
 class DecisionModelsDB {
 

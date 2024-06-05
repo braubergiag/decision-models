@@ -1,8 +1,10 @@
 #pragma once
+
 #include <QDialog>
 #include <Eigen/Core>
-#include "../decision_model.h"
-#include "CompareDialogBase.h"
+#include <decision_model.h>
+#include <CompareDialogBase.h>
+
 QT_BEGIN_NAMESPACE
 
 namespace Ui {

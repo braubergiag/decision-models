@@ -1,5 +1,5 @@
-#include "../include/decision_model.h"
-#include "../include/decision_methods/utils.h"
+#include <decision_model.h>
+#include <utils.h>
 #include <algorithm>
 
 void DecisionModel::addAlternative(const std::string &alternative) {

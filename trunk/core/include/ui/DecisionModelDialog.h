@@ -6,7 +6,7 @@
 #include <QLabel>
 #include <QVector>
 #include <QString>
-#include "../decision_models_db.h"
+#include <decision_models_db.h>
 
 QT_BEGIN_NAMESPACE
 

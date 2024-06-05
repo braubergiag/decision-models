@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 #include <Eigen/Dense>
 #include <QString>
-#include "../../trunk/core/include/decision_model.h"
-#include "../../trunk/core/include/decision_methods/utils.h"
+#include <decision_model.h>
+#include <utils.h>
 
 
 TEST(DecisionMethods, modelRanking) {

@@ -1,6 +1,6 @@
 #include <numeric>
-#include "../../include/decision_methods/tropical_decision_method.h"
-#include "../../include/decision_methods/utils.h"
+#include <tropical_decision_method.h>
+#include <utils.h>
 
 using utils::d;
 

@@ -3,10 +3,10 @@
 #include <memory>
 #include <QWidget>
 #include <QPushButton>
-#include "DecisionModelDialog.h"
-#include "CompareAlternativesDialog.h"
-#include "CompareCriteriaDialog.h"
-#include "../decision_models_db.h"
+#include <DecisionModelDialog.h>
+#include <CompareAlternativesDialog.h>
+#include <CompareCriteriaDialog.h>
+#include <decision_models_db.h>
 
 QT_BEGIN_NAMESPACE
 

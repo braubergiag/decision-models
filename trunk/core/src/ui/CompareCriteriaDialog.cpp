@@ -1,8 +1,8 @@
 #include <iostream>
 #include <QDebug>
-#include "ui_CompareCriteriaDialog.h"
-#include "../../include/ui/CompareCriteriaDialog.h"
-#include "../../include/decision_methods/utils.h"
+#include <ui_CompareCriteriaDialog.h>
+#include <CompareCriteriaDialog.h>
+#include <utils.h>
 
 CompareCriteriaDialog::CompareCriteriaDialog(DecisionModel &decisionModel, QWidget *parent)
 	: decisionModel_(decisionModel), CompareDialogBase(parent), ui(new Ui::CompareCriteriaDialog) {
