@@ -41,7 +41,8 @@ set (PROJECT_HEADERS
         trunk/core/include/ui/CompareAlternativesDialog.h
 
         trunk/core/include/decision_model.h
-        trunk/core/include/decision_methods/utils.h)
+        trunk/core/include/decision_methods/utils.h trunk/core/src/ui/CompareDialogBase.cpp trunk/core/include/ui/CompareDialogBase.h trunk/core/src/ui/CompareDialogBase.ui)
+include_directories(${CMAKE_SOURCE_DIR}/${PROJECT_HEADERS})
 
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

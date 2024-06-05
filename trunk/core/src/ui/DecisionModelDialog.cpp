@@ -11,7 +11,8 @@ DecisionModelDialog::DecisionModelDialog(const DecisionModelsDB &modelsDb, QWidg
 	editMode_ = false;
 }
 
-DecisionModelDialog::DecisionModelDialog(const DecisionModelsDB &modelsDb, const std::string &modelName, QWidget *parent)
+DecisionModelDialog::DecisionModelDialog(const DecisionModelsDB &modelsDb, const std::string &modelName,
+										 QWidget *parent)
 	: QDialog(parent), modelsDb_(modelsDb), modelName_(QString::fromStdString(modelName)),
 	  ui(new Ui::DecisionModelDialog) {
 

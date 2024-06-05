@@ -5,7 +5,7 @@
 #include "../../include/decision_methods/utils.h"
 
 CompareAlternativesDialog::CompareAlternativesDialog(DecisionModel &decisionModel, QWidget *parent)
-	: QDialog(parent), decisionModel_(decisionModel), ui(new Ui::CompareAlternativesDialog) {
+	: CompareDialogBase(parent), decisionModel_(decisionModel), ui(new Ui::CompareAlternativesDialog) {
 	ui->setupUi(this);
 
 
@@ -98,36 +98,7 @@ void CompareAlternativesDialog::setDefaultTableWidgetValues() {
 }
 
 void CompareAlternativesDialog::onCellChanged(int row, int column) {
-	static const double kEpsilon = 0.0001;
-	static const double kMaxVal = 10;
-
-	if (inUpdateState)
-		return;
-	auto &altWidget = ui->alternativesTableWidget;
-
-	if (row == column) {
-		altWidget->item(column, row)->setText(kDefaultValueView);
-		return;
-	}
-	auto item_value = altWidget->item(row, column)->text();
-	if (item_value == kDefaultValueView)
-		return;
-
-	if (item_value.contains("/")) {
-		utils::Fraction frac;
-		std::istringstream is(altWidget->item(row, column)->text().toStdString());
-		is >> frac;
-		altWidget->item(row, column)->setData(Qt::WhatsThisRole, frac.value());
-		altWidget->item(column, row)->setText(QString::fromStdString(frac.inv_view()));
-		altWidget->item(column, row)->setData(Qt::WhatsThisRole, frac.inv_value());
-
-	} else {
-		double value = item_value.toDouble();
-		altWidget->item(row, column)->setData(Qt::WhatsThisRole, QString("%1").arg(value));
-		if (value > kEpsilon and value <= kMaxVal) {
-			altWidget->item(column, row)->setText(QString("1/%1").arg(value));
-		}
-	}
+	handleCellChanged(ui->alternativesTableWidget, row, column);
 }
 
 void CompareAlternativesDialog::updateTableWidget(int index) {
