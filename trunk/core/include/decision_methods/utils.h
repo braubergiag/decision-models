@@ -7,10 +7,18 @@ namespace utils {
 		return p / q;
 	}
 
-	inline bool approximatelyEqual(double a, double b, double epsilon = 0.01) {
+	inline bool approximately_equal(double a, double b, double epsilon = 0.001) {
 		return abs(a - b) <= ((abs(a) < abs(b) ? abs(b) : abs(a)) * epsilon);
 	}
 
+	inline bool definitely_less_than(double a, double b, double epsilon = 0.001)
+	{
+		return (b - a) > ( (abs(a) < abs(b) ? abs(b) : abs(a)) * epsilon);
+	}
+	inline bool less_or_equal_than(double a, double b, double epsilon = 0.001)
+	{
+		return definitely_less_than(a,b,epsilon) || approximately_equal(a,b,epsilon);
+	}
 	inline std::string wrap_with_spaces(const std::string &str) {
 		return std::string(" ").append(str).append(" ");
 	}

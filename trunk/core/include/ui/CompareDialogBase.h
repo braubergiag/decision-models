@@ -26,10 +26,13 @@ private:
 	void handleIncorrectValue(QTableWidget *tableWidget, int row, int column);
 
 	bool isDefaultValue(const QString &input) const;
+	bool isInteger(const QString &input) const;
+	bool isFraction(const QString &input) const;
 
 protected:
 	inline static const double kDefaultValue{1.};
-	inline static const double kMaxVal = 10;
+	inline static const double kMaxVal{10};
+	inline static const double kMinVal{0};
 	inline static const QString kDefaultValueView{"1"};
 
 private:
