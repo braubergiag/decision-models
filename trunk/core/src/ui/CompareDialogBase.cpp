@@ -21,11 +21,16 @@ bool isFraction(const QString &input) {
 	return input.contains("/");
 }
 
+bool CompareDialogBase::isDefaultValue(const QString &input) const {
+	return input == kDefaultValueView;
+}
+
 void CompareDialogBase::handleCellChanged(QTableWidget *tableWidget, int row, int column) {
 	if (row == column) {
 		tableWidget->item(column, row)->setText(kDefaultValueView);
 		return;
 	}
+
 	auto item_value = tableWidget->item(row, column)->text();
 	if (isFraction(item_value)) {
 		handleFractionValue(tableWidget, row, column);
@@ -39,9 +44,9 @@ void CompareDialogBase::handleCellChanged(QTableWidget *tableWidget, int row, in
 void CompareDialogBase::handleIntValue(QTableWidget *tableWidget, int row, int column) {
 	auto item_value = tableWidget->item(row, column)->text();
 	auto value = item_value.toInt();
-	tableWidget->item(row, column)->setData(Qt::WhatsThisRole, QString("%1").arg(value));
 	if (value <= kMaxVal) {
-		tableWidget->item(column, row)->setText(QString("1/%1").arg(value));
+		tableWidget->item(row, column)->setData(Qt::WhatsThisRole, QString("%1").arg(value));
+		tableWidget->item(column, row)->setText(QString::fromStdString(utils::Fraction(1, value).view()));
 	}
 }
 

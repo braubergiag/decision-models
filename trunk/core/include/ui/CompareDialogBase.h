@@ -25,6 +25,8 @@ private:
 	void handleFractionValue(QTableWidget *tableWidget, int row, int column);
 	void handleIncorrectValue(QTableWidget *tableWidget, int row, int column);
 
+	bool isDefaultValue(const QString &input) const;
+
 protected:
 	inline static const double kDefaultValue{1.};
 	inline static const double kMaxVal = 10;

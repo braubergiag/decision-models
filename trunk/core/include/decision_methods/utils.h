@@ -1,7 +1,6 @@
 #pragma once
 
 #include <QString>
-#include <optional>
 
 namespace utils {
 	inline double d(double p, double q) {
@@ -48,16 +47,6 @@ namespace utils {
 		int denominator_;
 	};
 
-	inline std::istream &operator>>(std::istream &is, Fraction &frac) {
-		auto numerator{0};
-		auto denominator{0};
-		is >> numerator;
-		is.ignore(1);
-		is >> denominator;
-
-		frac.set_numerator(numerator);
-		frac.set_denominator(denominator);
-		return is;
-	};
+	std::istream &operator>>(std::istream &is, Fraction &frac);
 
 } // namespace utils
