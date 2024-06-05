@@ -16,6 +16,7 @@ public:
 								  const std::vector<Eigen::MatrixXd> &alternatives_main_eigen_vectors) const;
 
 	Eigen::MatrixXd main_eigenvector(const Eigen::MatrixXd &matrix) const;
+
 public:
 	void perform() override;
 };

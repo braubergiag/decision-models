@@ -2,6 +2,7 @@
 #include "../../include/decision_methods/utils.h"
 
 using utils::d;
+
 namespace tropical {
 
 	std::ostream &operator<<(std::ostream &stream, const MaxAlgMatrixXd &matrixXd) {
@@ -9,7 +10,7 @@ namespace tropical {
 	}
 
 	bool operator>=(const MaxAlgVectorXd &lhs, const MaxAlgVectorXd &rhs) {
-		Eigen::Index sz =  std::max(lhs.size(), rhs.size());
+		Eigen::Index sz = std::max(lhs.size(), rhs.size());
 		for (Eigen::Index i = 0; i < sz; ++i) {
 			if (lhs(i) < rhs(i))
 				return false;
@@ -80,6 +81,7 @@ namespace tropical {
 		}
 		return matrixXd;
 	}
+
 	Eigen::VectorXd to_VectorXd(const MaxAlgVectorXd &maxAlgVectorXd) {
 		Eigen::VectorXd vectorXd = Eigen::VectorXd::Zero(maxAlgVectorXd.size());
 		for (auto i = 0; i < maxAlgVectorXd.rows(); ++i) {
@@ -87,12 +89,15 @@ namespace tropical {
 		}
 		return vectorXd;
 	}
+
 	MaxAlgMatrixXd eye(Eigen::Index rows, Eigen::Index cols) {
 		return MaxAlgMatrixXd::Identity(rows, cols);
 	}
+
 	MaxAlgMatrixXd eye(Eigen::Index n) {
 		return MaxAlgMatrixXd::Identity(n, n);
 	}
+
 	MaxAlgVectorXd ones(Eigen::Index n) {
 		return MaxAlgVectorXd::Ones(n);
 	}

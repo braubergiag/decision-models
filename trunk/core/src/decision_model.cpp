@@ -153,6 +153,7 @@ std::pair<std::string, std::string> DecisionModel::tropicalResult() const {
 std::string DecisionModel::modelRanking(const Eigen::VectorXd &weights) {
 	return modelRanking(rankModel(weights));
 }
+
 DecisionModel::ModelRanking DecisionModel::rankModel(const Eigen::VectorXd &weights) {
 	ModelRanking rankings;
 	for (int i = 0; i < weights.size(); ++i) {

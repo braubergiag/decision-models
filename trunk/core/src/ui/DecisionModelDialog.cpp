@@ -38,6 +38,7 @@ void DecisionModelDialog::initSignalAndSlots() {
 DecisionModelDialog::~DecisionModelDialog() {
 	delete ui;
 }
+
 void DecisionModelDialog::onAddAlternativeButtonClicked() {
 	auto alternativeName = ui->alternativeLineEdit->text();
 	if (alternativeName.isEmpty()) {
@@ -98,7 +99,6 @@ void DecisionModelDialog::onButtonBoxAccepted() {
 	accept();
 }
 
-
 void DecisionModelDialog::setAlternativesListWidget(const DecisionModelsDB &modelsDb) {
 	auto modelNameStd = modelName_.toStdString();
 	if (modelsDb.count(modelNameStd)) {
@@ -148,7 +148,6 @@ void DecisionModelDialog::onDeleteCriterionButtonClicked() {
 void DecisionModelDialog::onButtonBoxRejected() {
 	reject();
 }
-
 
 const QVector<QString> &DecisionModelDialog::alternativesNames() const {
 	return alternativesNames_;

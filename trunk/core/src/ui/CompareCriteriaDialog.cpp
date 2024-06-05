@@ -4,7 +4,6 @@
 #include "../../include/ui/CompareCriteriaDialog.h"
 #include "../../include/decision_methods/utils.h"
 
-
 CompareCriteriaDialog::CompareCriteriaDialog(DecisionModel &decisionModel, QWidget *parent)
 	: decisionModel_(decisionModel), CompareDialogBase(parent), ui(new Ui::CompareCriteriaDialog) {
 	ui->setupUi(this);

@@ -20,7 +20,6 @@ CompareAlternativesDialog::~CompareAlternativesDialog() {
 	delete ui;
 }
 
-
 void CompareAlternativesDialog::initSignalsAndSlotsConnections() {
 	connect(ui->criteriaComboBox, qOverload<int>(&QComboBox::currentIndexChanged), this,
 			&CompareAlternativesDialog::onCriterionChanged);

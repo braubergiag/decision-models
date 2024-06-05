@@ -9,9 +9,11 @@
 #include "../decision_models_db.h"
 
 QT_BEGIN_NAMESPACE
+
 namespace Ui {
 	class DecisionModelDialog;
 }
+
 QT_END_NAMESPACE
 
 class DecisionModelDialog : public QDialog {

@@ -5,9 +5,11 @@
 #include "../decision_model.h"
 #include "CompareDialogBase.h"
 QT_BEGIN_NAMESPACE
+
 namespace Ui {
 	class CompareCriteriaDialog;
 }
+
 QT_END_NAMESPACE
 
 class CompareCriteriaDialog : public CompareDialogBase {
