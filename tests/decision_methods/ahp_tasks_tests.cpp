@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <Eigen/Dense>
-#include "../../trunk/core/include/decision_methods/ahp_decision_method.h"
-#include "../../trunk/core/include/decision_methods/utils.h"
+#include <ahp_decision_method.h>
+#include <utils.h>
 
 using utils::d;
 

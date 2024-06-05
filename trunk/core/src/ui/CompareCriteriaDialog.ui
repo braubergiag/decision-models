@@ -1,42 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CompareCriteriaDialog</class>
- <widget class="QDialog" name="CompareCriteriaDialog">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>643</width>
-    <height>548</height>
-   </rect>
-  </property>
-  <property name="windowTitle">
-   <string>Сравнение критериев</string>
-  </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2">
-   <item>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Сравнение критериев</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QTableWidget" name="criteriaTableWidget"/>
-     </item>
-     <item>
-      <widget class="QDialogButtonBox" name="buttonBox">
-       <property name="standardButtons">
-        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-  </layout>
- </widget>
- <resources/>
- <connections/>
+    <class>CompareCriteriaDialog</class>
+    <widget class="QDialog" name="CompareCriteriaDialog">
+        <property name="windowModality">
+            <enum>Qt::WindowModal</enum>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>643</width>
+                <height>548</height>
+            </rect>
+        </property>
+        <property name="windowTitle">
+            <string>Сравнение критериев</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item>
+                <layout class="QVBoxLayout" name="verticalLayout">
+                    <item>
+                        <widget class="QLabel" name="label">
+                            <property name="text">
+                                <string>Сравнение критериев</string>
+                            </property>
+                        </widget>
+                    </item>
+                    <item>
+                        <widget class="QTableWidget" name="criteriaTableWidget"/>
+                    </item>
+                    <item>
+                        <widget class="QDialogButtonBox" name="buttonBox">
+                            <property name="standardButtons">
+                                <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+                            </property>
+                        </widget>
+                    </item>
+                </layout>
+            </item>
+        </layout>
+    </widget>
+    <resources/>
+    <connections/>
 </ui>

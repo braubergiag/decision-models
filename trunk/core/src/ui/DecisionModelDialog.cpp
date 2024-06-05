@@ -1,7 +1,7 @@
 #include <QDebug>
 #include <QMessageBox>
-#include "ui_DecisionModelDialog.h"
-#include "../../include/ui/DecisionModelDialog.h"
+#include <ui_DecisionModelDialog.h>
+#include <DecisionModelDialog.h>
 
 DecisionModelDialog::DecisionModelDialog(const DecisionModelsDB &modelsDb, QWidget *parent)
 	: QDialog(parent), modelsDb_(modelsDb), ui(new Ui::DecisionModelDialog) {
@@ -11,7 +11,8 @@ DecisionModelDialog::DecisionModelDialog(const DecisionModelsDB &modelsDb, QWidg
 	editMode_ = false;
 }
 
-DecisionModelDialog::DecisionModelDialog(const DecisionModelsDB &modelsDb, const std::string &modelName, QWidget *parent)
+DecisionModelDialog::DecisionModelDialog(const DecisionModelsDB &modelsDb, const std::string &modelName,
+										 QWidget *parent)
 	: QDialog(parent), modelsDb_(modelsDb), modelName_(QString::fromStdString(modelName)),
 	  ui(new Ui::DecisionModelDialog) {
 
@@ -37,6 +38,7 @@ void DecisionModelDialog::initSignalAndSlots() {
 DecisionModelDialog::~DecisionModelDialog() {
 	delete ui;
 }
+
 void DecisionModelDialog::onAddAlternativeButtonClicked() {
 	auto alternativeName = ui->alternativeLineEdit->text();
 	if (alternativeName.isEmpty()) {
@@ -97,7 +99,6 @@ void DecisionModelDialog::onButtonBoxAccepted() {
 	accept();
 }
 
-
 void DecisionModelDialog::setAlternativesListWidget(const DecisionModelsDB &modelsDb) {
 	auto modelNameStd = modelName_.toStdString();
 	if (modelsDb.count(modelNameStd)) {
@@ -147,7 +148,6 @@ void DecisionModelDialog::onDeleteCriterionButtonClicked() {
 void DecisionModelDialog::onButtonBoxRejected() {
 	reject();
 }
-
 
 const QVector<QString> &DecisionModelDialog::alternativesNames() const {
 	return alternativesNames_;

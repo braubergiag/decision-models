@@ -1,5 +1,5 @@
 #include <QApplication>
-#include "../include/ui/StartMenu.h"
+#include <StartMenu.h>
 
 int main(int argc, char *argv[]) {
 	QApplication a(argc, argv);

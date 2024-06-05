@@ -1,8 +1,8 @@
 #pragma once
 
 #include <utility>
-#include "decision_method.h"
-#include "tropical.h"
+#include <decision_method.h>
+#include <tropical.h>
 
 using tropical::MaxAlgMatrixXd;
 using tropical::MaxAlgVectorXd;

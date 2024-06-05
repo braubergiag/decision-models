@@ -1,6 +1,6 @@
 #include <algorithm>
-#include "../../include/decision_methods/gm_decision_method.h"
-#include "../../include/decision_methods/utils.h"
+#include <gm_decision_method.h>
+#include <utils.h>
 
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
@@ -25,7 +25,7 @@ void gm_decision_method::perform() {
 	for (auto i = 0; i < n_criteria; ++i) {
 		criteria_weight_vector(i) = pow(criteria().row(i).prod(), d(1, n_criteria));
 		for (auto j = 0; j < n_alternatives; ++j) {
-			matrix_weights(j, i) = pow(alternatives().at(i).row(j).prod(), d( 1, n_alternatives));
+			matrix_weights(j, i) = pow(alternatives().at(i).row(j).prod(), d(1, n_alternatives));
 		}
 	}
 

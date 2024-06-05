@@ -1,5 +1,5 @@
-#include "../include/decision_model.h"
-#include "../include/decision_methods/utils.h"
+#include <decision_model.h>
+#include <utils.h>
 #include <algorithm>
 
 void DecisionModel::addAlternative(const std::string &alternative) {
@@ -153,6 +153,7 @@ std::pair<std::string, std::string> DecisionModel::tropicalResult() const {
 std::string DecisionModel::modelRanking(const Eigen::VectorXd &weights) {
 	return modelRanking(rankModel(weights));
 }
+
 DecisionModel::ModelRanking DecisionModel::rankModel(const Eigen::VectorXd &weights) {
 	ModelRanking rankings;
 	for (int i = 0; i < weights.size(); ++i) {
@@ -171,7 +172,7 @@ std::string DecisionModel::modelRanking(const ModelRanking &modelRanking) {
 		ss << alternative_sign + std::to_string(alternative_n);
 		if (i + 1 < modelRanking.size()) {
 			auto [next_weight, next_alternative_n] = modelRanking.at(i + 1);
-			ss << (utils::approximatelyEqual(weight, next_weight) ? utils::wrap_with_spaces(equality_sign)
+			ss << (utils::approximately_equal(weight, next_weight) ? utils::wrap_with_spaces(equality_sign)
 																  : utils::wrap_with_spaces(greater_sign));
 		}
 	}

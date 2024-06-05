@@ -1,10 +1,11 @@
 #include <QComboBox>
 #include <QDebug>
-#include "ui_CompareAlternativesDialog.h"
-#include "../../include/ui/CompareAlternativesDialog.h"
+#include <ui_CompareAlternativesDialog.h>
+#include <CompareAlternativesDialog.h>
+#include <utils.h>
 
 CompareAlternativesDialog::CompareAlternativesDialog(DecisionModel &decisionModel, QWidget *parent)
-	: QDialog(parent), decisionModel_(decisionModel), ui(new Ui::CompareAlternativesDialog) {
+	: CompareDialogBase(parent), decisionModel_(decisionModel), ui(new Ui::CompareAlternativesDialog) {
 	ui->setupUi(this);
 
 
@@ -18,7 +19,6 @@ CompareAlternativesDialog::CompareAlternativesDialog(DecisionModel &decisionMode
 CompareAlternativesDialog::~CompareAlternativesDialog() {
 	delete ui;
 }
-
 
 void CompareAlternativesDialog::initSignalsAndSlotsConnections() {
 	connect(ui->criteriaComboBox, qOverload<int>(&QComboBox::currentIndexChanged), this,
@@ -97,36 +97,7 @@ void CompareAlternativesDialog::setDefaultTableWidgetValues() {
 }
 
 void CompareAlternativesDialog::onCellChanged(int row, int column) {
-	static const double kEpsilon = 0.0001;
-	static const double kMaxVal = 10;
-
-	if (inUpdateState)
-		return;
-
-	if (row == column) {
-		ui->alternativesTableWidget->item(column, row)->setText(kDefaultValueView);
-		return;
-	}
-	auto item_value = ui->alternativesTableWidget->item(row, column)->text();
-	if (item_value == kDefaultValueView)
-		return;
-
-	if (item_value.contains("/")) {
-		double symmetric_item_value =
-				ui->alternativesTableWidget->item(column, row)->data(Qt::WhatsThisRole).toDouble();
-		if (symmetric_item_value > kEpsilon) {
-			double inverse_value = 1. / symmetric_item_value;
-			ui->alternativesTableWidget->item(row, column)
-					->setData(Qt::WhatsThisRole, QString("%1").arg(inverse_value));
-		}
-
-	} else {
-		double value = item_value.toDouble();
-		ui->alternativesTableWidget->item(row, column)->setData(Qt::WhatsThisRole, QString("%1").arg(value));
-		if (value > kEpsilon and value <= kMaxVal) {
-			ui->alternativesTableWidget->item(column, row)->setText(QString("1/%1").arg(value));
-		}
-	}
+	handleCellChanged(ui->alternativesTableWidget, row, column);
 }
 
 void CompareAlternativesDialog::updateTableWidget(int index) {

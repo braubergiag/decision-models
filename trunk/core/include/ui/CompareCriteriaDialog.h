@@ -1,15 +1,19 @@
 #pragma once
+
 #include <QDialog>
 #include <QTableWidget>
 #include <Eigen/Core>
-#include "../decision_model.h"
+#include <decision_model.h>
+#include <CompareDialogBase.h>
 QT_BEGIN_NAMESPACE
+
 namespace Ui {
 	class CompareCriteriaDialog;
 }
+
 QT_END_NAMESPACE
 
-class CompareCriteriaDialog : public QDialog {
+class CompareCriteriaDialog : public CompareDialogBase {
 	Q_OBJECT
 
 public:
@@ -32,7 +36,5 @@ private:
 
 	int rowCount_;
 	int columnCount_;
-	const double kDefaultValue{1.};
-	const QString kDefaultValueView{"1"};
 	Ui::CompareCriteriaDialog *ui;
 };

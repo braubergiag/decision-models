@@ -1,11 +1,11 @@
 #include <iostream>
 #include <QDebug>
-#include <QVBoxLayout>
-#include "ui_CompareCriteriaDialog.h"
-#include "../../include/ui/CompareCriteriaDialog.h"
+#include <ui_CompareCriteriaDialog.h>
+#include <CompareCriteriaDialog.h>
+#include <utils.h>
 
 CompareCriteriaDialog::CompareCriteriaDialog(DecisionModel &decisionModel, QWidget *parent)
-	: decisionModel_(decisionModel), QDialog(parent), ui(new Ui::CompareCriteriaDialog) {
+	: decisionModel_(decisionModel), CompareDialogBase(parent), ui(new Ui::CompareCriteriaDialog) {
 	ui->setupUi(this);
 
 	if (decisionModel_.criteriaComparisonMatrixIsInit())
@@ -22,30 +22,7 @@ CompareCriteriaDialog::~CompareCriteriaDialog() {
 }
 
 void CompareCriteriaDialog::onCellChanged(int row, int column) {
-	static const double kEpsilon = 0.0001;
-	static const double kMaxVal = 10;
-	if (row == column) {
-		ui->criteriaTableWidget->item(column, row)->setText(kDefaultValueView);
-		return;
-	}
-	auto item_value = ui->criteriaTableWidget->item(row, column)->text();
-	if (item_value == kDefaultValueView)
-		return;
-
-	if (item_value.contains("/")) {
-		double symmetric_item_value = ui->criteriaTableWidget->item(column, row)->data(Qt::WhatsThisRole).toDouble();
-		if (symmetric_item_value > kEpsilon) {
-			double inverse_value = 1. / symmetric_item_value;
-			ui->criteriaTableWidget->item(row, column)->setData(Qt::WhatsThisRole, QString("%1").arg(inverse_value));
-		}
-
-	} else {
-		double value = item_value.toDouble();
-		ui->criteriaTableWidget->item(row, column)->setData(Qt::WhatsThisRole, QString("%1").arg(value));
-		if (value > kEpsilon and value <= kMaxVal) {
-			ui->criteriaTableWidget->item(column, row)->setText(QString("1/%1").arg(value));
-		}
-	}
+	handleCellChanged(ui->criteriaTableWidget, row, column);
 }
 
 void CompareCriteriaDialog::onButtonBoxAccepted() {

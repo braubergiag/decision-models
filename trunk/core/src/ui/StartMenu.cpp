@@ -2,8 +2,8 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QVector>
-#include "ui_StartMenu.h"
-#include "../../include/ui/StartMenu.h"
+#include <ui_StartMenu.h>
+#include <StartMenu.h>
 
 StartMenu::StartMenu(QWidget *parent) : QWidget(parent), ui(new Ui::StartMenu) {
 	ui->setupUi(this);

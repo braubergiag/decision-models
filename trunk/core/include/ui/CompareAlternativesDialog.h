@@ -1,14 +1,19 @@
 #pragma once
+
 #include <QDialog>
 #include <Eigen/Core>
-#include "../decision_model.h"
+#include <decision_model.h>
+#include <CompareDialogBase.h>
+
 QT_BEGIN_NAMESPACE
+
 namespace Ui {
 	class CompareAlternativesDialog;
 }
+
 QT_END_NAMESPACE
 
-class CompareAlternativesDialog : public QDialog {
+class CompareAlternativesDialog : public CompareDialogBase {
 	Q_OBJECT
 
 public:

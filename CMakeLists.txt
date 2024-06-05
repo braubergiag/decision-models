@@ -20,28 +20,35 @@ set (PROJECT_SOURCES
         trunk/core/src/decision_methods/gm_decision_method.cpp
         trunk/core/src/decision_methods/tropical.cpp
         trunk/core/src/decision_methods/tropical_decision_method.cpp
+        trunk/core/src/decision_methods/utils.cpp
         trunk/core/src/decision_model.cpp
         trunk/core/src/decision_models_db.cpp
         trunk/core/src/main.cpp
 
         trunk/core/src/ui/StartMenu.cpp
         trunk/core/src/ui/DecisionModelDialog.cpp
+        trunk/core/src/ui/CompareDialogBase.cpp
         trunk/core/src/ui/CompareCriteriaDialog.cpp
         trunk/core/src/ui/CompareAlternativesDialog.cpp
 
         trunk/core/src/ui/StartMenu.ui
         trunk/core/src/ui/DecisionModelDialog.ui
+        trunk/core/src/ui/CompareDialogBase.ui
         trunk/core/src/ui/CompareCriteriaDialog.ui
         trunk/core/src/ui/CompareAlternativesDialog.ui
 )
 set (PROJECT_HEADERS
         trunk/core/include/ui/StartMenu.h
         trunk/core/include/ui/DecisionModelDialog.h
+        trunk/core/include/ui/CompareDialogBase.h
         trunk/core/include/ui/CompareCriteriaDialog.h
         trunk/core/include/ui/CompareAlternativesDialog.h
 
         trunk/core/include/decision_model.h
-        trunk/core/include/decision_methods/utils.h)
+        trunk/core/include/decision_methods/utils.h )
+include_directories(${CMAKE_SOURCE_DIR}/trunk/core/include)
+include_directories(${CMAKE_SOURCE_DIR}/trunk/core/include/decision_methods)
+include_directories(${CMAKE_SOURCE_DIR}/trunk/core/include/ui)
 
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -112,11 +119,7 @@ enable_testing()
 
 add_executable(
         DecisionModelsTests
-        trunk/core/src/decision_methods/ahp_decision_method.cpp
-        trunk/core/src/decision_methods/gm_decision_method.cpp
-        trunk/core/src/decision_methods/tropical.cpp
-        trunk/core/src/decision_methods/tropical_decision_method.cpp
-        trunk/core/src/decision_model.cpp
+        ${PROJECT_SOURCES}
 
         tests/decision_methods/ahp_tasks_tests.cpp
         tests/decision_methods/gm_tasks_tests.cpp
@@ -125,7 +128,7 @@ add_executable(
         tests/decision_model/model_ranking.cpp)
 
 
-target_link_libraries(DecisionModelsTests gtest_main Eigen3::Eigen)
+target_link_libraries(DecisionModelsTests gtest_main Eigen3::Eigen Qt${QT_VERSION_MAJOR}::Widgets )
 include(GoogleTest)
 gtest_discover_tests(DecisionModelsTests)
 

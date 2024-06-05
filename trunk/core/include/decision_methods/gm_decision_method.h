@@ -1,6 +1,6 @@
 #pragma once
 
-#include "decision_method.h"
+#include <decision_method.h>
 
 class gm_decision_method : public decision_method<typename Eigen::MatrixXd, typename Eigen::VectorXd> {
 public:
