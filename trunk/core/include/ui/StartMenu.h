@@ -43,8 +43,9 @@ private slots:
 	void onEditModelButtonClicked();
 	void onCompareAlternativesButtonClicked();
 	void onCompareCriteriaButtonClicked();
-	void onDecisionModelDialogAccepted(const DecisionModelDialog *createModelDialog,
-									   const std::string &oldModelName = {});
+	void onDecisionModelDialogAccepted(const DecisionModelDialog *createModelDialog);
+	void onEditDecisionModelDialogAccepted(const DecisionModelDialog *createModelDialog,
+										   DecisionModel * model);
 	void onModelListUpdate();
 	void onEstimateButtonClicked();
 	void onModelReady();

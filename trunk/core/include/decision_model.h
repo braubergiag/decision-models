@@ -11,12 +11,20 @@ using ComparisionMatrixView = Eigen::Matrix<std::string, Eigen::Dynamic, Eigen::
 
 class DecisionModel {
 public:
-	using ComparisonMatrixView = Eigen::Matrix<std::string, Eigen::Dynamic, Eigen::Dynamic>;
+	using ComparisonMatrixView = Eigen::MatrixX<std::string>;
 	DecisionModel() = default;
 
 public:
 	void addAlternative(const std::string &alternative);
 	void addCriteria(const std::string &criteria);
+	void removeAlternative(int index);
+	void removeCriteria(int index);
+
+private:
+	template<typename T>
+	Eigen::MatrixX<T> removeRow(const Eigen::MatrixX<T> &matrix, int index);
+	template<typename T>
+	Eigen::MatrixX<T> removeColumn(const Eigen::MatrixX<T> &matrix, int index);
 
 public:
 	void performTropicalMethod();
@@ -49,7 +57,7 @@ public:
 	bool compsIsInitAt(int index) const;
 
 public:
-	const std::string &decisionName() const;
+	const std::string &modelName() const;
 	const std::vector<std::string> &criteriaNames() const;
 	const std::vector<std::string> &alternativesNames() const;
 
@@ -70,7 +78,7 @@ public:
 	constexpr static auto alternative_sign = "A";
 
 private:
-	std::string decisionName_;
+	std::string modelName_;
 	std::vector<std::string> criteriaNames_;
 	std::vector<std::string> alternativesNames_;
 
@@ -89,3 +97,25 @@ private:
 	gm_decision_method gmDecisionMethod_;
 	tropical_decision_method tropicalDecisionMethod_;
 };
+
+template<typename T>
+Eigen::MatrixX<T> DecisionModel::removeColumn(const Eigen::MatrixX<T> &matrix, int index) {
+	auto new_rows_count = matrix.rows();
+	auto new_cols_count = matrix.cols() - 1;
+
+	Eigen::MatrixX<T> result(new_rows_count, new_cols_count);
+	result.leftCols(index) = matrix.leftCols(index);
+	result.rightCols(matrix.cols() - index - 1) = matrix.rightCols(matrix.cols() - index - 1);
+	return result;
+}
+
+template<typename T>
+Eigen::MatrixX<T> DecisionModel::removeRow(const Eigen::MatrixX<T> &matrix, int index) {
+	auto new_rows_count = matrix.rows() - 1;
+	auto new_cols_count = matrix.cols();
+
+	Eigen::MatrixX<T> result(new_rows_count, new_cols_count);
+	result.topRows(index) = matrix.topRows(index);
+	result.bottomRows(matrix.rows() - index - 1) = matrix.bottomRows(matrix.rows() - index - 1);
+	return result;
+}

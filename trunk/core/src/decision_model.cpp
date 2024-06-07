@@ -11,11 +11,11 @@ void DecisionModel::addCriteria(const std::string &criteria) {
 }
 
 void DecisionModel::setDecisionName(const std::string &decisionName) {
-	decisionName_ = decisionName;
+	modelName_ = decisionName;
 }
 
-const std::string &DecisionModel::decisionName() const {
-	return decisionName_;
+const std::string &DecisionModel::modelName() const {
+	return modelName_;
 }
 
 const std::vector<std::string> &DecisionModel::criteriaNames() const {
@@ -173,8 +173,38 @@ std::string DecisionModel::modelRanking(const ModelRanking &modelRanking) {
 		if (i + 1 < modelRanking.size()) {
 			auto [next_weight, next_alternative_n] = modelRanking.at(i + 1);
 			ss << (utils::approximately_equal(weight, next_weight) ? utils::wrap_with_spaces(equality_sign)
-																  : utils::wrap_with_spaces(greater_sign));
+																   : utils::wrap_with_spaces(greater_sign));
 		}
 	}
 	return ss.str();
+}
+
+void DecisionModel::removeCriteria(int index) {
+	if (index < criteriaCount()) {
+		// Note Матрицы сравнения альтернатив должны быть проинициализированы
+		if (alternativesComps_.size() == criteriaCount()) {
+			alternativesComps_.erase(begin(alternativesComps_) + index);
+			alternativesCompsViews_.erase(begin(alternativesCompsViews_) + index);
+		}
+		criteriaNames_.erase(begin(criteriaNames_) + index);
+
+		criteriaComparisons_ = removeRow(criteriaComparisons_, index);
+		criteriaComparisons_ = removeColumn(criteriaComparisons_, index);
+
+		criteriaComparisonsMatrixView_ = removeRow(criteriaComparisonsMatrixView_, index);
+		criteriaComparisonsMatrixView_ = removeColumn(criteriaComparisonsMatrixView_, index);
+	}
+}
+
+void DecisionModel::removeAlternative(int index) {
+	for (auto & alt : alternativesComps_) {
+		alt = removeRow(alt, index);
+		alt = removeColumn(alt, index);
+	}
+	for (auto & altView : alternativesCompsViews_) {
+		altView = removeRow(altView, index);
+		altView = removeColumn(altView, index);
+	}
+	alternativesNames_.erase(begin(alternativesNames_) + index);
+
 }

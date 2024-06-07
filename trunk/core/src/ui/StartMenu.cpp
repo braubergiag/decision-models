@@ -32,7 +32,7 @@ StartMenu::~StartMenu() {
 }
 
 void StartMenu::onCreateModelButtonClicked() {
-	auto createModelDialog = new DecisionModelDialog(modelsDb_, this);
+	auto createModelDialog = new DecisionModelDialog(this, modelsDb_);
 	auto res = createModelDialog->exec();
 	if (res == QDialog::Accepted) {
 		emit onDecisionModelDialogAccepted(createModelDialog);
@@ -76,13 +76,26 @@ void StartMenu::onEditModelButtonClicked() {
 	}
 	auto modelName = ui->modelsList->currentItem()->text().toStdString();
 	if (modelsDb_.count(modelName)) {
-		auto createModelDialog = new DecisionModelDialog(modelsDb_, modelName, this);
+		auto model =  &modelsDb_.model(modelName);
+		auto createModelDialog = new DecisionModelDialog(this, modelsDb_, model);
 		auto res = createModelDialog->exec();
 		if (res == QDialog::Accepted) {
-			emit onDecisionModelDialogAccepted(createModelDialog, modelName);
+			emit onEditDecisionModelDialogAccepted(createModelDialog, model);
 			switchState(eMode::eModelNotPrepared);
 		}
 	}
+}
+
+void StartMenu::onEditDecisionModelDialogAccepted(const DecisionModelDialog *createModelDialog, DecisionModel *model) {
+
+	ui->alternativesList->clear();
+	for (const auto & altName : model->alternativesNames())
+		ui->alternativesList->addItem(QString::fromStdString(altName));
+
+	ui->criteriaList->clear();
+	for (const auto  &criteriaName: model->criteriaNames())
+		ui->criteriaList->addItem(QString::fromStdString(criteriaName));
+
 }
 
 void StartMenu::onModelListUpdate() {
@@ -107,8 +120,7 @@ void StartMenu::onModelListUpdate() {
 	}
 }
 
-void StartMenu::onDecisionModelDialogAccepted(const DecisionModelDialog *createModelDialog,
-											  const std::string &oldModelName) {
+void StartMenu::onDecisionModelDialogAccepted(const DecisionModelDialog *createModelDialog) {
 	qDebug() << "Accepted DecisionModelDialog";
 	DecisionModel decisionModel;
 	auto modelName = createModelDialog->modelName();
@@ -123,25 +135,13 @@ void StartMenu::onDecisionModelDialogAccepted(const DecisionModelDialog *createM
 	for (const auto &criterionName: criteriaNames) {
 		decisionModel.addCriteria(criterionName.toStdString());
 	}
-	modelsDb_.addOrUpdateModel(decisionModel.decisionName(), decisionModel);
+	modelsDb_.addOrUpdateModel(decisionModel.modelName(), decisionModel);
 
-	if (oldModelName.empty()) {
-		ui->modelsList->addItem(modelName);
-		auto currentModelIndex = ui->modelsList->count() - 1;
-		ui->modelsList->setCurrentRow(currentModelIndex);
-	}
+	ui->modelsList->addItem(modelName);
+	auto currentModelIndex = ui->modelsList->count() - 1;
+	ui->modelsList->setCurrentRow(currentModelIndex);
 
-	else if (oldModelName != modelName.toStdString()) {
-		modelsDb_.deleteModel(oldModelName);
-		auto oldModelNameIndex = ui->modelsList->currentRow();
-		auto item = ui->modelsList->takeItem(oldModelNameIndex);
-		delete item;
-		ui->modelsList->insertItem(oldModelNameIndex, modelName);
-		ui->modelsList->setCurrentRow(oldModelNameIndex);
-		emit modelUpdated();
-	} else {
-		emit modelUpdated();
-	}
+	emit modelUpdated();
 }
 
 void StartMenu::onCompareAlternativesButtonClicked() {

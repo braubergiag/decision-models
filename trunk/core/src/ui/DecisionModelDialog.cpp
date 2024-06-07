@@ -3,25 +3,25 @@
 #include <ui_DecisionModelDialog.h>
 #include <DecisionModelDialog.h>
 
-DecisionModelDialog::DecisionModelDialog(const DecisionModelsDB &modelsDb, QWidget *parent)
+DecisionModelDialog::DecisionModelDialog(QWidget *parent, const DecisionModelsDB &modelsDb)
 	: QDialog(parent), modelsDb_(modelsDb), ui(new Ui::DecisionModelDialog) {
 	ui->setupUi(this);
-
-	initSignalAndSlots();
+	connect(ui->addAlternative, &QPushButton::clicked, this, &DecisionModelDialog::onAddAlternativeButtonClicked);
+	connect(ui->addCriteria, &QPushButton::clicked, this, &DecisionModelDialog::onAddCriteriaButtonClicked);
+	connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &DecisionModelDialog::onButtonBoxAccepted);
+	connect(ui->buttonBox, &QDialogButtonBox::rejected, this, &DecisionModelDialog::onButtonBoxRejected);
+	connect(ui->deleteAlternative, &QPushButton::clicked, this, &DecisionModelDialog::onDeleteAlternativeButtonClicked);
+	connect(ui->deleteCriteria, &QPushButton::clicked, this, &DecisionModelDialog::onDeleteCriterionButtonClicked);
 	editMode_ = false;
 }
 
-DecisionModelDialog::DecisionModelDialog(const DecisionModelsDB &modelsDb, const std::string &modelName,
-										 QWidget *parent)
-	: QDialog(parent), modelsDb_(modelsDb), modelName_(QString::fromStdString(modelName)),
-	  ui(new Ui::DecisionModelDialog) {
+DecisionModelDialog::DecisionModelDialog(QWidget *parent, const DecisionModelsDB &modelsDb, DecisionModel *model)
+	: DecisionModelDialog(parent, modelsDb) {
 
-	ui->setupUi(this);
-
-	initSignalAndSlots();
-	ui->modelNameLineEdit->setText(modelName_);
-	setAlternativesListWidget(modelsDb_);
-	setCriteriaListWidget(modelsDb_);
+	decisionModel_ = model;
+	ui->modelNameLineEdit->setText(QString::fromStdString(decisionModel_->modelName()));
+	setAlternativesListWidget(*decisionModel_);
+	setCriteriaListWidget(*decisionModel_);
 	editMode_ = true;
 }
 
@@ -99,23 +99,15 @@ void DecisionModelDialog::onButtonBoxAccepted() {
 	accept();
 }
 
-void DecisionModelDialog::setAlternativesListWidget(const DecisionModelsDB &modelsDb) {
-	auto modelNameStd = modelName_.toStdString();
-	if (modelsDb.count(modelNameStd)) {
-		auto &model = modelsDb_.model(modelNameStd);
-		for (const auto &alternativeName: model.alternativesNames()) {
-			ui->alternativesList->addItem(QString::fromStdString(alternativeName));
-		}
+void DecisionModelDialog::setAlternativesListWidget(const DecisionModel &model) {
+	for (const auto &alternativeName: model.alternativesNames()) {
+		ui->alternativesList->addItem(QString::fromStdString(alternativeName));
 	}
 }
 
-void DecisionModelDialog::setCriteriaListWidget(const DecisionModelsDB &modelsDb) {
-	auto modelNameStd = modelName_.toStdString();
-	if (modelsDb.count(modelNameStd)) {
-		auto &model = modelsDb_.model(modelNameStd);
-		for (const auto &criterionName: model.criteriaNames()) {
-			ui->criteriaList->addItem(QString::fromStdString(criterionName));
-		}
+void DecisionModelDialog::setCriteriaListWidget(const DecisionModel &model) {
+	for (const auto &criterionName: model.criteriaNames()) {
+		ui->criteriaList->addItem(QString::fromStdString(criterionName));
 	}
 }
 
@@ -129,6 +121,9 @@ void DecisionModelDialog::onDeleteAlternativeButtonClicked() {
 		return;
 	}
 	auto item = ui->alternativesList->takeItem(alternativeNameRowIndex);
+	if (decisionModel_) {
+		decisionModel_->removeAlternative(alternativeNameRowIndex);
+	}
 	delete item;
 }
 
@@ -142,6 +137,9 @@ void DecisionModelDialog::onDeleteCriterionButtonClicked() {
 		return;
 	}
 	auto item = ui->criteriaList->takeItem(criterionNameRowIndex);
+	if (decisionModel_) {
+		decisionModel_->removeCriteria(criterionNameRowIndex);
+	}
 	delete item;
 }
 

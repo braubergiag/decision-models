@@ -20,8 +20,8 @@ class DecisionModelDialog : public QDialog {
 	Q_OBJECT
 
 public:
-	explicit DecisionModelDialog(const DecisionModelsDB &modelsDb, QWidget *parent = nullptr);
-	DecisionModelDialog(const DecisionModelsDB &modelsDb, const std::string &modelName, QWidget *parent = nullptr);
+	DecisionModelDialog(QWidget *parent, const DecisionModelsDB &modelsDb);
+	DecisionModelDialog(QWidget *parent, const DecisionModelsDB &modelsDb, DecisionModel *model);
 	~DecisionModelDialog() override;
 private slots:
 	void onAddAlternativeButtonClicked();
@@ -39,14 +39,15 @@ public:
 
 private:
 	void initSignalAndSlots();
-	void setAlternativesListWidget(const DecisionModelsDB &modelsDb);
-	void setCriteriaListWidget(const DecisionModelsDB &modelsDb);
+	void setAlternativesListWidget(const DecisionModel &model);
+	void setCriteriaListWidget(const DecisionModel &model);
 
 private:
 	const int kMinAlternativesCount{2};
 	const int kMinCriteriaCount{1};
 
 	const DecisionModelsDB &modelsDb_;
+	DecisionModel * decisionModel_ = nullptr;
 
 	QString modelName_;
 	QVector<QString> alternativesNames_;
