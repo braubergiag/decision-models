@@ -6,9 +6,9 @@
 
 
 TEST(DecisionMethods, modelRanking) {
-	const std::string equality_sign = DecisionModel::equality_sign;
-	const std::string greater_sign = DecisionModel::greater_sign;
-	const std::string alt_sign = DecisionModel::alternative_sign;
+	const std::string equality_sign = DecisionModel::equalitySign;
+	const std::string greater_sign = DecisionModel::greaterSign;
+	const std::string alt_sign = DecisionModel::alternativeSign;
 
 	Eigen::VectorXd weights(3);
 	weights << 0.25, 1, 0.4;

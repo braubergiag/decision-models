@@ -15,16 +15,15 @@ public:
 	DecisionModel() = default;
 
 public:
-	void addAlternative(const std::string &alternative);
-	void addCriteria(const std::string &criteria);
-	void removeAlternative(int index);
-	void removeCriteria(int index);
+	void addAlternativeName(const std::string &alternative);
+	void addCriteriaName(const std::string &criteria);
+	void removeAlternative(int alternativeIndex);
+	void removeCriteria(int criteriaIndex);
+	void addAlternative(const std::string &alternativeName);
+	void addCriteria(const std::string &criteriaName);
 
 private:
-	template<typename T>
-	Eigen::MatrixX<T> removeRow(const Eigen::MatrixX<T> &matrix, int index);
-	template<typename T>
-	Eigen::MatrixX<T> removeColumn(const Eigen::MatrixX<T> &matrix, int index);
+	void initAlternativesComparisonsMatrix();
 
 public:
 	void performTropicalMethod();
@@ -73,9 +72,13 @@ public:
 
 
 public:
-	constexpr static auto equality_sign = "\u2261";
-	constexpr static auto greater_sign = "\u227B";
-	constexpr static auto alternative_sign = "A";
+	constexpr static auto equalitySign = "\u2261";
+	constexpr static auto greaterSign = "\u227B";
+	constexpr static auto alternativeSign = "A";
+
+private:
+	constexpr static auto defaultMatrixValue = 1.;
+	inline const static std::string defaultMatrixView = "1";
 
 private:
 	std::string modelName_;
@@ -97,25 +100,3 @@ private:
 	gm_decision_method gmDecisionMethod_;
 	tropical_decision_method tropicalDecisionMethod_;
 };
-
-template<typename T>
-Eigen::MatrixX<T> DecisionModel::removeColumn(const Eigen::MatrixX<T> &matrix, int index) {
-	auto new_rows_count = matrix.rows();
-	auto new_cols_count = matrix.cols() - 1;
-
-	Eigen::MatrixX<T> result(new_rows_count, new_cols_count);
-	result.leftCols(index) = matrix.leftCols(index);
-	result.rightCols(matrix.cols() - index - 1) = matrix.rightCols(matrix.cols() - index - 1);
-	return result;
-}
-
-template<typename T>
-Eigen::MatrixX<T> DecisionModel::removeRow(const Eigen::MatrixX<T> &matrix, int index) {
-	auto new_rows_count = matrix.rows() - 1;
-	auto new_cols_count = matrix.cols();
-
-	Eigen::MatrixX<T> result(new_rows_count, new_cols_count);
-	result.topRows(index) = matrix.topRows(index);
-	result.bottomRows(matrix.rows() - index - 1) = matrix.bottomRows(matrix.rows() - index - 1);
-	return result;
-}

@@ -26,7 +26,7 @@ DecisionModelDialog::DecisionModelDialog(QWidget *parent, const DecisionModelsDB
 }
 
 void DecisionModelDialog::initSignalAndSlots() {
-
+	
 	connect(ui->addAlternative, &QPushButton::clicked, this, &DecisionModelDialog::onAddAlternativeButtonClicked);
 	connect(ui->addCriteria, &QPushButton::clicked, this, &DecisionModelDialog::onAddCriteriaButtonClicked);
 	connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &DecisionModelDialog::onButtonBoxAccepted);
@@ -48,6 +48,9 @@ void DecisionModelDialog::onAddAlternativeButtonClicked() {
 		QMessageBox::information(this, "Альтернатива уже указана", "Альтернатива с данным названием уже есть в списке");
 		return;
 	}
+	if (decisionModel_) {
+		decisionModel_->addAlternative(alternativeName.toStdString());
+	}
 	ui->alternativesList->addItem(alternativeName);
 	ui->alternativeLineEdit->clear();
 }
@@ -60,6 +63,9 @@ void DecisionModelDialog::onAddCriteriaButtonClicked() {
 	} else if (!ui->criteriaList->findItems(criteriaName, Qt::MatchExactly).isEmpty()) {
 		QMessageBox::information(this, "Критерий уже добавлен", "Критерий с данным названием уже есть в списке");
 		return;
+	}
+	if (decisionModel_) {
+		decisionModel_->addCriteria(criteriaName.toStdString());
 	}
 
 	ui->criteriaList->addItem(criteriaName);

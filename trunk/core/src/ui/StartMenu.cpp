@@ -81,7 +81,6 @@ void StartMenu::onEditModelButtonClicked() {
 		auto res = createModelDialog->exec();
 		if (res == QDialog::Accepted) {
 			emit onEditDecisionModelDialogAccepted(createModelDialog, model);
-			switchState(eMode::eModelNotPrepared);
 		}
 	}
 }
@@ -130,10 +129,10 @@ void StartMenu::onDecisionModelDialogAccepted(const DecisionModelDialog *createM
 	auto criteriaNames = createModelDialog->criteriaNames();
 
 	for (const auto &alternativeName: alternativesNames) {
-		decisionModel.addAlternative(alternativeName.toStdString());
+		decisionModel.addAlternativeName(alternativeName.toStdString());
 	}
 	for (const auto &criterionName: criteriaNames) {
-		decisionModel.addCriteria(criterionName.toStdString());
+		decisionModel.addCriteriaName(criterionName.toStdString());
 	}
 	modelsDb_.addOrUpdateModel(decisionModel.modelName(), decisionModel);
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QString>
+#include <Eigen/Core>
 
 namespace utils {
 	inline double d(double p, double q) {
@@ -11,18 +12,21 @@ namespace utils {
 		return abs(a - b) <= ((abs(a) < abs(b) ? abs(b) : abs(a)) * epsilon);
 	}
 
-	inline bool definitely_less_than(double a, double b, double epsilon = 0.001)
-	{
-		return (b - a) > ( (abs(a) < abs(b) ? abs(b) : abs(a)) * epsilon);
+	inline bool definitely_less_than(double a, double b, double epsilon = 0.001) {
+		return (b - a) > ((abs(a) < abs(b) ? abs(b) : abs(a)) * epsilon);
 	}
-	inline bool less_or_equal_than(double a, double b, double epsilon = 0.001)
-	{
-		return definitely_less_than(a,b,epsilon) || approximately_equal(a,b,epsilon);
+
+	inline bool less_or_equal_than(double a, double b, double epsilon = 0.001) {
+		return definitely_less_than(a, b, epsilon) || approximately_equal(a, b, epsilon);
 	}
+
 	inline std::string wrap_with_spaces(const std::string &str) {
 		return std::string(" ").append(str).append(" ");
 	}
+}
 
+
+namespace utils {
 	class Fraction {
 	public:
 		Fraction(int numerator, int denominator) : numerator_(numerator), denominator_(denominator){};
@@ -58,3 +62,5 @@ namespace utils {
 	std::istream &operator>>(std::istream &is, Fraction &frac);
 
 } // namespace utils
+
+
