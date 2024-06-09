@@ -49,7 +49,7 @@ private slots:
 										   DecisionModelsDB &db);
 	void onModelListUpdate();
 	void onEstimateButtonClicked();
-	void onMethodChoose(bool checked);
+	void onMethodChoose();
 	void onModelReady();
 	void clearModelResults(const QString &modelName);
 

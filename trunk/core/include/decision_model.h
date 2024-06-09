@@ -99,7 +99,6 @@ private:
 
 
 	bool criteriaComparisonMatrixIsInit_{false};
-	bool alternativesComparisonsMatricesIsInit_{false};
 
 	ahp_decision_method ahpDecisionMethod_;
 	gm_decision_method gmDecisionMethod_;

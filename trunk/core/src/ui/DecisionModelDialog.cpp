@@ -68,7 +68,7 @@ void DecisionModelDialog::onButtonBoxAccepted() {
 		QMessageBox::information(this, "Название модели", "Пожалуйста, укажите название модели");
 		return;
 	} else if (!editMode_ && modelsDb_.count(modelName_.toStdString()) > 0) {
-		QMessageBox::information(this, "Название модели", "Модель с данным названием уже существует");
+		QMessageBox::information(this, "Название модели", "Модель \"" + modelName_ + "\" уже существует.");
 		return;
 	}
 
@@ -95,6 +95,12 @@ void DecisionModelDialog::onButtonBoxAccepted() {
 	if (decisionModel_) {
 		auto newModelName = ui->modelNameLineEdit->text().toStdString();
 		if (decisionModel_->modelName() != newModelName) {
+			if (modelsDb_.count(newModelName)) {
+				QMessageBox::information(this, "Название модели",
+										 "Модель \"" + QString::fromStdString(newModelName) + "\" уже существует");
+				ui->modelNameLineEdit->setText(QString::fromStdString(decisionModel_->modelName()));
+				return;
+			}
 			auto oldName = decisionModel_->modelName();
 			decisionModel_->setDecisionName(newModelName);
 		}

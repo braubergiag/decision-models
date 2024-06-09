@@ -249,7 +249,7 @@ void StartMenu::clearModelResults(const QString &modelName) {
 	}
 }
 
-void StartMenu::onMethodChoose(bool checked) {
+void StartMenu::onMethodChoose() {
 	if (ui->tmCheckBox->isChecked() || ui->ahpCheckBox->isChecked() || ui->gmCheckBox->isChecked())
 		ui->estimateButton->setEnabled(true);
 	else {
