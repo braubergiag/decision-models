@@ -44,8 +44,8 @@ private slots:
 	void onCompareAlternativesButtonClicked();
 	void onCompareCriteriaButtonClicked();
 	void onDecisionModelDialogAccepted(const DecisionModelDialog *createModelDialog);
-	void onEditDecisionModelDialogAccepted(const DecisionModelDialog *createModelDialog,
-										   DecisionModel * model);
+	void onEditDecisionModelDialogAccepted(const DecisionModelDialog *createModelDialog, DecisionModel *model,
+										   DecisionModelsDB &db);
 	void onModelListUpdate();
 	void onEstimateButtonClicked();
 	void onModelReady();

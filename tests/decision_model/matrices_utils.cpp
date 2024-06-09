@@ -72,3 +72,57 @@ TEST(MatricesUtilsTests,AddRowAndColumn) {
 	auto result = addRowAndColumn(matrix, 1., 1.);
 	ASSERT_TRUE(result.isApprox(expected));
 }
+
+TEST(MatricesUtilsTests,RemoveRowFromOneByOneMatrix) {
+	Eigen::MatrixXd matrix(1, 1);
+	matrix << 1;
+
+	Eigen::MatrixXd expected(0, 0);
+	auto result = removeRow(matrix, 0);
+	ASSERT_TRUE(result.isApprox(expected));
+}
+
+TEST(MatricesUtilsTests,RemoveColumnFromOneByOneMatrix) {
+	Eigen::MatrixXd matrix(1, 1);
+	matrix << 1;
+
+	Eigen::MatrixXd expected(0, 0);
+	auto result = removeColumn(matrix, 0);
+	ASSERT_TRUE(result.isApprox(expected));
+}
+
+TEST(MatricesUtilsTests,RemoveRowAndColumnFromOneByOneMatrix) {
+	Eigen::MatrixXd matrix(1, 1);
+	matrix << 1;
+
+	Eigen::MatrixXd expected(0, 0);
+	auto result = removeRowAndColumn(matrix, 0, 0);
+	ASSERT_TRUE(result.isApprox(expected));
+}
+
+TEST(MatricesUtilsTests,AddColumnToEmptyMatrix) {
+	Eigen::MatrixXd matrix;
+
+	Eigen::MatrixXd expected(1, 1);
+	expected << 1.;
+	auto result = addColumn(matrix, 1.);
+	ASSERT_TRUE(result.isApprox(expected));
+}
+
+TEST(MatricesUtilsTests,AddRowToEmptyMatrix) {
+	Eigen::MatrixXd matrix;
+
+	Eigen::MatrixXd expected(1, 1);
+	expected << 1.;
+	auto result = addRow(matrix, 1.);
+	ASSERT_TRUE(result.isApprox(expected));
+}
+
+TEST(MatricesUtilsTests,AddRowAndColumntToEmptyMatrix) {
+	Eigen::MatrixXd matrix;
+
+	Eigen::MatrixXd expected(1, 1);
+	expected << 1.;
+	auto result = addRowAndColumn(matrix, 1., 1.);
+	ASSERT_TRUE(result.isApprox(expected));
+}

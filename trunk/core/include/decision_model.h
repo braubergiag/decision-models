@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 #include <Eigen/Core>
+#include <QVector>
+#include <QString>
 #include <ahp_decision_method.h>
 #include <gm_decision_method.h>
 #include <tropical_decision_method.h>
@@ -13,6 +15,8 @@ class DecisionModel {
 public:
 	using ComparisonMatrixView = Eigen::MatrixX<std::string>;
 	DecisionModel() = default;
+	DecisionModel(const QString &modelName, const QVector<QString> &alternativesNames,
+				  const QVector<QString> &criteriaNames);
 
 public:
 	void addAlternativeName(const std::string &alternative);
@@ -23,7 +27,8 @@ public:
 	void addCriteria(const std::string &criteriaName);
 
 private:
-	void initAlternativesComparisonsMatrix();
+	void addAlternativesComparisonsMatrix();
+	void initCriteriaComparisonsMatrix();
 
 public:
 	void performTropicalMethod();

@@ -6,6 +6,19 @@
 
 using namespace matrices_utils;
 
+DecisionModel::DecisionModel(const QString &modelName, const QVector<QString> &alternativesNames,
+							 const QVector<QString> &criteriaNames) {
+	modelName_ = modelName.toStdString();
+	for (const auto &alternativeName: alternativesNames) {
+		addAlternativeName(alternativeName.toStdString());
+	}
+	for (const auto &criterionName: criteriaNames) {
+		addCriteriaName(criterionName.toStdString());
+		addAlternativesComparisonsMatrix();
+	}
+	initCriteriaComparisonsMatrix();
+}
+
 void DecisionModel::addAlternativeName(const std::string &alternative) {
 	alternativesNames_.emplace_back(alternative);
 }
@@ -185,8 +198,7 @@ std::string DecisionModel::modelRanking(const ModelRanking &modelRanking) {
 
 void DecisionModel::removeCriteria(int criteriaIndex) {
 	if (criteriaIndex < criteriaCount()) {
-		// Note Матрицы сравнения альтернатив должны быть проинициализированы
-		if (alternativesComps_.size() == criteriaCount()) {
+		if (alternativesComparisonsMatricesIsInit()) {
 			alternativesComps_.erase(begin(alternativesComps_) + criteriaIndex);
 			alternativesCompsViews_.erase(begin(alternativesCompsViews_) + criteriaIndex);
 		}
@@ -201,10 +213,10 @@ void DecisionModel::removeCriteria(int criteriaIndex) {
 void DecisionModel::removeAlternative(int alternativeIndex) {
 	for (auto i = 0; i < alternativesComps_.size(); ++i) {
 		if (alternativesCompsIsInit_.at(i)) {
-			auto & alt = alternativesComps_[i];
+			auto &alt = alternativesComps_[i];
 			alt = removeRowAndColumn(alt, alternativeIndex, alternativeIndex);
 
-			auto & altView = alternativesCompsViews_[i];
+			auto &altView = alternativesCompsViews_[i];
 			altView = removeRowAndColumn(altView, alternativeIndex, alternativeIndex);
 		}
 	}
@@ -229,12 +241,17 @@ void DecisionModel::addCriteria(const std::string &criteriaName) {
 			addRowAndColumn(criteriaComparisonsMatrixView_, defaultMatrixView, defaultMatrixView);
 	criteriaNames_.emplace_back(criteriaName);
 
-	initAlternativesComparisonsMatrix();
+	addAlternativesComparisonsMatrix();
 }
 
-void DecisionModel::initAlternativesComparisonsMatrix() {
+void DecisionModel::addAlternativesComparisonsMatrix() {
 	alternativesComps_.emplace_back(Eigen::MatrixXd::Ones(alternativesCount(), alternativesCount()));
 	alternativesCompsViews_.emplace_back(
 			Eigen::MatrixX<std::string>::Constant(alternativesCount(), alternativesCount(), defaultMatrixView));
 	alternativesCompsIsInit_.emplace_back(true);
+}
+
+void DecisionModel::initCriteriaComparisonsMatrix() {
+	criteriaComparisons_.setOnes(criteriaCount(), criteriaCount());
+	criteriaComparisonsMatrixView_.setConstant(criteriaCount(), criteriaCount(), defaultMatrixView);
 }

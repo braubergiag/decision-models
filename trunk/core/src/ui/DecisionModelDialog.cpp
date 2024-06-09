@@ -25,16 +25,6 @@ DecisionModelDialog::DecisionModelDialog(QWidget *parent, const DecisionModelsDB
 	editMode_ = true;
 }
 
-void DecisionModelDialog::initSignalAndSlots() {
-	
-	connect(ui->addAlternative, &QPushButton::clicked, this, &DecisionModelDialog::onAddAlternativeButtonClicked);
-	connect(ui->addCriteria, &QPushButton::clicked, this, &DecisionModelDialog::onAddCriteriaButtonClicked);
-	connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &DecisionModelDialog::onButtonBoxAccepted);
-	connect(ui->buttonBox, &QDialogButtonBox::rejected, this, &DecisionModelDialog::onButtonBoxRejected);
-	connect(ui->deleteAlternative, &QPushButton::clicked, this, &DecisionModelDialog::onDeleteAlternativeButtonClicked);
-	connect(ui->deleteCriteria, &QPushButton::clicked, this, &DecisionModelDialog::onDeleteCriterionButtonClicked);
-}
-
 DecisionModelDialog::~DecisionModelDialog() {
 	delete ui;
 }
@@ -58,7 +48,7 @@ void DecisionModelDialog::onAddAlternativeButtonClicked() {
 void DecisionModelDialog::onAddCriteriaButtonClicked() {
 	auto criteriaName = ui->criteriaLineEdit->text();
 	if (criteriaName.isEmpty()) {
-		QMessageBox::information(this, "Название не задано", "Пожалуйста, укажите название альтернативы");
+		QMessageBox::information(this, "Название не задано", "Пожалуйста, укажите название критерия");
 		return;
 	} else if (!ui->criteriaList->findItems(criteriaName, Qt::MatchExactly).isEmpty()) {
 		QMessageBox::information(this, "Критерий уже добавлен", "Критерий с данным названием уже есть в списке");
@@ -101,6 +91,13 @@ void DecisionModelDialog::onButtonBoxAccepted() {
 	}
 	for (int i = 0; i < criteriaCount; ++i) {
 		criteriaNames_.append(ui->criteriaList->item(i)->text());
+	}
+	if (decisionModel_) {
+		auto newModelName = ui->modelNameLineEdit->text().toStdString();
+		if (decisionModel_->modelName() != newModelName) {
+			auto oldName = decisionModel_->modelName();
+			decisionModel_->setDecisionName(newModelName);
+		}
 	}
 	accept();
 }

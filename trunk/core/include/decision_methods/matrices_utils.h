@@ -24,8 +24,11 @@ namespace matrices_utils {
 namespace matrices_utils {
 	template<typename T>
 	Eigen::MatrixX<T> removeColumn(const Eigen::MatrixX<T> &matrix, int index) {
-		if (index > (matrix.cols() - 1) || matrix.cols() < 2)
+		if (index > (matrix.cols() - 1))
 			return matrix;
+		if (matrix.cols() == 1) {
+			return Eigen::MatrixX<T>();
+		}
 		auto new_rows_count = matrix.rows();
 		auto new_cols_count = matrix.cols() - 1;
 
@@ -37,8 +40,11 @@ namespace matrices_utils {
 
 	template<typename T>
 	Eigen::MatrixX<T> removeRow(const Eigen::MatrixX<T> &matrix, int index) {
-		if (index > (matrix.rows() - 1) || matrix.rows() < 2)
+		if (index > (matrix.rows() - 1))
 			return matrix;
+		if (matrix.rows() == 1) {
+			return Eigen::MatrixX<T>();
+		}
 		auto new_rows_count = matrix.rows() - 1;
 		auto new_cols_count = matrix.cols();
 
@@ -59,6 +65,8 @@ namespace matrices_utils {
 	template<typename T>
 	Eigen::MatrixX<T> addRow(const Eigen::MatrixX<T> &matrix, T rowValue) {
 		Eigen::MatrixX<T> result(matrix);
+		if (result.size() == 0)
+			return Eigen::MatrixX<T>::Constant(1, 1, rowValue);
 		result.conservativeResize(result.rows() + 1, result.cols());
 		result.row(result.rows() - 1) = Eigen::VectorX<T>::Constant(result.cols(), rowValue);
 		return result;
@@ -67,14 +75,19 @@ namespace matrices_utils {
 	template<typename T>
 	Eigen::MatrixX<T> addColumn(const Eigen::MatrixX<T> &matrix, T columnValue) {
 		Eigen::MatrixX<T> result(matrix);
+		if (result.size() == 0)
+			return Eigen::MatrixX<T>::Constant(1, 1, columnValue);
 		result.conservativeResize(result.rows(), result.cols() + 1);
 		result.col(result.cols() - 1) = Eigen::VectorX<T>::Constant(result.rows(), columnValue);
 		return result;
 	}
 
+
 	template<typename T>
 	Eigen::MatrixX<T> addRowAndColumn(const Eigen::MatrixX<T> &matrix, T rowValue, T columnValue) {
 		Eigen::MatrixX<T> result(matrix);
+		if (result.size() == 0)
+			return Eigen::MatrixX<T>::Constant(1, 1, rowValue);
 		result = addRow(result, rowValue);
 		result = addColumn(result, columnValue);
 		return result;

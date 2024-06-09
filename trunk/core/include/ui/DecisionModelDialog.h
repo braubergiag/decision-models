@@ -38,7 +38,6 @@ public:
 	const QVector<QString> &criteriaNames() const;
 
 private:
-	void initSignalAndSlots();
 	void setAlternativesListWidget(const DecisionModel &model);
 	void setCriteriaListWidget(const DecisionModel &model);
 
@@ -53,8 +52,6 @@ private:
 	QVector<QString> alternativesNames_;
 	QVector<QString> criteriaNames_;
 	bool editMode_{false};
-	bool isInit_{false};
-
 
 	Ui::DecisionModelDialog *ui;
 };

@@ -36,7 +36,7 @@ void StartMenu::onCreateModelButtonClicked() {
 	auto res = createModelDialog->exec();
 	if (res == QDialog::Accepted) {
 		emit onDecisionModelDialogAccepted(createModelDialog);
-		switchState(eMode::eModelNotPrepared);
+		switchState(eMode::eModelPrepared);
 	}
 }
 
@@ -76,29 +76,37 @@ void StartMenu::onEditModelButtonClicked() {
 	}
 	auto modelName = ui->modelsList->currentItem()->text().toStdString();
 	if (modelsDb_.count(modelName)) {
-		auto model =  &modelsDb_.model(modelName);
+		auto model = &modelsDb_.model(modelName);
 		auto createModelDialog = new DecisionModelDialog(this, modelsDb_, model);
 		auto res = createModelDialog->exec();
 		if (res == QDialog::Accepted) {
-			emit onEditDecisionModelDialogAccepted(createModelDialog, model);
+			emit onEditDecisionModelDialogAccepted(createModelDialog, model, modelsDb_);
 		}
 	}
 }
 
-void StartMenu::onEditDecisionModelDialogAccepted(const DecisionModelDialog *createModelDialog, DecisionModel *model) {
+void StartMenu::onEditDecisionModelDialogAccepted(const DecisionModelDialog *createModelDialog, DecisionModel *model,
+												  DecisionModelsDB &db) {
+
+	auto oldModelName = ui->modelsList->currentItem()->text().toStdString();
+	auto newModelName = model->modelName();
+	if (newModelName != oldModelName) {
+		db.changeModelName(oldModelName, newModelName);
+		model = &db.model(newModelName);
+		ui->modelsList->currentItem()->setText(QString::fromStdString(model->modelName()));
+	}
 
 	ui->alternativesList->clear();
-	for (const auto & altName : model->alternativesNames())
+	for (const auto &altName: model->alternativesNames())
 		ui->alternativesList->addItem(QString::fromStdString(altName));
 
 	ui->criteriaList->clear();
-	for (const auto  &criteriaName: model->criteriaNames())
+	for (const auto &criteriaName: model->criteriaNames())
 		ui->criteriaList->addItem(QString::fromStdString(criteriaName));
-
 }
 
 void StartMenu::onModelListUpdate() {
-	if (!ui->modelsList->count() > 0 || !ui->modelsList->currentItem())
+	if (ui->modelsList->count() == 0 || !ui->modelsList->currentItem())
 		return;
 	ui->alternativesList->clear();
 	ui->criteriaList->clear();
@@ -116,24 +124,19 @@ void StartMenu::onModelListUpdate() {
 		ui->compareAlternativesButton->setEnabled(true);
 		ui->deleteModelButton->setEnabled(true);
 		ui->editModelButton->setEnabled(true);
+		switchState(eMode::eModelPrepared);
 	}
 }
 
 void StartMenu::onDecisionModelDialogAccepted(const DecisionModelDialog *createModelDialog) {
 	qDebug() << "Accepted DecisionModelDialog";
-	DecisionModel decisionModel;
 	auto modelName = createModelDialog->modelName();
-	decisionModel.setDecisionName(modelName.toStdString());
 
 	auto alternativesNames = createModelDialog->alternativesNames();
 	auto criteriaNames = createModelDialog->criteriaNames();
+	DecisionModel decisionModel(modelName, alternativesNames, criteriaNames);
 
-	for (const auto &alternativeName: alternativesNames) {
-		decisionModel.addAlternativeName(alternativeName.toStdString());
-	}
-	for (const auto &criterionName: criteriaNames) {
-		decisionModel.addCriteriaName(criterionName.toStdString());
-	}
+
 	modelsDb_.addOrUpdateModel(decisionModel.modelName(), decisionModel);
 
 	ui->modelsList->addItem(modelName);
@@ -151,8 +154,7 @@ void StartMenu::onCompareAlternativesButtonClicked() {
 		auto compareAlternativesDialog = new CompareAlternativesDialog(model, this);
 		auto res = compareAlternativesDialog->exec();
 		if (res == QDialog::Accepted) {
-			if (model.criteriaComparisonMatrixIsInit() && model.alternativesComparisonsMatricesIsInit())
-				switchState(eMode::eModelPrepared);
+			switchState(eMode::eModelPrepared);
 		}
 	}
 }
@@ -164,8 +166,7 @@ void StartMenu::onCompareCriteriaButtonClicked() {
 		auto compareCriteriaDialog = new CompareCriteriaDialog(model, this);
 		auto res = compareCriteriaDialog->exec();
 		if (res == QDialog::Accepted) {
-			if (model.criteriaComparisonMatrixIsInit() && model.alternativesComparisonsMatricesIsInit())
-				switchState(eMode::eModelPrepared);
+			switchState(eMode::eModelPrepared);
 		}
 	}
 }
