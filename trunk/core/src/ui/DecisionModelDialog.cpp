@@ -32,7 +32,7 @@ DecisionModelDialog::~DecisionModelDialog() {
 void DecisionModelDialog::onAddAlternativeButtonClicked() {
 	auto alternativeName = ui->alternativeLineEdit->text();
 	if (alternativeName.isEmpty()) {
-		QMessageBox::information(this, "Название не задано", "Пожалуйста, укажите название альтернативы");
+		QMessageBox::information(this, "Название альтернативы не задано", "Пожалуйста, укажите название альтернативы");
 		return;
 	} else if (!ui->alternativesList->findItems(alternativeName, Qt::MatchExactly).isEmpty()) {
 		QMessageBox::information(this, "Альтернатива уже указана", "Альтернатива с данным названием уже есть в списке");
@@ -48,7 +48,7 @@ void DecisionModelDialog::onAddAlternativeButtonClicked() {
 void DecisionModelDialog::onAddCriteriaButtonClicked() {
 	auto criteriaName = ui->criteriaLineEdit->text();
 	if (criteriaName.isEmpty()) {
-		QMessageBox::information(this, "Название не задано", "Пожалуйста, укажите название критерия");
+		QMessageBox::information(this, "Название критерия не задано", "Пожалуйста, укажите название критерия");
 		return;
 	} else if (!ui->criteriaList->findItems(criteriaName, Qt::MatchExactly).isEmpty()) {
 		QMessageBox::information(this, "Критерий уже добавлен", "Критерий с данным названием уже есть в списке");
