@@ -108,7 +108,7 @@ void StartMenu::onEditDecisionModelDialogAccepted(const DecisionModelDialog *cre
 }
 
 void StartMenu::onModelListUpdate() {
-	if (ui->modelsList->count() == 0 || !ui->modelsList->currentItem()){
+	if (ui->modelsList->count() == 0 || !ui->modelsList->currentItem()) {
 		switchState(eMode::eModelNotPrepared);
 		return;
 	}
@@ -177,7 +177,7 @@ void StartMenu::onCompareCriteriaButtonClicked() {
 
 void StartMenu::onEstimateButtonClicked() {
 	auto modelName = ui->modelsList->currentItem()->text();
-	auto & model = modelsDb_.model(modelName.toStdString());
+	auto &model = modelsDb_.model(modelName.toStdString());
 	lastActiveModel_ = modelName;
 
 	auto [ahp, gm, tropical] =
@@ -231,7 +231,6 @@ void StartMenu::switchState(StartMenu::eMode newState) {
 			ui->ahpCheckBox->setEnabled(true);
 			ui->gmCheckBox->setEnabled(true);
 			ui->tmCheckBox->setEnabled(true);
-
 	}
 }
 

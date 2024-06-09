@@ -23,8 +23,7 @@ namespace utils {
 	inline std::string wrap_with_spaces(const std::string &str) {
 		return std::string(" ").append(str).append(" ");
 	}
-}
-
+} // namespace utils
 
 namespace utils {
 	class Fraction {
@@ -62,5 +61,3 @@ namespace utils {
 	std::istream &operator>>(std::istream &is, Fraction &frac);
 
 } // namespace utils
-
-

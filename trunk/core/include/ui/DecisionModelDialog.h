@@ -46,7 +46,7 @@ private:
 	const int kMinCriteriaCount{1};
 
 	const DecisionModelsDB &modelsDb_;
-	DecisionModel * decisionModel_ = nullptr;
+	DecisionModel *decisionModel_ = nullptr;
 
 	QString modelName_;
 	QVector<QString> alternativesNames_;

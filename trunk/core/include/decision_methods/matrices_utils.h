@@ -82,7 +82,6 @@ namespace matrices_utils {
 		return result;
 	}
 
-
 	template<typename T>
 	Eigen::MatrixX<T> addRowAndColumn(const Eigen::MatrixX<T> &matrix, T rowValue, T columnValue) {
 		Eigen::MatrixX<T> result(matrix);

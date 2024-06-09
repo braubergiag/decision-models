@@ -9,7 +9,7 @@ class DecisionModelsDB {
 
 public:
 	void addOrUpdateModel(const std::string &modelName, const DecisionModel &decisionModel);
-	void changeModelName(const std::string &oldModelName, const std::string& newModelName);
+	void changeModelName(const std::string &oldModelName, const std::string &newModelName);
 	void deleteModel(const std::string &modelName);
 	size_t size() const;
 	bool count(const std::string &modelName) const;
