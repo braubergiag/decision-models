@@ -1,111 +1,111 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
-    <class>DecisionModelDialog</class>
-    <widget class="QDialog" name="DecisionModelDialog">
-        <property name="windowModality">
-            <enum>Qt::WindowModal</enum>
-        </property>
-        <property name="geometry">
-            <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>425</width>
-                <height>782</height>
-            </rect>
-        </property>
-        <property name="windowTitle">
-            <string>Создание и редактирование модели</string>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout_2">
-            <item>
-                <layout class="QVBoxLayout" name="verticalLayout">
-                    <item>
-                        <layout class="QHBoxLayout" name="horizontalLayout">
-                            <item>
-                                <widget class="QLabel" name="label_2">
-                                    <property name="text">
-                                        <string>Название модели:</string>
-                                    </property>
-                                </widget>
-                            </item>
-                            <item>
-                                <widget class="QLineEdit" name="modelNameLineEdit"/>
-                            </item>
-                        </layout>
-                    </item>
-                    <item>
-                        <layout class="QHBoxLayout" name="horizontalLayout_2">
-                            <item>
-                                <widget class="QLabel" name="label">
-                                    <property name="text">
-                                        <string>Альтернатива:</string>
-                                    </property>
-                                </widget>
-                            </item>
-                            <item>
-                                <widget class="QLineEdit" name="alternativeLineEdit"/>
-                            </item>
-                            <item>
-                                <widget class="QPushButton" name="addAlternative">
-                                    <property name="text">
-                                        <string>Добавить</string>
-                                    </property>
-                                </widget>
-                            </item>
-                            <item>
-                                <widget class="QPushButton" name="deleteAlternative">
-                                    <property name="text">
-                                        <string>Удалить</string>
-                                    </property>
-                                </widget>
-                            </item>
-                        </layout>
-                    </item>
-                    <item>
-                        <widget class="QListWidget" name="alternativesList"/>
-                    </item>
-                    <item>
-                        <layout class="QHBoxLayout" name="horizontalLayout_3">
-                            <item>
-                                <widget class="QLabel" name="label_3">
-                                    <property name="text">
-                                        <string>Критерий:</string>
-                                    </property>
-                                </widget>
-                            </item>
-                            <item>
-                                <widget class="QLineEdit" name="criteriaLineEdit"/>
-                            </item>
-                            <item>
-                                <widget class="QPushButton" name="addCriteria">
-                                    <property name="text">
-                                        <string>Добавить</string>
-                                    </property>
-                                </widget>
-                            </item>
-                            <item>
-                                <widget class="QPushButton" name="deleteCriteria">
-                                    <property name="text">
-                                        <string>Удалить</string>
-                                    </property>
-                                </widget>
-                            </item>
-                        </layout>
-                    </item>
-                    <item>
-                        <widget class="QListWidget" name="criteriaList"/>
-                    </item>
-                    <item>
-                        <widget class="QDialogButtonBox" name="buttonBox">
-                            <property name="standardButtons">
-                                <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-                            </property>
-                        </widget>
-                    </item>
-                </layout>
-            </item>
-        </layout>
-    </widget>
-    <resources/>
-    <connections/>
+ <class>DecisionModelDialog</class>
+ <widget class="QDialog" name="DecisionModelDialog">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>425</width>
+    <height>782</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Создание и редактирование модели</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Название модели:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="modelNameLineEdit"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Альтернатива:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="alternativeLineEdit"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="addAlternative">
+         <property name="text">
+          <string>Добавить</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="deleteAlternative">
+         <property name="text">
+          <string>Удалить</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QListWidget" name="alternativesList"/>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Критерий:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="criteriaLineEdit"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="addCriteria">
+         <property name="text">
+          <string>Добавить</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="deleteCriteria">
+         <property name="text">
+          <string>Удалить</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QListWidget" name="criteriaList"/>
+     </item>
+     <item>
+      <widget class="QDialogButtonBox" name="buttonBox">
+       <property name="standardButtons">
+        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
 </ui>

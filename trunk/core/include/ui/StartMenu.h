@@ -3,6 +3,7 @@
 #include <memory>
 #include <QWidget>
 #include <QPushButton>
+#include <QString>
 #include <DecisionModelDialog.h>
 #include <CompareAlternativesDialog.h>
 #include <CompareCriteriaDialog.h>
@@ -43,14 +44,18 @@ private slots:
 	void onEditModelButtonClicked();
 	void onCompareAlternativesButtonClicked();
 	void onCompareCriteriaButtonClicked();
-	void onDecisionModelDialogAccepted(const DecisionModelDialog *createModelDialog,
-									   const std::string &oldModelName = {});
+	void onDecisionModelDialogAccepted(const DecisionModelDialog *createModelDialog);
+	void onEditDecisionModelDialogAccepted(const DecisionModelDialog *createModelDialog, DecisionModel *model,
+										   DecisionModelsDB &db);
 	void onModelListUpdate();
 	void onEstimateButtonClicked();
+	void onMethodChoose();
 	void onModelReady();
+	void clearModelResults(const QString &modelName);
 
 private:
 	eMode currentState{eMode::eModelNotPrepared};
+	QString lastActiveModel_;
 	DecisionModelsDB modelsDb_;
 	Ui::StartMenu *ui;
 };

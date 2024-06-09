@@ -2,7 +2,6 @@
 #include <QDebug>
 #include <ui_CompareAlternativesDialog.h>
 #include <CompareAlternativesDialog.h>
-#include <utils.h>
 
 CompareAlternativesDialog::CompareAlternativesDialog(DecisionModel &decisionModel, QWidget *parent)
 	: CompareDialogBase(parent), decisionModel_(decisionModel), ui(new Ui::CompareAlternativesDialog) {

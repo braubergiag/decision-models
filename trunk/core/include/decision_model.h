@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 #include <Eigen/Core>
+#include <QVector>
+#include <QString>
 #include <ahp_decision_method.h>
 #include <gm_decision_method.h>
 #include <tropical_decision_method.h>
@@ -11,12 +13,22 @@ using ComparisionMatrixView = Eigen::Matrix<std::string, Eigen::Dynamic, Eigen::
 
 class DecisionModel {
 public:
-	using ComparisonMatrixView = Eigen::Matrix<std::string, Eigen::Dynamic, Eigen::Dynamic>;
+	using ComparisonMatrixView = Eigen::MatrixX<std::string>;
 	DecisionModel() = default;
+	DecisionModel(const QString &modelName, const QVector<QString> &alternativesNames,
+				  const QVector<QString> &criteriaNames);
 
 public:
-	void addAlternative(const std::string &alternative);
-	void addCriteria(const std::string &criteria);
+	void addAlternativeName(const std::string &alternative);
+	void addCriteriaName(const std::string &criteria);
+	void removeAlternative(int alternativeIndex);
+	void removeCriteria(int criteriaIndex);
+	void addAlternative(const std::string &alternativeName);
+	void addCriteria(const std::string &criteriaName);
+
+private:
+	void addAlternativesComparisonsMatrix();
+	void initCriteriaComparisonsMatrix();
 
 public:
 	void performTropicalMethod();
@@ -49,7 +61,7 @@ public:
 	bool compsIsInitAt(int index) const;
 
 public:
-	const std::string &decisionName() const;
+	const std::string &modelName() const;
 	const std::vector<std::string> &criteriaNames() const;
 	const std::vector<std::string> &alternativesNames() const;
 
@@ -65,12 +77,16 @@ public:
 
 
 public:
-	constexpr static auto equality_sign = "\u2261";
-	constexpr static auto greater_sign = "\u227B";
-	constexpr static auto alternative_sign = "A";
+	constexpr static auto equalitySign = "\u2261";
+	constexpr static auto greaterSign = "\u227B";
+	constexpr static auto alternativeSign = "A";
 
 private:
-	std::string decisionName_;
+	constexpr static auto defaultMatrixValue = 1.;
+	inline const static std::string defaultMatrixView = "1";
+
+private:
+	std::string modelName_;
 	std::vector<std::string> criteriaNames_;
 	std::vector<std::string> alternativesNames_;
 
@@ -83,7 +99,6 @@ private:
 
 
 	bool criteriaComparisonMatrixIsInit_{false};
-	bool alternativesComparisonsMatricesIsInit_{false};
 
 	ahp_decision_method ahpDecisionMethod_;
 	gm_decision_method gmDecisionMethod_;

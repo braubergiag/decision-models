@@ -24,3 +24,10 @@ void DecisionModelsDB::deleteModel(const std::string &modelName) {
 	if (modelsDb_.count(modelName))
 		modelsDb_.erase(modelName);
 }
+
+void DecisionModelsDB::changeModelName(const std::string &oldModelName, const std::string &newModelName) {
+	if (modelsDb_.count(oldModelName)) {
+		modelsDb_[newModelName] = std::move(modelsDb_[oldModelName]);
+		modelsDb_.erase(oldModelName);
+	}
+}

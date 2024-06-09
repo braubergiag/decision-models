@@ -45,7 +45,9 @@ set (PROJECT_HEADERS
         trunk/core/include/ui/CompareAlternativesDialog.h
 
         trunk/core/include/decision_model.h
-        trunk/core/include/decision_methods/utils.h )
+        trunk/core/include/decision_methods/utils.h
+        #trunk/core/include/decision_methods/matrices_utils.h
+        )
 include_directories(${CMAKE_SOURCE_DIR}/trunk/core/include)
 include_directories(${CMAKE_SOURCE_DIR}/trunk/core/include/decision_methods)
 include_directories(${CMAKE_SOURCE_DIR}/trunk/core/include/ui)
@@ -119,13 +121,21 @@ enable_testing()
 
 add_executable(
         DecisionModelsTests
-        ${PROJECT_SOURCES}
+        trunk/core/src/decision_methods/ahp_decision_method.cpp
+        trunk/core/src/decision_methods/gm_decision_method.cpp
+        trunk/core/src/decision_methods/tropical.cpp
+        trunk/core/src/decision_methods/tropical_decision_method.cpp
+        trunk/core/src/decision_methods/utils.cpp
+        trunk/core/src/decision_model.cpp
+        trunk/core/src/decision_models_db.cpp
 
         tests/decision_methods/ahp_tasks_tests.cpp
         tests/decision_methods/gm_tasks_tests.cpp
         tests/decision_methods/tropical_tests.cpp
         tests/decision_methods/tropical_tasks_tests.cpp
-        tests/decision_model/model_ranking.cpp)
+        tests/decision_model/model_ranking.cpp
+        tests/decision_model/matrices_utils.cpp
+)
 
 
 target_link_libraries(DecisionModelsTests gtest_main Eigen3::Eigen Qt${QT_VERSION_MAJOR}::Widgets )
